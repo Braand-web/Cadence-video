@@ -10,7 +10,7 @@ export function AppLayout() {
   const queueCount = videos.filter((v) => v.status === 'scheduled' || v.status === 'review').length + seedLibrary().filter((v) => v.status === 'scheduled').length;
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', background: 'radial-gradient(1200px 600px at 78% -8%, rgba(124,92,255,.14), transparent 60%),radial-gradient(900px 500px at -6% 108%, rgba(124,92,255,.09), transparent 55%),#0A0A0F' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', background: 'radial-gradient(1200px 600px at 78% -8%, rgba(240,90,40,.14), transparent 60%),radial-gradient(900px 500px at -6% 108%, rgba(240,90,40,.09), transparent 55%),#101012' }}>
       <Sidebar queueCount={queueCount} />
       <main style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
         <Header />

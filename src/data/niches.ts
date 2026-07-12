@@ -1,11 +1,11 @@
 import type { NicheDef } from '../types';
 
 export const NICHES: NicheDef[] = [
-  { key: 'motivation', name: 'Citations motivantes', desc: 'Punchlines qui claquent, ton inspirant.', icon: 'flame', bg: 'linear-gradient(135deg,#9D6BFF,#FF8A5C)', hook: 'Personne ne viendra te sauver.' },
-  { key: 'facts', name: 'Faits insolites', desc: 'Le saviez-vous ? qui rend accro.', icon: 'brain', bg: 'linear-gradient(135deg,#5CC8FF,#7C5CFF)', hook: 'Ton cerveau brûle 20% de tes calories.' },
+  { key: 'motivation', name: 'Citations motivantes', desc: 'Punchlines qui claquent, ton inspirant.', icon: 'flame', bg: 'linear-gradient(135deg,#A56A00,#FF8A5C)', hook: 'Personne ne viendra te sauver.' },
+  { key: 'facts', name: 'Faits insolites', desc: 'Le saviez-vous ? qui rend accro.', icon: 'brain', bg: 'linear-gradient(135deg,#5CC8FF,#2D3E9E)', hook: 'Ton cerveau brûle 20% de tes calories.' },
   { key: 'finance', name: 'Finance', desc: 'Argent, investissement, discipline.', icon: 'dollar', bg: 'linear-gradient(135deg,#34D399,#0EA5A5)', hook: 'Les riches ne budgètent pas. Ils font ça.' },
   { key: 'fitness', name: 'Fitness', desc: 'Routines, discipline, transformation.', icon: 'dumbbell', bg: 'linear-gradient(135deg,#FFB74C,#FF6B4C)', hook: '5 minutes > 1 heure le dimanche.' },
-  { key: 'growth', name: 'Développement perso', desc: 'Habitudes, focus, mental.', icon: 'zap', bg: 'linear-gradient(135deg,#A78BFA,#7C5CFF)', hook: 'Arrête de scroller. Lis ça.' },
+  { key: 'growth', name: 'Développement perso', desc: 'Habitudes, focus, mental.', icon: 'zap', bg: 'linear-gradient(135deg,#FF8A5C,#F05A28)', hook: 'Arrête de scroller. Lis ça.' },
   { key: 'tips', name: 'Astuces & vie pratique', desc: 'Hacks utiles du quotidien.', icon: 'spark', bg: 'linear-gradient(135deg,#F472B6,#A855F7)', hook: 'La règle des 2 minutes.' },
 ];
 

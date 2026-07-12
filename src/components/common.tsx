@@ -65,7 +65,7 @@ export function MiniWave({ active }: { active: boolean }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 2, height: 18 }}>
       {hs.map((h, i) => (
-        <span key={i} style={{ width: 2, height: h, borderRadius: 2, background: active ? '#A78BFA' : 'rgba(255,255,255,.25)' }} />
+        <span key={i} style={{ width: 2, height: h, borderRadius: 2, background: active ? '#FF8A5C' : 'rgba(255,255,255,.25)' }} />
       ))}
     </div>
   );
@@ -74,7 +74,7 @@ export function MiniWave({ active }: { active: boolean }) {
 export function toggleTrackStyle(on: boolean, big = true): CSSProperties {
   const w = big ? 44 : 40;
   const h = big ? 25 : 23;
-  return { position: 'relative', width: w, height: h, borderRadius: 20, flex: 'none', transition: 'background .2s', display: 'inline-block', background: on ? '#7C5CFF' : 'rgba(255,255,255,.15)' };
+  return { position: 'relative', width: w, height: h, borderRadius: 20, flex: 'none', transition: 'background .2s', display: 'inline-block', background: on ? '#F05A28' : 'rgba(255,255,255,.15)' };
 }
 export function toggleKnobStyle(on: boolean, big = true): CSSProperties {
   const w = big ? 19 : 17;
@@ -96,22 +96,22 @@ export function Toggle({ on, onClick, big = true }: { on: boolean; onClick: () =
 export function chipStyle(on: boolean): CSSProperties {
   return {
     padding: '9px 15px',
-    borderRadius: 11,
+    borderRadius: 9999,
     cursor: 'pointer',
-    fontFamily: 'Manrope',
+    fontFamily: 'Hanken Grotesk',
     fontWeight: 600,
     fontSize: 13,
-    border: `1px solid ${on ? 'rgba(124,92,255,.5)' : 'rgba(255,255,255,.1)'}`,
-    background: on ? 'rgba(124,92,255,.16)' : 'transparent',
-    color: on ? '#A78BFA' : '#B9B9C8',
+    border: `1px solid ${on ? 'rgba(240,90,40,.5)' : 'rgba(255,255,255,.1)'}`,
+    background: on ? 'rgba(240,90,40,.16)' : 'transparent',
+    color: on ? '#FF8A5C' : '#D8D5CE',
   };
 }
 
 export function StatusBadge({ status }: { status: 'published' | 'scheduled' | 'draft' | 'review' }) {
   const map = {
     published: { label: '● Publié', bg: 'rgba(52,211,153,.16)', fg: '#34D399' },
-    scheduled: { label: '● Programmé', bg: 'rgba(124,92,255,.18)', fg: '#A78BFA' },
-    draft: { label: '● Brouillon', bg: 'rgba(255,255,255,.09)', fg: '#B9B9C8' },
+    scheduled: { label: '● Programmé', bg: 'rgba(240,90,40,.18)', fg: '#FF8A5C' },
+    draft: { label: '● Brouillon', bg: 'rgba(255,255,255,.09)', fg: '#D8D5CE' },
     review: { label: '● À valider', bg: 'rgba(255,183,76,.16)', fg: '#FFB74C' },
   } as const;
   const st = map[status] || map.draft;
@@ -125,8 +125,8 @@ export function StatusBadge({ status }: { status: 'published' | 'scheduled' | 'd
 export function statusMeta(status: 'published' | 'scheduled' | 'draft' | 'review') {
   const map = {
     published: { label: '● Publié', bg: 'rgba(52,211,153,.16)', fg: '#34D399' },
-    scheduled: { label: '● Programmé', bg: 'rgba(124,92,255,.18)', fg: '#A78BFA' },
-    draft: { label: '● Brouillon', bg: 'rgba(255,255,255,.09)', fg: '#B9B9C8' },
+    scheduled: { label: '● Programmé', bg: 'rgba(240,90,40,.18)', fg: '#FF8A5C' },
+    draft: { label: '● Brouillon', bg: 'rgba(255,255,255,.09)', fg: '#D8D5CE' },
     review: { label: '● À valider', bg: 'rgba(255,183,76,.16)', fg: '#FFB74C' },
   } as const;
   return map[status] || map.draft;

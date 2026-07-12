@@ -24,12 +24,12 @@ export function LogoBadge({ size = 34, radius }: { size?: number; radius?: numbe
     width: size,
     height: size,
     borderRadius: r,
-    background: 'linear-gradient(135deg,#7C5CFF,#9D6BFF)',
+    background: 'linear-gradient(135deg,#F05A28,#A56A00)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flex: 'none',
-    boxShadow: `0 ${Math.round(size * 0.18)}px ${Math.round(size * 0.6)}px rgba(124,92,255,.42)`,
+    boxShadow: `0 ${Math.round(size * 0.18)}px ${Math.round(size * 0.6)}px rgba(240,90,40,.42)`,
   };
   return (
     <div style={style}>

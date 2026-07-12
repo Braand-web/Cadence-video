@@ -30,9 +30,9 @@ const TRANS_ANIM: Record<TransitionType, string | undefined> = {
 };
 
 const SCENE_META = [
-  { label: 'Hook', bg: 'linear-gradient(150deg,#9D6BFF,#7C2D6B)', src: 'IA' },
-  { label: 'Contexte', bg: 'linear-gradient(150deg,#7C2D6B,#3B1D4E)', src: 'IA' },
-  { label: 'Tension', bg: 'linear-gradient(150deg,#4C1D95,#7C5CFF)', src: 'Stock' },
+  { label: 'Hook', bg: 'linear-gradient(150deg,#F05A28,#A56A00)', src: 'IA' },
+  { label: 'Contexte', bg: 'linear-gradient(150deg,#A56A00,#7C2D12)', src: 'IA' },
+  { label: 'Tension', bg: 'linear-gradient(150deg,#C72B7A,#F05A28)', src: 'Stock' },
   { label: 'Preuve', bg: 'linear-gradient(150deg,#2D3E9E,#5CC8FF)', src: 'IA' },
   { label: 'CTA', bg: 'linear-gradient(150deg,#0EA5A5,#34D399)', src: 'IA' },
 ];
@@ -44,25 +44,25 @@ const CAP_STYLE_OPTS: [string, string][] = [
   ['pill', 'Pilule'],
 ];
 const CAP_PREVIEW: Record<string, React.CSSProperties> = {
-  karaoke: { background: '#7C5CFF', color: '#fff', fontWeight: 800, fontSize: 13, padding: '4px 10px', borderRadius: 6 },
+  karaoke: { background: '#F05A28', color: '#fff', fontWeight: 800, fontSize: 13, padding: '4px 10px', borderRadius: 6 },
   bold: { color: '#fff', fontWeight: 800, fontSize: 15, textShadow: '0 2px 8px rgba(0,0,0,.8)', WebkitTextStroke: '1px rgba(0,0,0,.5)' },
   neon: { color: '#7DF9FF', fontWeight: 800, fontSize: 14, textShadow: '0 0 10px #7DF9FF' },
   pill: { background: 'rgba(0,0,0,.7)', color: '#fff', fontWeight: 700, fontSize: 13, padding: '5px 12px', borderRadius: 20 },
 };
 const CAP_FONT_OPTS: [string, string][] = [
-  ['grotesk', 'Manrope'],
-  ['manrope', 'Manrope'],
+  ['grotesk', 'Hanken Grotesk'],
+  ['manrope', 'Hanken Grotesk'],
   ['impact', 'Condensé'],
 ];
-const CAP_COLORS = ['#7C5CFF', '#FFFFFF', '#FFE45C', '#34D399', '#9D6BFF'];
-const HI_COLORS = ['#FFE45C', '#7DF9FF', '#9D6BFF', '#34D399'];
+const CAP_COLORS = ['#F05A28', '#FFFFFF', '#FFE45C', '#34D399', '#A56A00'];
+const HI_COLORS = ['#FFE45C', '#7DF9FF', '#A56A00', '#34D399'];
 const CAP_POS_OPTS: [string, string][] = [
   ['haut', 'Haut'],
   ['centre', 'Centre'],
   ['bas', 'Bas'],
 ];
 const VOICE_OPTS = [
-  { key: 'lea', name: 'Léa', desc: 'Féminine · FR · douce', color: '#9D6BFF' },
+  { key: 'lea', name: 'Léa', desc: 'Féminine · FR · douce', color: '#A56A00' },
   { key: 'hugo', name: 'Hugo', desc: 'Masculine · FR · grave', color: '#5CC8FF' },
   { key: 'emma', name: 'Emma', desc: 'Féminine · EN · claire', color: '#34D399' },
   { key: 'noah', name: 'Noah', desc: 'Masculine · EN · énergique', color: '#FFB74C' },
@@ -139,7 +139,7 @@ export function Editor() {
   const [edLogo, setEdLogo] = useState(true);
   const [edFont, setEdFont] = useState('grotesk');
   const [edCapSize, setEdCapSize] = useState(100);
-  const [edCapColor, setEdCapColor] = useState('#7C5CFF');
+  const [edCapColor, setEdCapColor] = useState('#F05A28');
   const [edHighlight, setEdHighlight] = useState('#FFE45C');
   const [edFadeIn, setEdFadeIn] = useState(true);
   const [edFadeOut, setEdFadeOut] = useState(true);
@@ -266,7 +266,7 @@ export function Editor() {
   const hookLabel = hookScore >= 85 ? 'Excellent' : hookScore >= 60 ? 'Correct' : 'À raccourcir';
   const hookColor = hookScore >= 85 ? '#34D399' : hookScore >= 60 ? '#FFB74C' : '#FF7A7A';
 
-  const trackColors: Record<string, string> = { Visuel: '#7C5CFF', Voix: '#9D6BFF', 'Sous-titres': '#34D399', Musique: '#FFB74C' };
+  const trackColors: Record<string, string> = { Visuel: '#F05A28', Voix: '#A56A00', 'Sous-titres': '#34D399', Musique: '#FFB74C' };
   const timelineTracks: [string, number[]][] = [
     ['Visuel', SCENES.map((s) => s.dur)],
     ['Voix', SCENES.map((s) => s.dur)],
@@ -281,15 +281,15 @@ export function Editor() {
     <div style={{ animation: 'fadeUp .35s ease both', display: 'grid', gridTemplateColumns: '320px 1fr', gap: 26, alignItems: 'start' }}>
       {/* canvas */}
       <div style={{ position: 'sticky', top: 96 }}>
-        <div style={{ position: 'relative', aspectRatio: aspectCss, borderRadius: 22, overflow: 'hidden', border: '1px solid rgba(255,255,255,.12)', background: '#0A0A0F', boxShadow: '0 26px 60px rgba(0,0,0,.5)', transition: 'aspect-ratio .3s' }}>
+        <div style={{ position: 'relative', aspectRatio: aspectCss, borderRadius: 22, overflow: 'hidden', border: '1px solid rgba(255,255,255,.12)', background: '#101012', boxShadow: '0 26px 60px rgba(0,0,0,.5)', transition: 'aspect-ratio .3s' }}>
           <div key={actIdx + '-' + curTrans} style={{ position: 'absolute', inset: 0, background: act.bg, animation: TRANS_ANIM[curTrans] }}>
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.58))' }} />
             <div style={{ position: 'absolute', top: 12, left: 12, right: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: 10, fontWeight: 700, color: '#fff', background: 'rgba(124,92,255,.7)', padding: '3px 9px', borderRadius: 20 }}>◆ {act.label}</span>
+              <span style={{ fontSize: 10, fontWeight: 700, color: '#fff', background: 'rgba(240,90,40,.7)', padding: '3px 9px', borderRadius: 20 }}>◆ {act.label}</span>
               <PlatformBadge plat={ev.plat} />
             </div>
             {actIdx === 0 && (
-              <div style={{ position: 'absolute', left: 16, right: 16, top: '44%', transform: 'translateY(-50%)', textAlign: 'center', fontFamily: 'Space Grotesk,sans-serif', fontWeight: 700, fontSize: 22, lineHeight: 1.12, color: '#fff', textShadow: '0 3px 16px rgba(0,0,0,.55)' }}>
+              <div style={{ position: 'absolute', left: 16, right: 16, top: '44%', transform: 'translateY(-50%)', textAlign: 'center', fontFamily: 'Hanken Grotesk,sans-serif', fontWeight: 700, fontSize: 22, lineHeight: 1.12, color: '#fff', textShadow: '0 3px 16px rgba(0,0,0,.55)' }}>
                 {ev.hook}
               </div>
             )}
@@ -297,7 +297,7 @@ export function Editor() {
               <span style={capMap[capStyle]}>{act.full}</span>
             </div>
           </div>
-          {edLogo && <div style={{ position: 'absolute', top: 52, right: 14, fontFamily: 'Manrope', fontWeight: 700, fontSize: 11, color: '#fff', opacity: 0.75, letterSpacing: '.02em' }}>⚡ Cadence</div>}
+          {edLogo && <div style={{ position: 'absolute', top: 52, right: 14, fontFamily: 'Hanken Grotesk', fontWeight: 700, fontSize: 11, color: '#fff', opacity: 0.75, letterSpacing: '.02em' }}>⚡ Cadence</div>}
           <div style={{ position: 'absolute', bottom: 14, left: 14, display: 'flex', alignItems: 'center', gap: 6 }}>
             <span style={{ display: 'flex', color: '#fff' }}>
               <Icon name="music" size={15} />
@@ -311,22 +311,22 @@ export function Editor() {
 
         {/* scrubber */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 14 }}>
-          <button onClick={togglePlay} style={{ width: 40, height: 40, borderRadius: '50%', background: '#7C5CFF', color: '#fff', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flex: 'none', boxShadow: '0 6px 18px rgba(124,92,255,.4)' }}>
+          <button onClick={togglePlay} style={{ width: 40, height: 40, borderRadius: '50%', background: '#fff', color: '#101012', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', flex: 'none', boxShadow: '0 4px 14px rgba(0,0,0,.3)' }}>
             <Icon name={edPlaying ? 'pause' : 'play'} size={18} />
           </button>
           <div onClick={seekBar} style={{ flex: 1, height: 14, display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
             <div style={{ flex: 1, height: 6, borderRadius: 10, background: 'rgba(255,255,255,.12)', position: 'relative' }}>
-              <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${prog * 100}%`, borderRadius: 10, background: 'linear-gradient(90deg,#7C5CFF,#9D6BFF)' }} />
+              <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${prog * 100}%`, borderRadius: 10, background: 'linear-gradient(90deg,#F05A28,#A56A00)' }} />
               <div style={{ position: 'absolute', left: `${prog * 100}%`, top: '50%', transform: 'translate(-50%,-50%)', width: 14, height: 14, borderRadius: '50%', background: '#fff', boxShadow: '0 2px 6px rgba(0,0,0,.4)' }} />
             </div>
           </div>
-          <span style={{ fontSize: 12, color: '#8A8A9C', fontVariantNumeric: 'tabular-nums', flex: 'none' }}>
+          <span style={{ fontSize: 12, color: '#8B8B92', fontVariantNumeric: 'tabular-nums', flex: 'none' }}>
             {fmtTime(edTime)} / {fmtTime(DUR)}
           </span>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 14 }}>
-          <button style={{ flex: 1, background: 'rgba(255,255,255,.05)', color: '#C9C9D6', border: '1px solid rgba(255,255,255,.1)', padding: 10, borderRadius: 11, fontFamily: 'Manrope', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>Aperçu plein écran</button>
-          <button style={{ flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 7, background: 'linear-gradient(135deg,#7C5CFF,#9D6BFF)', color: '#fff', border: 'none', padding: 10, borderRadius: 11, fontFamily: 'Manrope', fontWeight: 700, fontSize: 13, cursor: 'pointer', boxShadow: '0 8px 20px rgba(124,92,255,.35)' }}>
+          <button style={{ flex: 1, background: 'rgba(255,255,255,.05)', color: '#E4E1DA', border: '1px solid rgba(255,255,255,.1)', padding: 10, borderRadius: 11, fontFamily: 'Hanken Grotesk', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>Aperçu plein écran</button>
+          <button style={{ flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 7, background: '#fff', color: '#101012', border: 'none', padding: 10, borderRadius: 9999, fontFamily: 'Hanken Grotesk', fontWeight: 500, fontSize: 13, cursor: 'pointer', boxShadow: '0 4px 14px rgba(0,0,0,.28)' }}>
             Exporter MP4
           </button>
         </div>
@@ -339,7 +339,7 @@ export function Editor() {
             <button
               key={k}
               onClick={() => setEditorTab(k)}
-              style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '10px 13px', background: 'none', border: 'none', borderBottom: `2px solid ${editorTab === k ? '#7C5CFF' : 'transparent'}`, color: editorTab === k ? '#F3F3F6' : '#8A8A9C', fontFamily: 'Manrope', fontWeight: 700, fontSize: 13, cursor: 'pointer', marginBottom: -1, whiteSpace: 'nowrap' }}
+              style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '10px 13px', background: 'none', border: 'none', borderBottom: `2px solid ${editorTab === k ? '#F05A28' : 'transparent'}`, color: editorTab === k ? '#F7F4EF' : '#8B8B92', fontFamily: 'Hanken Grotesk', fontWeight: 700, fontSize: 13, cursor: 'pointer', marginBottom: -1, whiteSpace: 'nowrap' }}
             >
               <span style={{ display: 'flex' }}>
                 <Icon name={ic as any} size={15} />
@@ -358,8 +358,8 @@ export function Editor() {
                 { label: 'Scènes', value: String(SCENES.length) },
               ].map((st) => (
                 <div key={st.label} style={{ border: '1px solid rgba(255,255,255,.08)', borderRadius: 12, padding: '12px 14px', background: 'rgba(255,255,255,.02)' }}>
-                  <div style={{ fontSize: 11.5, color: '#8A8A9C', fontWeight: 600 }}>{st.label}</div>
-                  <div style={{ fontFamily: 'Manrope', fontSize: 19, fontWeight: 600, marginTop: 3 }}>{st.value}</div>
+                  <div style={{ fontSize: 11.5, color: '#8B8B92', fontWeight: 600 }}>{st.label}</div>
+                  <div style={{ fontFamily: 'Hanken Grotesk', fontSize: 19, fontWeight: 600, marginTop: 3 }}>{st.value}</div>
                 </div>
               ))}
             </div>
@@ -374,19 +374,19 @@ export function Editor() {
             </div>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
               <label style={{ fontSize: 13, fontWeight: 700 }}>Script complet</label>
-              <span style={{ fontSize: 11.5, color: '#7C5CFF', background: 'rgba(124,92,255,.14)', padding: '3px 10px', borderRadius: 20, fontWeight: 600 }}>✨ Généré par IA</span>
+              <span style={{ fontSize: 11.5, color: '#F05A28', background: 'rgba(240,90,40,.14)', padding: '3px 10px', borderRadius: 20, fontWeight: 600 }}>✨ Généré par IA</span>
             </div>
             <textarea
               value={editorScript}
               onChange={(e) => setEditorScript(e.target.value)}
-              style={{ width: '100%', minHeight: 150, background: 'rgba(255,255,255,.03)', border: '1px solid rgba(255,255,255,.12)', borderRadius: 14, padding: 16, color: '#F3F3F6', fontSize: 14, lineHeight: 1.6, resize: 'vertical' }}
+              style={{ width: '100%', minHeight: 150, background: 'rgba(255,255,255,.03)', border: '1px solid rgba(255,255,255,.12)', borderRadius: 14, padding: 16, color: '#F7F4EF', fontSize: 14, lineHeight: 1.6, resize: 'vertical' }}
             />
             <div style={{ display: 'flex', gap: 10, marginTop: 14 }}>
-              <button style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: 'rgba(124,92,255,.14)', color: '#A78BFA', border: '1px solid rgba(124,92,255,.3)', padding: '10px 16px', borderRadius: 11, fontFamily: 'Manrope', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>
+              <button style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: 'rgba(240,90,40,.14)', color: '#FF8A5C', border: '1px solid rgba(240,90,40,.3)', padding: '10px 16px', borderRadius: 11, fontFamily: 'Hanken Grotesk', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>
                 <Icon name="sparkles" size={16} /> Régénérer
               </button>
-              <button style={{ background: 'rgba(255,255,255,.04)', color: '#C9C9D6', border: '1px solid rgba(255,255,255,.1)', padding: '10px 16px', borderRadius: 11, fontFamily: 'Manrope', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>Raccourcir</button>
-              <button style={{ background: 'rgba(255,255,255,.04)', color: '#C9C9D6', border: '1px solid rgba(255,255,255,.1)', padding: '10px 16px', borderRadius: 11, fontFamily: 'Manrope', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>Traduire</button>
+              <button style={{ background: 'rgba(255,255,255,.04)', color: '#E4E1DA', border: '1px solid rgba(255,255,255,.1)', padding: '10px 16px', borderRadius: 11, fontFamily: 'Hanken Grotesk', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>Raccourcir</button>
+              <button style={{ background: 'rgba(255,255,255,.04)', color: '#E4E1DA', border: '1px solid rgba(255,255,255,.1)', padding: '10px 16px', borderRadius: 11, fontFamily: 'Hanken Grotesk', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>Traduire</button>
             </div>
             <div style={{ fontSize: 13, fontWeight: 700, margin: '22px 0 12px' }}>Découpage en scènes</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -394,14 +394,14 @@ export function Editor() {
                 <div
                   key={sc.label}
                   onClick={() => setEdTime(sc.start + 0.01)}
-                  style={{ display: 'flex', gap: 12, alignItems: 'center', padding: '11px 13px', borderRadius: 11, cursor: 'pointer', background: i === actIdx ? 'rgba(124,92,255,.1)' : 'rgba(255,255,255,.02)', border: `1px solid ${i === actIdx ? 'rgba(124,92,255,.4)' : 'rgba(255,255,255,.07)'}` }}
+                  style={{ display: 'flex', gap: 12, alignItems: 'center', padding: '11px 13px', borderRadius: 11, cursor: 'pointer', background: i === actIdx ? 'rgba(240,90,40,.1)' : 'rgba(255,255,255,.02)', border: `1px solid ${i === actIdx ? 'rgba(240,90,40,.4)' : 'rgba(255,255,255,.07)'}` }}
                 >
-                  <span style={{ width: 26, height: 26, borderRadius: 8, flex: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Manrope', fontWeight: 700, fontSize: 12, background: i === actIdx ? '#7C5CFF' : 'rgba(255,255,255,.06)', color: i === actIdx ? '#fff' : '#8A8A9C' }}>{i + 1}</span>
+                  <span style={{ width: 26, height: 26, borderRadius: 8, flex: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Hanken Grotesk', fontWeight: 700, fontSize: 12, background: i === actIdx ? '#F05A28' : 'rgba(255,255,255,.06)', color: i === actIdx ? '#fff' : '#8B8B92' }}>{i + 1}</span>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.3 }}>{sc.full}</div>
-                    <div style={{ fontSize: 11.5, color: '#8A8A9C', marginTop: 2 }}>{sc.label}</div>
+                    <div style={{ fontSize: 11.5, color: '#8B8B92', marginTop: 2 }}>{sc.label}</div>
                   </div>
-                  <span style={{ fontSize: 11.5, color: '#7E7E92', fontVariantNumeric: 'tabular-nums', flex: 'none' }}>
+                  <span style={{ fontSize: 11.5, color: '#6E6E74', fontVariantNumeric: 'tabular-nums', flex: 'none' }}>
                     {fmt1(sc.start)} – {fmt1(sc.end)}
                   </span>
                 </div>
@@ -415,9 +415,9 @@ export function Editor() {
             <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 12 }}>Style des sous-titres</div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 12 }}>
               {CAP_STYLE_OPTS.map(([k, l]) => (
-                <button key={k} onClick={() => setCapStyle(k)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, padding: 18, borderRadius: 14, cursor: 'pointer', background: '#111118', border: `1px solid ${capStyle === k ? 'rgba(124,92,255,.6)' : 'rgba(255,255,255,.09)'}` }}>
+                <button key={k} onClick={() => setCapStyle(k)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10, padding: 18, borderRadius: 14, cursor: 'pointer', background: '#111118', border: `1px solid ${capStyle === k ? 'rgba(240,90,40,.6)' : 'rgba(255,255,255,.09)'}` }}>
                   <span style={CAP_PREVIEW[k]}>Aa</span>
-                  <span style={{ fontSize: 12.5, fontWeight: 600, color: '#B9B9C8' }}>{l}</span>
+                  <span style={{ fontSize: 12.5, fontWeight: 600, color: '#D8D5CE' }}>{l}</span>
                 </button>
               ))}
             </div>
@@ -430,13 +430,13 @@ export function Editor() {
               ))}
             </div>
             <div style={{ fontSize: 13, fontWeight: 700, margin: '20px 0 10px' }}>Taille · {edCapSize}%</div>
-            <input type="range" min={70} max={150} value={edCapSize} onChange={(e) => setEdCapSize(+e.target.value)} style={{ width: '100%', accentColor: '#7C5CFF' }} />
+            <input type="range" min={70} max={150} value={edCapSize} onChange={(e) => setEdCapSize(+e.target.value)} style={{ width: '100%', accentColor: '#F05A28' }} />
             <div style={{ display: 'flex', gap: 30, marginTop: 20 }}>
               <div>
                 <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 10 }}>Couleur du texte</div>
                 <div style={{ display: 'flex', gap: 8 }}>
                   {CAP_COLORS.map((c) => (
-                    <span key={c} onClick={() => setEdCapColor(c)} style={{ width: 30, height: 30, borderRadius: 9, cursor: 'pointer', background: c, border: `2px solid ${edCapColor === c ? '#fff' : 'rgba(255,255,255,.15)'}`, boxShadow: edCapColor === c ? '0 0 0 2px #7C5CFF' : 'none', display: 'inline-block' }} />
+                    <span key={c} onClick={() => setEdCapColor(c)} style={{ width: 30, height: 30, borderRadius: 9, cursor: 'pointer', background: c, border: `2px solid ${edCapColor === c ? '#fff' : 'rgba(255,255,255,.15)'}`, boxShadow: edCapColor === c ? '0 0 0 2px #F05A28' : 'none', display: 'inline-block' }} />
                   ))}
                 </div>
               </div>
@@ -444,7 +444,7 @@ export function Editor() {
                 <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 10 }}>Surbrillance</div>
                 <div style={{ display: 'flex', gap: 8 }}>
                   {HI_COLORS.map((c) => (
-                    <span key={c} onClick={() => setEdHighlight(c)} style={{ width: 30, height: 30, borderRadius: 9, cursor: 'pointer', background: c, border: `2px solid ${edHighlight === c ? '#fff' : 'rgba(255,255,255,.15)'}`, boxShadow: edHighlight === c ? '0 0 0 2px #7C5CFF' : 'none', display: 'inline-block' }} />
+                    <span key={c} onClick={() => setEdHighlight(c)} style={{ width: 30, height: 30, borderRadius: 9, cursor: 'pointer', background: c, border: `2px solid ${edHighlight === c ? '#fff' : 'rgba(255,255,255,.15)'}`, boxShadow: edHighlight === c ? '0 0 0 2px #F05A28' : 'none', display: 'inline-block' }} />
                   ))}
                 </div>
               </div>
@@ -465,19 +465,19 @@ export function Editor() {
             <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 12 }}>Voix off</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {VOICE_OPTS.map((v) => (
-                <div key={v.key} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: 12, borderRadius: 12, cursor: 'pointer', background: 'rgba(255,255,255,.02)', border: `1px solid ${edVoice === v.key ? 'rgba(124,92,255,.5)' : 'rgba(255,255,255,.08)'}` }}>
+                <div key={v.key} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: 12, borderRadius: 12, cursor: 'pointer', background: 'rgba(255,255,255,.02)', border: `1px solid ${edVoice === v.key ? 'rgba(240,90,40,.5)' : 'rgba(255,255,255,.08)'}` }}>
                   <button onClick={() => setEdVoice(v.key)} style={{ width: 36, height: 36, borderRadius: 10, background: v.color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', flex: 'none', border: 'none', cursor: 'pointer' }}>
                     <Icon name="mic" size={16} />
                   </button>
                   <div onClick={() => setEdVoice(v.key)} style={{ flex: 1, textAlign: 'left', cursor: 'pointer' }}>
                     <div style={{ fontSize: 13.5, fontWeight: 700 }}>{v.name}</div>
-                    <div style={{ fontSize: 11.5, color: '#8A8A9C' }}>{v.desc}</div>
+                    <div style={{ fontSize: 11.5, color: '#8B8B92' }}>{v.desc}</div>
                   </div>
-                  <button style={{ width: 30, height: 30, borderRadius: 9, border: '1px solid rgba(255,255,255,.12)', background: 'rgba(255,255,255,.04)', color: '#A78BFA', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 'none' }} title="Écouter un extrait">
+                  <button style={{ width: 30, height: 30, borderRadius: 9, border: '1px solid rgba(255,255,255,.12)', background: 'rgba(255,255,255,.04)', color: '#FF8A5C', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 'none' }} title="Écouter un extrait">
                     <Icon name="play" size={13} />
                   </button>
                   {edVoice === v.key ? (
-                    <span style={{ display: 'flex', color: '#7C5CFF', flex: 'none' }}>
+                    <span style={{ display: 'flex', color: '#F05A28', flex: 'none' }}>
                       <Icon name="check" size={18} />
                     </span>
                   ) : (
@@ -489,16 +489,16 @@ export function Editor() {
             <div style={{ marginTop: 20 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, fontWeight: 700, marginBottom: 10 }}>
                 <span>Vitesse</span>
-                <span style={{ color: '#8A8A9C' }}>{edSpeed}%</span>
+                <span style={{ color: '#8B8B92' }}>{edSpeed}%</span>
               </div>
-              <input type="range" min={80} max={120} value={edSpeed} onChange={(e) => setEdSpeed(+e.target.value)} style={{ width: '100%', accentColor: '#7C5CFF' }} />
+              <input type="range" min={80} max={120} value={edSpeed} onChange={(e) => setEdSpeed(+e.target.value)} style={{ width: '100%', accentColor: '#F05A28' }} />
             </div>
             <div style={{ marginTop: 16 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, fontWeight: 700, marginBottom: 10 }}>
                 <span>Tonalité</span>
-                <span style={{ color: '#8A8A9C' }}>{edPitch}%</span>
+                <span style={{ color: '#8B8B92' }}>{edPitch}%</span>
               </div>
-              <input type="range" min={0} max={100} value={edPitch} onChange={(e) => setEdPitch(+e.target.value)} style={{ width: '100%', accentColor: '#7C5CFF' }} />
+              <input type="range" min={0} max={100} value={edPitch} onChange={(e) => setEdPitch(+e.target.value)} style={{ width: '100%', accentColor: '#F05A28' }} />
             </div>
           </div>
         )}
@@ -508,13 +508,13 @@ export function Editor() {
             <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 12 }}>Musique de fond</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {TRACK_OPTS.map((m) => (
-                <div key={m.key} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: 12, borderRadius: 12, cursor: 'pointer', background: 'rgba(255,255,255,.02)', border: `1px solid ${edTrack === m.key ? 'rgba(124,92,255,.5)' : 'rgba(255,255,255,.08)'}` }}>
-                  <button onClick={() => setEdTrack(m.key)} style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(124,92,255,.16)', color: '#A78BFA', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 'none', border: 'none', cursor: 'pointer' }}>
+                <div key={m.key} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: 12, borderRadius: 12, cursor: 'pointer', background: 'rgba(255,255,255,.02)', border: `1px solid ${edTrack === m.key ? 'rgba(240,90,40,.5)' : 'rgba(255,255,255,.08)'}` }}>
+                  <button onClick={() => setEdTrack(m.key)} style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(240,90,40,.16)', color: '#FF8A5C', display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 'none', border: 'none', cursor: 'pointer' }}>
                     <Icon name="music" size={15} />
                   </button>
                   <div onClick={() => setEdTrack(m.key)} style={{ flex: 1, minWidth: 0, cursor: 'pointer' }}>
                     <div style={{ fontSize: 13.5, fontWeight: 700 }}>{m.name}</div>
-                    <div style={{ fontSize: 11.5, color: '#8A8A9C' }}>
+                    <div style={{ fontSize: 11.5, color: '#8B8B92' }}>
                       {m.genre} · {m.bpm}
                     </div>
                   </div>
@@ -522,7 +522,7 @@ export function Editor() {
                     <MiniWave active={edTrack === m.key} />
                   </span>
                   {edTrack === m.key ? (
-                    <span style={{ display: 'flex', color: '#7C5CFF', flex: 'none' }}>
+                    <span style={{ display: 'flex', color: '#F05A28', flex: 'none' }}>
                       <Icon name="check" size={18} />
                     </span>
                   ) : (
@@ -533,7 +533,7 @@ export function Editor() {
             </div>
             <div style={{ marginTop: 20 }}>
               <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 10 }}>Volume musique</div>
-              <input type="range" min={0} max={100} defaultValue={35} style={{ width: '100%', accentColor: '#7C5CFF' }} />
+              <input type="range" min={0} max={100} defaultValue={35} style={{ width: '100%', accentColor: '#F05A28' }} />
             </div>
             <div style={{ display: 'flex', gap: 24, marginTop: 18 }}>
               <label style={{ display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer' }} onClick={() => setEdFadeIn((v) => !v)}>
@@ -556,34 +556,34 @@ export function Editor() {
           <div style={{ animation: 'fadeUp .25s ease both' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
               <div style={{ fontSize: 13, fontWeight: 700 }}>Séquences visuelles</div>
-              <span style={{ fontSize: 11.5, color: '#8A8A9C' }}>Clique une scène pour l'aperçu</span>
+              <span style={{ fontSize: 11.5, color: '#8B8B92' }}>Clique une scène pour l'aperçu</span>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 10 }}>
               {SCENES.map((sc, i) => (
-                <div key={sc.label} onClick={() => setEdTime(sc.start + 0.01)} style={{ aspectRatio: '9/16', borderRadius: 11, background: sc.bg, position: 'relative', overflow: 'hidden', cursor: 'pointer', border: `2px solid ${i === actIdx ? '#7C5CFF' : 'rgba(255,255,255,.1)'}` }}>
+                <div key={sc.label} onClick={() => setEdTime(sc.start + 0.01)} style={{ aspectRatio: '9/16', borderRadius: 11, background: sc.bg, position: 'relative', overflow: 'hidden', cursor: 'pointer', border: `2px solid ${i === actIdx ? '#F05A28' : 'rgba(255,255,255,.1)'}` }}>
                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg,transparent,rgba(0,0,0,.4))' }} />
-                  <span style={{ position: 'absolute', top: 5, right: 5, fontSize: 8, fontWeight: 700, color: '#fff', background: sc.src === 'IA' ? 'rgba(124,92,255,.85)' : 'rgba(0,0,0,.6)', padding: '2px 5px', borderRadius: 5 }}>{sc.src}</span>
+                  <span style={{ position: 'absolute', top: 5, right: 5, fontSize: 8, fontWeight: 700, color: '#fff', background: sc.src === 'IA' ? 'rgba(240,90,40,.85)' : 'rgba(0,0,0,.6)', padding: '2px 5px', borderRadius: 5 }}>{sc.src}</span>
                   <span style={{ position: 'absolute', bottom: 5, left: 6, fontSize: 9, fontWeight: 700, color: '#fff', textShadow: '0 1px 3px rgba(0,0,0,.6)' }}>{sc.label}</span>
                 </div>
               ))}
             </div>
-            <button style={{ width: '100%', marginTop: 14, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8, background: 'rgba(124,92,255,.14)', color: '#A78BFA', border: '1px dashed rgba(124,92,255,.4)', padding: 12, borderRadius: 12, fontFamily: 'Manrope', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>
+            <button style={{ width: '100%', marginTop: 14, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8, background: 'rgba(240,90,40,.14)', color: '#FF8A5C', border: '1px dashed rgba(240,90,40,.4)', padding: 12, borderRadius: 12, fontFamily: 'Hanken Grotesk', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>
               <Icon name="sparkles" size={16} /> Générer de nouveaux visuels IA
             </button>
             <div style={{ display: 'flex', gap: 10, marginTop: 10 }}>
-              <button style={{ flex: 1, background: 'rgba(255,255,255,.04)', color: '#C9C9D6', border: '1px solid rgba(255,255,255,.1)', padding: 11, borderRadius: 11, fontFamily: 'Manrope', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>Importer un média</button>
-              <button style={{ flex: 1, background: 'rgba(255,255,255,.04)', color: '#C9C9D6', border: '1px solid rgba(255,255,255,.1)', padding: 11, borderRadius: 11, fontFamily: 'Manrope', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>Banque d'images</button>
+              <button style={{ flex: 1, background: 'rgba(255,255,255,.04)', color: '#E4E1DA', border: '1px solid rgba(255,255,255,.1)', padding: 11, borderRadius: 11, fontFamily: 'Hanken Grotesk', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>Importer un média</button>
+              <button style={{ flex: 1, background: 'rgba(255,255,255,.04)', color: '#E4E1DA', border: '1px solid rgba(255,255,255,.1)', padding: 11, borderRadius: 11, fontFamily: 'Hanken Grotesk', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>Banque d'images</button>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '24px 0 6px' }}>
               <div style={{ fontSize: 13, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 8 }}>
                 <Icon name="scissors" size={16} /> Découpe des scènes
               </div>
-              <button onClick={resetTrim} style={{ background: 'none', border: 'none', color: '#7E7E92', fontFamily: 'Manrope', fontWeight: 700, fontSize: 12, cursor: 'pointer' }}>
+              <button onClick={resetTrim} style={{ background: 'none', border: 'none', color: '#6E6E74', fontFamily: 'Hanken Grotesk', fontWeight: 700, fontSize: 12, cursor: 'pointer' }}>
                 Réinitialiser
               </button>
             </div>
-            <p style={{ fontSize: 12, color: '#8A8A9C', margin: '0 0 12px' }}>Glisse les poignées entre les scènes pour ajuster leur durée, ou utilise − / +.</p>
+            <p style={{ fontSize: 12, color: '#8B8B92', margin: '0 0 12px' }}>Glisse les poignées entre les scènes pour ajuster leur durée, ou utilise − / +.</p>
             <div style={{ display: 'flex', gap: 4, alignItems: 'stretch', padding: '4px 0' }}>
               {SCENES.map((sc, i) => (
                 <div
@@ -611,18 +611,18 @@ export function Editor() {
                 </div>
               ))}
             </div>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', fontSize: 11.5, color: '#7E7E92', marginTop: 6, fontVariantNumeric: 'tabular-nums' }}>Durée totale · {fmt1(DUR)}</div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', fontSize: 11.5, color: '#6E6E74', marginTop: 6, fontVariantNumeric: 'tabular-nums' }}>Durée totale · {fmt1(DUR)}</div>
 
             <div style={{ fontSize: 13, fontWeight: 700, margin: '24px 0 4px' }}>Transitions entre scènes</div>
-            <p style={{ fontSize: 12, color: '#8A8A9C', margin: '0 0 12px' }}>Choisis l'effet à l'entrée de chaque scène. L'aperçu se rejoue à la sélection.</p>
+            <p style={{ fontSize: 12, color: '#8B8B92', margin: '0 0 12px' }}>Choisis l'effet à l'entrée de chaque scène. L'aperçu se rejoue à la sélection.</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {SCENES.slice(1).map((sc, k) => {
                 const i = k + 1;
                 return (
                   <div key={sc.label} style={{ display: 'flex', alignItems: 'center', gap: 12, border: '1px solid rgba(255,255,255,.07)', borderRadius: 12, padding: '10px 12px', background: 'rgba(255,255,255,.02)' }}>
-                    <div style={{ width: 120, flex: 'none', fontSize: 12, fontWeight: 600, color: '#B9B9C8', display: 'flex', alignItems: 'center', gap: 5, minWidth: 0 }}>
+                    <div style={{ width: 120, flex: 'none', fontSize: 12, fontWeight: 600, color: '#D8D5CE', display: 'flex', alignItems: 'center', gap: 5, minWidth: 0 }}>
                       <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{SCENES[i - 1].label}</span>
-                      <span style={{ color: '#5A5A6C', flex: 'none' }}>→</span>
+                      <span style={{ color: '#504F55', flex: 'none' }}>→</span>
                       <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{sc.label}</span>
                     </div>
                     <div style={{ flex: 1, display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
@@ -630,7 +630,7 @@ export function Editor() {
                         <button
                           key={type}
                           onClick={() => setTrans(i, type)}
-                          style={{ padding: '6px 11px', borderRadius: 9, cursor: 'pointer', fontFamily: 'Manrope', fontWeight: 600, fontSize: 12, border: `1px solid ${sceneTrans[i] === type ? 'rgba(124,92,255,.55)' : 'rgba(255,255,255,.1)'}`, background: sceneTrans[i] === type ? 'rgba(124,92,255,.18)' : 'transparent', color: sceneTrans[i] === type ? '#A78BFA' : '#8A8A9C' }}
+                          style={{ padding: '6px 11px', borderRadius: 9, cursor: 'pointer', fontFamily: 'Hanken Grotesk', fontWeight: 600, fontSize: 12, border: `1px solid ${sceneTrans[i] === type ? 'rgba(240,90,40,.55)' : 'rgba(255,255,255,.1)'}`, background: sceneTrans[i] === type ? 'rgba(240,90,40,.18)' : 'transparent', color: sceneTrans[i] === type ? '#FF8A5C' : '#8B8B92' }}
                         >
                           {label}
                         </button>
@@ -648,12 +648,12 @@ export function Editor() {
             <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 12 }}>Format d'export</div>
             <div style={{ display: 'flex', gap: 12 }}>
               {ASPECT_OPTS.map(([k, l, d]) => (
-                <button key={k} onClick={() => setEdAspect(k as any)} style={{ flex: 1, padding: 14, borderRadius: 13, cursor: 'pointer', textAlign: 'left', background: edAspect === k ? 'rgba(124,92,255,.1)' : 'rgba(255,255,255,.02)', border: `1px solid ${edAspect === k ? 'rgba(124,92,255,.5)' : 'rgba(255,255,255,.09)'}` }}>
-                  <div style={{ width: 28, height: k === '9:16' ? 40 : k === '1:1' ? 28 : 35, borderRadius: 5, background: edAspect === k ? '#7C5CFF' : 'rgba(255,255,255,.12)', marginBottom: 10 }} />
+                <button key={k} onClick={() => setEdAspect(k as any)} style={{ flex: 1, padding: 14, borderRadius: 13, cursor: 'pointer', textAlign: 'left', background: edAspect === k ? 'rgba(240,90,40,.1)' : 'rgba(255,255,255,.02)', border: `1px solid ${edAspect === k ? 'rgba(240,90,40,.5)' : 'rgba(255,255,255,.09)'}` }}>
+                  <div style={{ width: 28, height: k === '9:16' ? 40 : k === '1:1' ? 28 : 35, borderRadius: 5, background: edAspect === k ? '#F05A28' : 'rgba(255,255,255,.12)', marginBottom: 10 }} />
                   <div style={{ fontSize: 13.5, fontWeight: 700 }}>
                     {k} · {l}
                   </div>
-                  <div style={{ fontSize: 11.5, color: '#8A8A9C', marginTop: 2 }}>{d}</div>
+                  <div style={{ fontSize: 11.5, color: '#8B8B92', marginTop: 2 }}>{d}</div>
                 </button>
               ))}
             </div>
@@ -665,7 +665,7 @@ export function Editor() {
                 </span>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 13.5, fontWeight: 700 }}>Filigrane / logo</div>
-                  <div style={{ fontSize: 12, color: '#8A8A9C' }}>Affiche « ⚡ Cadence » en haut à droite</div>
+                  <div style={{ fontSize: 12, color: '#8B8B92' }}>Affiche « ⚡ Cadence » en haut à droite</div>
                 </div>
               </label>
               <label style={{ display: 'flex', alignItems: 'center', gap: 14, cursor: 'pointer', border: '1px solid rgba(255,255,255,.08)', borderRadius: 12, padding: 14, background: 'rgba(255,255,255,.02)' }} onClick={() => setEdIntro((v) => !v)}>
@@ -674,7 +674,7 @@ export function Editor() {
                 </span>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 13.5, fontWeight: 700 }}>Intro animée (0,5s)</div>
-                  <div style={{ fontSize: 12, color: '#8A8A9C' }}>Logo animé au démarrage</div>
+                  <div style={{ fontSize: 12, color: '#8B8B92' }}>Logo animé au démarrage</div>
                 </div>
               </label>
               <label style={{ display: 'flex', alignItems: 'center', gap: 14, cursor: 'pointer', border: '1px solid rgba(255,255,255,.08)', borderRadius: 12, padding: 14, background: 'rgba(255,255,255,.02)' }} onClick={() => setEdOutro((v) => !v)}>
@@ -683,7 +683,7 @@ export function Editor() {
                 </span>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 13.5, fontWeight: 700 }}>Call-to-action final</div>
-                  <div style={{ fontSize: 12, color: '#8A8A9C' }}>« Abonne-toi » sur la dernière scène</div>
+                  <div style={{ fontSize: 12, color: '#8B8B92' }}>« Abonne-toi » sur la dernière scène</div>
                 </div>
               </label>
             </div>
@@ -693,27 +693,27 @@ export function Editor() {
         {/* timeline */}
         <div style={{ marginTop: 26, border: '1px solid rgba(255,255,255,.08)', borderRadius: 16, padding: 16, background: 'rgba(255,255,255,.02)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
-            <span style={{ fontSize: 12, color: '#8A8A9C', fontWeight: 700, letterSpacing: '.03em' }}>TIMELINE</span>
-            <span style={{ fontSize: 11.5, color: '#7E7E92', fontVariantNumeric: 'tabular-nums' }}>
+            <span style={{ fontSize: 12, color: '#8B8B92', fontWeight: 700, letterSpacing: '.03em' }}>TIMELINE</span>
+            <span style={{ fontSize: 11.5, color: '#6E6E74', fontVariantNumeric: 'tabular-nums' }}>
               {fmtTime(edTime)} / {fmtTime(DUR)}
             </span>
           </div>
           <div style={{ position: 'relative', paddingLeft: 78 }}>
             <div style={{ position: 'relative', height: 16, marginBottom: 4 }}>
               {ruler.map((r) => (
-                <span key={r.label} style={{ position: 'absolute', left: r.left, fontSize: 10, color: '#5A5A6C', transform: 'translateX(-2px)' }}>
+                <span key={r.label} style={{ position: 'absolute', left: r.left, fontSize: 10, color: '#504F55', transform: 'translateX(-2px)' }}>
                   {r.label}
                 </span>
               ))}
             </div>
-            <div style={{ position: 'absolute', top: 16, bottom: 0, left: `${prog * 100}%`, marginLeft: 78, width: 2, background: '#9D6BFF', boxShadow: '0 0 8px #9D6BFF', zIndex: 2, pointerEvents: 'none' }}>
-              <span style={{ position: 'absolute', top: -5, left: -4, width: 10, height: 10, borderRadius: '50%', background: '#9D6BFF' }} />
+            <div style={{ position: 'absolute', top: 16, bottom: 0, left: `${prog * 100}%`, marginLeft: 78, width: 2, background: '#A56A00', boxShadow: '0 0 8px #A56A00', zIndex: 2, pointerEvents: 'none' }}>
+              <span style={{ position: 'absolute', top: -5, left: -4, width: 10, height: 10, borderRadius: '50%', background: '#A56A00' }} />
             </div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 2 }}>
             {timelineTracks.map(([label, segs]) => (
               <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <span style={{ width: 68, fontSize: 11, color: '#8A8A9C', fontWeight: 600, flex: 'none', display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span style={{ width: 68, fontSize: 11, color: '#8B8B92', fontWeight: 600, flex: 'none', display: 'flex', alignItems: 'center', gap: 6 }}>
                   <span style={{ width: 8, height: 8, borderRadius: 3, background: trackColors[label] }} />
                   {label}
                 </span>

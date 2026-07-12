@@ -21,7 +21,7 @@ function Gate() {
 
   if (loading) {
     return (
-      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#0A0A0F', color: '#8A8A9C', fontFamily: 'Manrope' }}>
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#101012', color: '#8B8B92', fontFamily: 'Hanken Grotesk' }}>
         Chargement…
       </div>
     );

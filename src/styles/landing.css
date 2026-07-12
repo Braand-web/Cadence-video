@@ -1,8 +1,8 @@
 .lp {
   --lp-max: 1180px;
-  background: #0a0a0f;
-  color: #f3f3f6;
-  font-family: 'Manrope', system-ui, sans-serif;
+  background: #101012;
+  color: #F7F4EF;
+  font-family: 'Hanken Grotesk', system-ui, sans-serif;
   overflow-x: hidden;
 }
 
@@ -39,12 +39,12 @@
 .lp-nav-links a {
   font-size: 14px;
   font-weight: 600;
-  color: #9a9aae;
+  color: #8B8B92;
   text-decoration: none;
   transition: color 0.15s;
 }
 .lp-nav-links a:hover {
-  color: #f3f3f6;
+  color: #F7F4EF;
 }
 .lp-nav-actions {
   display: flex;
@@ -58,8 +58,8 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border-radius: 12px;
-  font-family: 'Manrope', sans-serif;
+  border-radius: 9999px;
+  font-family: 'Hanken Grotesk', sans-serif;
   font-weight: 700;
   cursor: pointer;
   border: none;
@@ -70,29 +70,35 @@
 .lp-btn:active {
   transform: translateY(1px);
 }
-.lp-btn-primary {
-  background: linear-gradient(135deg, #7c5cff, #9d6bff);
-  color: #fff;
+.lp-btn-primary,
+.lp a.lp-btn-primary {
+  background: #fff;
+  color: #101012;
+  font-weight: 500;
   padding: 13px 24px;
   font-size: 14.5px;
-  box-shadow: 0 10px 28px rgba(124, 92, 255, 0.35);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.32);
 }
-.lp-btn-primary:hover {
-  filter: brightness(1.08);
+.lp-btn-primary:hover,
+.lp a.lp-btn-primary:hover {
+  background: #F7F4EF;
   transform: translateY(-1px);
 }
-.lp-btn-ghost {
+.lp-btn-ghost,
+.lp a.lp-btn-ghost {
   background: transparent;
-  color: #d3d3de;
+  color: #D8D5CE;
   padding: 10px 4px;
   font-size: 14px;
 }
-.lp-btn-ghost:hover {
+.lp-btn-ghost:hover,
+.lp a.lp-btn-ghost:hover {
   color: #fff;
 }
-.lp-btn-outline {
+.lp-btn-outline,
+.lp a.lp-btn-outline {
   background: rgba(255, 255, 255, 0.04);
-  color: #f3f3f6;
+  color: #F7F4EF;
   border: 1px solid rgba(255, 255, 255, 0.14);
   padding: 12px 22px;
   font-size: 14px;
@@ -112,7 +118,7 @@
   inset: -120px 0 auto 0;
   height: 640px;
   pointer-events: none;
-  background: radial-gradient(900px 480px at 82% 0%, rgba(124, 92, 255, 0.24), transparent 60%), radial-gradient(600px 420px at 4% 30%, rgba(124, 92, 255, 0.12), transparent 60%);
+  background: radial-gradient(900px 480px at 82% 0%, rgba(240,90,40,0.24), transparent 60%), radial-gradient(600px 420px at 4% 30%, rgba(240,90,40,0.12), transparent 60%);
   z-index: 0;
 }
 .lp-hero-grid {
@@ -131,15 +137,15 @@
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #a78bfa;
-  background: rgba(124, 92, 255, 0.12);
-  border: 1px solid rgba(124, 92, 255, 0.28);
+  color: #FF8A5C;
+  background: rgba(240,90,40,0.12);
+  border: 1px solid rgba(240,90,40,0.28);
   padding: 7px 14px;
   border-radius: 20px;
   margin-bottom: 26px;
 }
 .lp-h1 {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Hanken Grotesk', sans-serif;
   font-weight: 600;
   letter-spacing: -0.025em;
   line-height: 1.03;
@@ -149,7 +155,7 @@
 }
 .lp-h1 em {
   font-style: normal;
-  background: linear-gradient(135deg, #a78bfa, #7c5cff 60%, #ff9d7a);
+  background: linear-gradient(135deg, #FF8A5C, #F05A28 60%, #ff9d7a);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -157,7 +163,7 @@
 .lp-lead {
   font-size: 18px;
   line-height: 1.65;
-  color: #b9b9c8;
+  color: #D8D5CE;
   max-width: 46ch;
   margin: 0 0 36px;
 }
@@ -169,13 +175,13 @@
 }
 .lp-hero-note {
   font-size: 13px;
-  color: #6f6f82;
+  color: #6E6E74;
 }
 .lp-platform-row {
   display: flex;
   align-items: center;
   gap: 14px;
-  color: #6f6f82;
+  color: #6E6E74;
   font-size: 12.5px;
   font-weight: 600;
 }
@@ -187,7 +193,7 @@
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.09);
   background: rgba(255, 255, 255, 0.02);
-  color: #b9b9c8;
+  color: #D8D5CE;
 }
 
 /* ---------- device mock ---------- */
@@ -203,7 +209,7 @@
   border-radius: 28px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  background: linear-gradient(150deg, #9d6bff, #7c2d6b);
+  background: linear-gradient(150deg, #F05A28, #7c2d12);
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.03);
   animation: lp-float 7s ease-in-out infinite;
 }
@@ -242,7 +248,7 @@
 .lp-device-hooks span {
   position: absolute;
   inset: 0;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Hanken Grotesk', sans-serif;
   font-weight: 700;
   font-size: 21px;
   line-height: 1.2;
@@ -266,7 +272,7 @@
   z-index: 2;
 }
 .lp-device-caption span {
-  background: #7c5cff;
+  background: #F05A28;
   color: #fff;
   font-weight: 800;
   font-size: 13px;
@@ -313,7 +319,7 @@
   width: 340px;
   height: 340px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(124, 92, 255, 0.35), transparent 65%);
+  background: radial-gradient(circle, rgba(240,90,40,0.35), transparent 65%);
   filter: blur(10px);
   z-index: 0;
   top: 50%;
@@ -335,11 +341,11 @@
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #7e7e92;
+  color: #6E6E74;
   margin: 0 0 12px;
 }
 .lp-h2 {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Hanken Grotesk', sans-serif;
   font-weight: 600;
   letter-spacing: -0.02em;
   font-size: clamp(28px, 3.2vw, 38px);
@@ -348,7 +354,7 @@
 }
 .lp-section-sub {
   font-size: 16px;
-  color: #8a8a9c;
+  color: #8B8B92;
   line-height: 1.6;
   max-width: 56ch;
 }
@@ -371,15 +377,15 @@
   right: -2px;
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, rgba(124, 92, 255, 0.5), rgba(124, 92, 255, 0.05));
+  background: linear-gradient(90deg, rgba(240,90,40,0.5), rgba(240,90,40,0.05));
 }
 .lp-pipeline-icon {
   width: 46px;
   height: 46px;
   border-radius: 13px;
-  background: rgba(124, 92, 255, 0.14);
-  border: 1px solid rgba(124, 92, 255, 0.3);
-  color: #a78bfa;
+  background: rgba(240,90,40,0.14);
+  border: 1px solid rgba(240,90,40,0.3);
+  color: #FF8A5C;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -388,14 +394,14 @@
   z-index: 1;
 }
 .lp-pipeline-name {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Hanken Grotesk', sans-serif;
   font-weight: 600;
   font-size: 15.5px;
   margin-bottom: 6px;
 }
 .lp-pipeline-desc {
   font-size: 13px;
-  color: #8a8a9c;
+  color: #8B8B92;
   line-height: 1.5;
   max-width: 22ch;
 }
@@ -422,22 +428,22 @@
   width: 38px;
   height: 38px;
   border-radius: 11px;
-  background: rgba(124, 92, 255, 0.14);
-  color: #a78bfa;
+  background: rgba(240,90,40,0.14);
+  color: #FF8A5C;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 18px;
 }
 .lp-feature-title {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Hanken Grotesk', sans-serif;
   font-weight: 600;
   font-size: 16.5px;
   margin-bottom: 8px;
 }
 .lp-feature-desc {
   font-size: 13.5px;
-  color: #8a8a9c;
+  color: #8B8B92;
   line-height: 1.6;
 }
 
@@ -448,22 +454,22 @@
   gap: 32px;
   border-radius: 22px;
   padding: 52px 48px;
-  background: linear-gradient(135deg, rgba(124, 92, 255, 0.12), rgba(124, 92, 255, 0.02));
-  border: 1px solid rgba(124, 92, 255, 0.2);
+  background: linear-gradient(135deg, rgba(240,90,40,0.12), rgba(240,90,40,0.02));
+  border: 1px solid rgba(240,90,40,0.2);
 }
 .lp-stat-value {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Hanken Grotesk', sans-serif;
   font-weight: 600;
   font-size: clamp(32px, 3.6vw, 46px);
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #f3f3f6, #c9c0ff);
+  background: linear-gradient(135deg, #F7F4EF, #FFD9B8);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 .lp-stat-label {
   font-size: 13.5px;
-  color: #a9a9ba;
+  color: #B8B5AE;
   margin-top: 8px;
   line-height: 1.5;
 }
@@ -483,8 +489,8 @@
   flex-direction: column;
 }
 .lp-plan-popular {
-  background: linear-gradient(180deg, rgba(124, 92, 255, 0.14), rgba(255, 255, 255, 0.02));
-  border-color: rgba(124, 92, 255, 0.5);
+  background: linear-gradient(180deg, rgba(240,90,40,0.14), rgba(255, 255, 255, 0.02));
+  border-color: rgba(240,90,40,0.5);
   position: relative;
 }
 .lp-plan-badge {
@@ -492,7 +498,7 @@
   top: -12px;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, #7c5cff, #9d6bff);
+  background: linear-gradient(135deg, #F05A28, #A56A00);
   color: #fff;
   font-size: 10.5px;
   font-weight: 700;
@@ -501,10 +507,10 @@
   letter-spacing: 0.04em;
 }
 .lp-plan-name {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Hanken Grotesk', sans-serif;
   font-weight: 700;
   font-size: 15px;
-  color: #b9b9c8;
+  color: #D8D5CE;
 }
 .lp-plan-price {
   display: flex;
@@ -513,12 +519,12 @@
   margin: 14px 0 20px;
 }
 .lp-plan-price strong {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Hanken Grotesk', sans-serif;
   font-size: 38px;
   font-weight: 600;
 }
 .lp-plan-price span {
-  color: #8a8a9c;
+  color: #8B8B92;
   font-size: 13px;
 }
 .lp-plan-feats {
@@ -533,7 +539,7 @@
   align-items: center;
   gap: 9px;
   font-size: 13.5px;
-  color: #c9c9d6;
+  color: #E4E1DA;
 }
 .lp-plan-feat svg {
   flex: none;
@@ -549,12 +555,12 @@
 .lp-cta-glow {
   position: absolute;
   inset: 0;
-  background: radial-gradient(560px 320px at 50% 0%, rgba(124, 92, 255, 0.22), transparent 65%);
+  background: radial-gradient(560px 320px at 50% 0%, rgba(240,90,40,0.22), transparent 65%);
   pointer-events: none;
 }
 .lp-cta h2 {
   position: relative;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Hanken Grotesk', sans-serif;
   font-weight: 600;
   letter-spacing: -0.02em;
   font-size: clamp(30px, 4vw, 46px);
@@ -563,7 +569,7 @@
 }
 .lp-cta p {
   position: relative;
-  color: #8a8a9c;
+  color: #8B8B92;
   font-size: 16px;
   margin: 0 0 34px;
 }
@@ -584,20 +590,20 @@
   flex: 1;
   justify-content: flex-end;
   font-size: 13px;
-  color: #7e7e92;
+  color: #6E6E74;
 }
 .lp-footer-links a {
   text-decoration: none;
   color: inherit;
 }
 .lp-footer-links a:hover {
-  color: #f3f3f6;
+  color: #F7F4EF;
 }
 .lp-footer-brand {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Hanken Grotesk', sans-serif;
   font-weight: 700;
   font-size: 15px;
 }

@@ -19,8 +19,8 @@ function VideoCard({ v, onEdit }: { v: DisplayVideo; onEdit: () => void }) {
   const captionWord = v.status === 'published' ? 'VIRAL' : 'AUTO';
   const statusMap = {
     published: { label: '● Publié', bg: 'rgba(52,211,153,.16)', fg: '#34D399' },
-    scheduled: { label: '● Programmé', bg: 'rgba(124,92,255,.18)', fg: '#A78BFA' },
-    draft: { label: '● Brouillon', bg: 'rgba(255,255,255,.09)', fg: '#B9B9C8' },
+    scheduled: { label: '● Programmé', bg: 'rgba(240,90,40,.18)', fg: '#FF8A5C' },
+    draft: { label: '● Brouillon', bg: 'rgba(255,255,255,.09)', fg: '#D8D5CE' },
     review: { label: '● À valider', bg: 'rgba(255,183,76,.16)', fg: '#FFB74C' },
   } as const;
   const st = statusMap[v.status];
@@ -32,7 +32,7 @@ function VideoCard({ v, onEdit }: { v: DisplayVideo; onEdit: () => void }) {
           <PlatformBadge plat={v.plat} />
         </div>
         <div style={{ position: 'absolute', top: 11, right: 11, fontSize: 10, fontWeight: 700, color: '#fff', background: 'rgba(0,0,0,.4)', backdropFilter: 'blur(6px)', padding: '3px 8px', borderRadius: 20 }}>{v.dur}</div>
-        <div style={{ position: 'absolute', left: 14, right: 14, top: '50%', transform: 'translateY(-50%)', textAlign: 'center', fontFamily: 'Space Grotesk,sans-serif', fontWeight: 700, fontSize: 18, lineHeight: 1.12, color: '#fff', textShadow: '0 2px 14px rgba(0,0,0,.5)' }}>{v.hook}</div>
+        <div style={{ position: 'absolute', left: 14, right: 14, top: '50%', transform: 'translateY(-50%)', textAlign: 'center', fontFamily: 'Hanken Grotesk,sans-serif', fontWeight: 700, fontSize: 18, lineHeight: 1.12, color: '#fff', textShadow: '0 2px 14px rgba(0,0,0,.5)' }}>{v.hook}</div>
         <div style={{ position: 'absolute', left: 12, right: 12, bottom: 12, display: 'flex', flexDirection: 'column', gap: 8 }}>
           <div style={{ display: 'inline-flex', alignSelf: 'center', gap: 4, background: 'rgba(0,0,0,.55)', padding: '3px 9px', borderRadius: 20, fontSize: 11, fontWeight: 700, color: '#fff' }}>
             <span style={{ color: '#FFE45C' }}>⚡</span>
@@ -42,8 +42,8 @@ function VideoCard({ v, onEdit }: { v: DisplayVideo; onEdit: () => void }) {
         </div>
       </div>
       <div style={{ padding: '10px 2px 0' }}>
-        <div style={{ fontSize: 13, fontWeight: 600, color: '#B9B9C8' }}>{v.nicheName}</div>
-        <div style={{ marginTop: 4, fontSize: 12, color: '#7E7E92' }}>{meta}</div>
+        <div style={{ fontSize: 13, fontWeight: 600, color: '#D8D5CE' }}>{v.nicheName}</div>
+        <div style={{ marginTop: 4, fontSize: 12, color: '#6E6E74' }}>{meta}</div>
       </div>
     </div>
   );
@@ -72,19 +72,19 @@ export function Dashboard() {
         {stats.map((s) => (
           <div key={s.label} style={{ border: '1px solid rgba(255,255,255,.08)', borderRadius: 16, padding: '18px 18px 16px', background: 'linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01))' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: 12.5, color: '#8A8A9C', fontWeight: 600 }}>{s.label}</span>
-              <span style={{ display: 'flex', color: '#7C5CFF' }}>
+              <span style={{ fontSize: 12.5, color: '#8B8B92', fontWeight: 600 }}>{s.label}</span>
+              <span style={{ display: 'flex', color: '#F05A28' }}>
                 <Icon name={s.icon} size={16} />
               </span>
             </div>
-            <div style={{ fontFamily: 'Space Grotesk,sans-serif', fontSize: 30, fontWeight: 600, letterSpacing: '-.02em', marginTop: 10 }}>{s.value}</div>
+            <div style={{ fontFamily: 'Hanken Grotesk,sans-serif', fontSize: 30, fontWeight: 600, letterSpacing: '-.02em', marginTop: 10 }}>{s.value}</div>
             <div style={{ fontSize: 12, marginTop: 4, color: '#34D399', fontWeight: 600 }}>{s.delta}</div>
           </div>
         ))}
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18, flexWrap: 'wrap' }}>
-        <h2 style={{ margin: 0, fontFamily: 'Space Grotesk,sans-serif', fontSize: 17, fontWeight: 600, marginRight: 6 }}>Bibliothèque</h2>
+        <h2 style={{ margin: 0, fontFamily: 'Hanken Grotesk,sans-serif', fontSize: 17, fontWeight: 600, marginRight: 6 }}>Bibliothèque</h2>
         {FILTERS.map(([id, label]) => (
           <button key={id} onClick={() => setFilter(id)} style={{ ...chipStyle(filter === id), padding: '7px 14px', borderRadius: 20 }}>
             {label}

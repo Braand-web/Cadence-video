@@ -24,8 +24,8 @@ export function Sidebar({ queueCount }: { queueCount: number }) {
       <div style={{ display: 'flex', alignItems: 'center', gap: 11, padding: '6px 8px 18px' }}>
         <LogoBadge size={34} />
         <div>
-          <div style={{ fontFamily: 'Space Grotesk,sans-serif', fontWeight: 700, fontSize: 18, letterSpacing: '-.01em', lineHeight: 1 }}>Cadence</div>
-          <div style={{ fontSize: 10.5, color: '#7E7E92', letterSpacing: '.04em', marginTop: 2 }}>CONTENU AUTOPILOTE</div>
+          <div style={{ fontFamily: 'Hanken Grotesk,sans-serif', fontWeight: 700, fontSize: 18, letterSpacing: '-.01em', lineHeight: 1 }}>Cadence</div>
+          <div style={{ fontSize: 10.5, color: '#6E6E74', letterSpacing: '.04em', marginTop: 2 }}>CONTENU AUTOPILOTE</div>
         </div>
       </div>
 
@@ -44,13 +44,13 @@ export function Sidebar({ queueCount }: { queueCount: number }) {
               borderRadius: 11,
               border: 'none',
               cursor: 'pointer',
-              fontFamily: 'Manrope',
+              fontFamily: 'Hanken Grotesk',
               fontWeight: 600,
               fontSize: 14,
               textAlign: 'left',
               transition: 'background .15s',
-              background: active ? 'rgba(124,92,255,.16)' : 'transparent',
-              color: active ? '#F3F3F6' : '#8A8A9C',
+              background: active ? 'rgba(240,90,40,.16)' : 'transparent',
+              color: active ? '#F7F4EF' : '#8B8B92',
               textDecoration: 'none',
             }}
           >
@@ -59,21 +59,21 @@ export function Sidebar({ queueCount }: { queueCount: number }) {
             </span>
             <span style={{ flex: 1, textAlign: 'left' }}>{item.label}</span>
             {item.id === 'queue' && queueCount > 0 && (
-              <span style={{ fontSize: 11, fontWeight: 700, background: 'rgba(124,92,255,.2)', color: '#A78BFA', padding: '1px 7px', borderRadius: 20 }}>{queueCount}</span>
+              <span style={{ fontSize: 11, fontWeight: 700, background: 'rgba(240,90,40,.2)', color: '#FF8A5C', padding: '1px 7px', borderRadius: 20 }}>{queueCount}</span>
             )}
           </NavLink>
         );
       })}
 
       <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', gap: 10, padding: 10, border: '1px solid rgba(255,255,255,.08)', borderRadius: 14, background: 'rgba(255,255,255,.02)' }}>
-        <div style={{ width: 34, height: 34, borderRadius: '50%', background: 'linear-gradient(135deg,#9D6BFF,#7C5CFF)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 14, flex: 'none' }}>
+        <div style={{ width: 34, height: 34, borderRadius: '50%', background: 'linear-gradient(135deg,#A56A00,#F05A28)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 14, flex: 'none' }}>
           {(profile?.studio_name || 'C')[0]}
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontSize: 13, fontWeight: 700, lineHeight: 1.1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{profile?.studio_name || 'Studio Créateur'}</div>
-          <div style={{ fontSize: 11, color: '#7E7E92', textTransform: 'capitalize' }}>Plan {profile?.plan || 'Creator'}</div>
+          <div style={{ fontSize: 11, color: '#6E6E74', textTransform: 'capitalize' }}>Plan {profile?.plan || 'Creator'}</div>
         </div>
-        <button onClick={() => signOut()} style={{ background: 'none', border: 'none', color: '#7E7E92', cursor: 'pointer', display: 'flex', padding: 4 }} title="Déconnexion">
+        <button onClick={() => signOut()} style={{ background: 'none', border: 'none', color: '#6E6E74', cursor: 'pointer', display: 'flex', padding: 4 }} title="Déconnexion">
           <Icon name="logout" size={16} />
         </button>
       </div>

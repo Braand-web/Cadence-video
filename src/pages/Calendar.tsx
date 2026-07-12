@@ -24,19 +24,19 @@ export function Calendar() {
   return (
     <div style={{ animation: 'fadeUp .35s ease both' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 20 }}>
-        <button onClick={calPrev} style={{ width: 36, height: 36, borderRadius: 10, border: '1px solid rgba(255,255,255,.1)', background: 'rgba(255,255,255,.04)', color: '#F3F3F6', cursor: 'pointer' }}>
+        <button onClick={calPrev} style={{ width: 36, height: 36, borderRadius: 10, border: '1px solid rgba(255,255,255,.1)', background: 'rgba(255,255,255,.04)', color: '#F7F4EF', cursor: 'pointer' }}>
           ‹
         </button>
-        <h2 style={{ margin: 0, fontFamily: 'Space Grotesk,sans-serif', fontSize: 19, fontWeight: 600, minWidth: 190 }}>
+        <h2 style={{ margin: 0, fontFamily: 'Hanken Grotesk,sans-serif', fontSize: 19, fontWeight: 600, minWidth: 190 }}>
           {MONTH_NAMES[m]} {y}
         </h2>
-        <button onClick={calNext} style={{ width: 36, height: 36, borderRadius: 10, border: '1px solid rgba(255,255,255,.1)', background: 'rgba(255,255,255,.04)', color: '#F3F3F6', cursor: 'pointer' }}>
+        <button onClick={calNext} style={{ width: 36, height: 36, borderRadius: 10, border: '1px solid rgba(255,255,255,.1)', background: 'rgba(255,255,255,.04)', color: '#F7F4EF', cursor: 'pointer' }}>
           ›
         </button>
         <div style={{ flex: 1 }} />
-        <div style={{ display: 'flex', gap: 16, fontSize: 12, color: '#8A8A9C' }}>
+        <div style={{ display: 'flex', gap: 16, fontSize: 12, color: '#8B8B92' }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-            <span style={{ width: 9, height: 9, borderRadius: 3, background: '#7C5CFF' }} />
+            <span style={{ width: 9, height: 9, borderRadius: 3, background: '#F05A28' }} />
             Programmé
           </span>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
@@ -50,7 +50,7 @@ export function Calendar() {
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7,1fr)', gap: 8, marginBottom: 8 }}>
         {WEEKDAYS.map((w) => (
-          <div key={w} style={{ textAlign: 'center', fontSize: 11.5, fontWeight: 700, color: '#7E7E92', letterSpacing: '.04em' }}>
+          <div key={w} style={{ textAlign: 'center', fontSize: 11.5, fontWeight: 700, color: '#6E6E74', letterSpacing: '.04em' }}>
             {w}
           </div>
         ))}
@@ -62,15 +62,15 @@ export function Calendar() {
           const evs = events[c.day] || [];
           const shown = evs.slice(0, 2);
           return (
-            <div key={i} style={{ minHeight: 96, borderRadius: 12, padding: 8, background: isToday ? 'rgba(124,92,255,.1)' : 'rgba(255,255,255,.02)', border: `1px solid ${isToday ? 'rgba(124,92,255,.5)' : 'rgba(255,255,255,.06)'}` }}>
-              <div style={{ fontSize: 12.5, fontWeight: 700, color: isToday ? '#A78BFA' : '#B9B9C8' }}>{c.day}</div>
+            <div key={i} style={{ minHeight: 96, borderRadius: 12, padding: 8, background: isToday ? 'rgba(240,90,40,.1)' : 'rgba(255,255,255,.02)', border: `1px solid ${isToday ? 'rgba(240,90,40,.5)' : 'rgba(255,255,255,.06)'}` }}>
+              <div style={{ fontSize: 12.5, fontWeight: 700, color: isToday ? '#FF8A5C' : '#D8D5CE' }}>{c.day}</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 3, marginTop: 4 }}>
                 {shown.map((e, j) => (
                   <div key={j} style={{ fontSize: 10, fontWeight: 700, color: '#fff', background: e.c, borderRadius: 5, padding: '2px 6px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     {e.h}
                   </div>
                 ))}
-                {evs.length > 2 && <div style={{ fontSize: 10, color: '#8A8A9C', fontWeight: 600 }}>+{evs.length - 2}</div>}
+                {evs.length > 2 && <div style={{ fontSize: 10, color: '#8B8B92', fontWeight: 600 }}>+{evs.length - 2}</div>}
               </div>
             </div>
           );

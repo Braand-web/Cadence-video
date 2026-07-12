@@ -1,5 +1,6 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { Icon, ICONS } from './Icon';
+import { LogoBadge } from './Logo';
 import { useAuth } from '../lib/AuthContext';
 
 const NAV_ITEMS: { id: string; to: string; label: string; icon: keyof typeof ICONS; badge?: () => string | null }[] = [
@@ -21,9 +22,7 @@ export function Sidebar({ queueCount }: { queueCount: number }) {
   return (
     <aside style={{ width: 248, flex: 'none', borderRight: '1px solid rgba(255,255,255,.07)', padding: '22px 15px', display: 'flex', flexDirection: 'column', gap: 4, position: 'sticky', top: 0, height: '100vh' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 11, padding: '6px 8px 18px' }}>
-        <div style={{ width: 34, height: 34, borderRadius: 10, background: 'linear-gradient(135deg,#7C5CFF,#9D6BFF)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 6px 20px rgba(124,92,255,.4)' }}>
-          <Icon name="zap" size={18} style={{ color: '#fff' }} />
-        </div>
+        <LogoBadge size={34} />
         <div>
           <div style={{ fontFamily: 'Space Grotesk,sans-serif', fontWeight: 700, fontSize: 18, letterSpacing: '-.01em', lineHeight: 1 }}>Cadence</div>
           <div style={{ fontSize: 10.5, color: '#7E7E92', letterSpacing: '.04em', marginTop: 2 }}>CONTENU AUTOPILOTE</div>

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Icon, YoutubeIcon, TiktokIcon } from '../components/Icon';
+import { LogoBadge } from '../components/Logo';
 import { STAGES } from '../data/niches';
 import { PLANS } from '../data/mock';
 import '../styles/landing.css';
@@ -27,9 +28,7 @@ export function Landing() {
       <nav className="lp-nav">
         <div className="lp-shell lp-nav-row">
           <div className="lp-footer-brand">
-            <span style={{ width: 30, height: 30, borderRadius: 9, background: 'linear-gradient(135deg,#7C5CFF,#9D6BFF)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Icon name="zap" size={15} style={{ color: '#fff' }} />
-            </span>
+            <LogoBadge size={30} />
             Cadence
           </div>
           <div className="lp-nav-links">
@@ -217,9 +216,7 @@ export function Landing() {
       <footer className="lp-footer">
         <div className="lp-shell lp-footer-row">
           <div className="lp-footer-brand">
-            <span style={{ width: 26, height: 26, borderRadius: 8, background: 'linear-gradient(135deg,#7C5CFF,#9D6BFF)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Icon name="zap" size={13} style={{ color: '#fff' }} />
-            </span>
+            <LogoBadge size={26} />
             Cadence
           </div>
           <div className="lp-footer-links">

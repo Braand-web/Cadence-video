@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Icon, GoogleIcon, YoutubeIcon, TiktokIcon } from '../components/Icon';
+import { LogoBadge } from '../components/Logo';
 import { useAuth } from '../lib/AuthContext';
 
 type ConnKey = 'yt' | 'tt';
@@ -92,9 +93,7 @@ export function Onboarding({ onEnterApp }: { onEnterApp: () => void }) {
     >
       <div style={{ width: '100%', maxWidth: 440, animation: 'fadeUp .4s ease both' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, justifyContent: 'center', marginBottom: 26 }}>
-          <div style={{ width: 40, height: 40, borderRadius: 12, background: 'linear-gradient(135deg,#7C5CFF,#9D6BFF)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 24px rgba(124,92,255,.45)' }}>
-            <Icon name="zap" size={18} style={{ color: '#fff' }} />
-          </div>
+          <LogoBadge size={40} />
           <span style={{ fontFamily: 'Space Grotesk,sans-serif', fontWeight: 700, fontSize: 24, letterSpacing: '-.01em' }}>Cadence</span>
         </div>
 

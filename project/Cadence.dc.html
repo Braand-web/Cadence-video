@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:#0A0A0F;color:#F3F3F6;font-family:'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#A78BFA;text-decoration:none}
+  a:hover{color:#A78BFA}
+  input,textarea{font-family:'Manrope',sans-serif}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-thumb{background:rgba(255,255,255,.09);border-radius:20px;border:3px solid #0A0A0F}
+  ::-webkit-scrollbar-track{background:transparent}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes pulseDot{0%,100%{opacity:1}50%{opacity:.35}}
+  @keyframes wave{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+  @keyframes growBar{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+  @keyframes trFade{from{opacity:0}to{opacity:1}}
+  @keyframes trSlide{from{transform:translateX(100%)}to{transform:translateX(0)}}
+  @keyframes trZoom{from{transform:scale(1.18);opacity:.3}to{transform:scale(1);opacity:1}}
+</style>
+</helmet>
+
+<div style="min-height:100vh">
+
+  <!-- ==================== AUTH / ONBOARDING ==================== -->
+  <sc-if value="{{ isAuth }}" hint-placeholder-val="{{ true }}">
+    <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px;background:radial-gradient(1000px 600px at 80% -10%, rgba(124,92,255,.22), transparent 60%),radial-gradient(800px 500px at -5% 110%, rgba(124,92,255,.16), transparent 55%),#0A0A0F">
+      <div style="width:100%;max-width:440px;animation:fadeUp .4s ease both">
+        <div style="display:flex;align-items:center;gap:12px;justify-content:center;margin-bottom:26px">
+          <div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#7C5CFF,#9D6BFF);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(124,92,255,.45)">{{ logoIcon }}</div>
+          <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;letter-spacing:-.01em">{{ brandName }}</span>
+        </div>
+
+        <!-- progress dots -->
+        <div style="display:flex;gap:7px;justify-content:center;margin-bottom:24px">
+          <sc-for list="{{ authDots }}" as="d" hint-placeholder-count="3">
+            <span style="{{ d.style }}"></span>
+          </sc-for>
+        </div>
+
+        <div style="border:1px solid rgba(255,255,255,.09);border-radius:22px;padding:30px;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.015));box-shadow:0 30px 80px rgba(0,0,0,.45)">
+
+          <!-- STEP 0: signup/login -->
+          <sc-if value="{{ isAuth0 }}" hint-placeholder-val="{{ true }}">
+            <div style="animation:fadeUp .3s ease both">
+              <div style="display:flex;background:rgba(255,255,255,.05);border-radius:12px;padding:4px;margin-bottom:22px">
+                <button onClick="{{ setSignup }}" style="{{ tabSignup }}">Créer un compte</button>
+                <button onClick="{{ setLogin }}" style="{{ tabLogin }}">Se connecter</button>
+              </div>
+              <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 6px;text-align:center">{{ authHeading }}</h1>
+              <p style="color:#8A8A9C;font-size:13.5px;text-align:center;margin:0 0 22px">Contenu quotidien, en pilote automatique.</p>
+
+              <button onClick="{{ authNext }}" style="width:100%;display:flex;align-items:center;justify-content:center;gap:11px;background:#fff;color:#14141B;border:none;padding:13px;border-radius:12px;font-family:'Manrope';font-weight:700;font-size:14.5px;cursor:pointer;margin-bottom:16px" style-hover="filter:brightness(.95)">
+                {{ googleIcon }} Continuer avec Google
+              </button>
+              <div style="display:flex;align-items:center;gap:12px;margin:0 0 16px;color:#5A5A6C;font-size:12px"><span style="flex:1;height:1px;background:rgba(255,255,255,.1)"></span>OU<span style="flex:1;height:1px;background:rgba(255,255,255,.1)"></span></div>
+
+              <label style="display:block;font-size:12.5px;font-weight:600;color:#B9B9C8;margin-bottom:7px">E-mail</label>
+              <input type="email" value="creator@studio.co" style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:11px;padding:12px 14px;color:#F3F3F6;font-size:14px;margin-bottom:14px" style-focus="border-color:#7C5CFF;outline:none">
+              <label style="display:block;font-size:12.5px;font-weight:600;color:#B9B9C8;margin-bottom:7px">Mot de passe</label>
+              <input type="password" value="••••••••••" style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:11px;padding:12px 14px;color:#F3F3F6;font-size:14px;margin-bottom:20px" style-focus="border-color:#7C5CFF;outline:none">
+
+              <button onClick="{{ authNext }}" style="width:100%;background:linear-gradient(135deg,#7C5CFF,#9D6BFF);color:#fff;border:none;padding:13px;border-radius:12px;font-family:'Manrope';font-weight:700;font-size:14.5px;cursor:pointer;box-shadow:0 8px 24px rgba(124,92,255,.35)" style-hover="filter:brightness(1.08)">{{ authCta }}</button>
+              <p style="text-align:center;font-size:11.5px;color:#5A5A6C;margin:16px 0 0;line-height:1.5">En continuant, tu acceptes les <a href="#">Conditions</a> et la <a href="#">Politique de confidentialité</a>.</p>
+            </div>
+          </sc-if>
+
+          <!-- STEP 1: connect networks (OAuth) -->
+          <sc-if value="{{ isAuth1 }}" hint-placeholder-val="{{ false }}">
+            <div style="animation:fadeUp .3s ease both">
+              <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:21px;margin:0 0 6px;text-align:center">Connecte un réseau</h1>
+              <p style="color:#8A8A9C;font-size:13.5px;text-align:center;margin:0 0 22px">Cadence publiera directement sur ce compte. Tu peux en ajouter d'autres plus tard.</p>
+              <div style="display:flex;flex-direction:column;gap:12px">
+                <div style="{{ ytCardStyle }}">
+                  <span style="width:42px;height:42px;border-radius:11px;background:#FF0033;display:flex;align-items:center;justify-content:center;flex:none">{{ ytIcon }}</span>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-weight:700;font-size:14.5px">YouTube Shorts</div>
+                    <div style="font-size:12px;color:#8A8A9C">{{ ytStatus }}</div>
+                  </div>
+                  <button onClick="{{ connectYt }}" style="{{ ytBtn }}">{{ ytBtnLabel }}</button>
+                </div>
+                <div style="{{ ttCardStyle }}">
+                  <span style="width:42px;height:42px;border-radius:11px;background:#000;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;flex:none">{{ ttIcon }}</span>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-weight:700;font-size:14.5px">TikTok</div>
+                    <div style="font-size:12px;color:#8A8A9C">{{ ttStatus }}</div>
+                  </div>
+                  <button onClick="{{ connectTt }}" style="{{ ttBtn }}">{{ ttBtnLabel }}</button>
+                </div>
+              </div>
+              <div style="margin-top:16px;font-size:11.5px;color:#5A5A6C;display:flex;align-items:center;gap:7px;justify-content:center">{{ lockIcon }} Connexion sécurisée via OAuth · aucun mot de passe stocké</div>
+              <button onClick="{{ authNext }}" style="{{ auth1Cta }}" style-hover="filter:brightness(1.08)">{{ auth1CtaLabel }}</button>
+            </div>
+          </sc-if>
+
+          <!-- STEP 2: done -->
+          <sc-if value="{{ isAuth2 }}" hint-placeholder-val="{{ false }}">
+            <div style="text-align:center;animation:fadeUp .3s ease both;padding:8px 0">
+              <div style="width:64px;height:64px;border-radius:20px;background:#34D399;color:#04160E;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 12px 30px rgba(52,211,153,.4)">{{ bigCheck }}</div>
+              <h1 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 8px">Tout est prêt 🎬</h1>
+              <p style="color:#8A8A9C;font-size:14px;margin:0 0 24px;line-height:1.5">Ton studio est configuré. Choisis une niche et Cadence produira ta première vidéo en moins d'une minute.</p>
+              <button onClick="{{ enterApp }}" style="width:100%;background:linear-gradient(135deg,#7C5CFF,#9D6BFF);color:#fff;border:none;padding:14px;border-radius:12px;font-family:'Manrope';font-weight:700;font-size:15px;cursor:pointer;box-shadow:0 8px 24px rgba(124,92,255,.35)" style-hover="filter:brightness(1.08)">Accéder au tableau de bord →</button>
+            </div>
+          </sc-if>
+        </div>
+
+        <sc-if value="{{ isAuth0 }}" hint-placeholder-val="{{ true }}">
+          <div style="text-align:center;margin-top:18px"><button onClick="{{ enterApp }}" style="background:none;border:none;color:#7E7E92;font-family:'Manrope';font-size:12.5px;cursor:pointer" style-hover="color:#A78BFA">Voir la démo sans compte →</button></div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ==================== APP ==================== -->
+  <sc-if value="{{ isApp }}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;min-height:100vh;background:radial-gradient(1200px 600px at 78% -8%, rgba(124,92,255,.14), transparent 60%),radial-gradient(900px 500px at -6% 108%, rgba(124,92,255,.09), transparent 55%),#0A0A0F">
+
+    <!-- SIDEBAR -->
+    <aside style="width:248px;flex:none;border-right:1px solid rgba(255,255,255,.07);padding:22px 15px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh">
+      <div style="display:flex;align-items:center;gap:11px;padding:6px 8px 18px">
+        <div style="width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#7C5CFF,#9D6BFF);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(124,92,255,.4)">{{ logoIcon }}</div>
+        <div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;letter-spacing:-.01em;line-height:1">{{ brandName }}</div>
+          <div style="font-size:10.5px;color:#7E7E92;letter-spacing:.04em;margin-top:2px">CONTENU AUTOPILOTE</div>
+        </div>
+      </div>
+
+      <sc-for list="{{ nav }}" as="item" hint-placeholder-count="7">
+        <button onClick="{{ item.onClick }}" style="{{ item.style }}" style-hover="background:rgba(255,255,255,.05)">
+          <span style="display:flex;flex:none">{{ item.icon }}</span>
+          <span style="flex:1;text-align:left">{{ item.label }}</span>
+          <sc-if value="{{ item.badge }}" hint-placeholder-val="{{ false }}">
+            <span style="font-size:11px;font-weight:700;background:rgba(124,92,255,.2);color:#A78BFA;padding:1px 7px;border-radius:20px">{{ item.badge }}</span>
+          </sc-if>
+        </button>
+      </sc-for>
+
+      <div style="margin-top:auto;display:flex;align-items:center;gap:10px;padding:10px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02)">
+        <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#9D6BFF,#7C5CFF);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex:none">C</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:700;line-height:1.1">Studio Créateur</div>
+          <div style="font-size:11px;color:#7E7E92">Plan Creator</div>
+        </div>
+        <button onClick="{{ logout }}" style="background:none;border:none;color:#7E7E92;cursor:pointer;display:flex;padding:4px" style-hover="color:#F3F3F6" title="Déconnexion">{{ logoutIcon }}</button>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main style="flex:1;min-width:0;display:flex;flex-direction:column">
+      <header style="display:flex;align-items:center;gap:16px;padding:20px 34px;border-bottom:1px solid rgba(255,255,255,.06);position:sticky;top:0;background:rgba(10,10,15,.82);backdrop-filter:blur(14px);z-index:5">
+        <sc-if value="{{ showBack }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ backFromEditor }}" style="width:38px;height:38px;border-radius:11px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#F3F3F6;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none" style-hover="background:rgba(255,255,255,.08)">{{ backIcon }}</button>
+        </sc-if>
+        <div style="flex:1;min-width:0">
+          <h1 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;letter-spacing:-.02em">{{ pageTitle }}</h1>
+          <div style="font-size:13px;color:#8A8A9C;margin-top:2px">{{ pageSubtitle }}</div>
+        </div>
+        <sc-if value="{{ showEditorActions }}" hint-placeholder-val="{{ false }}">
+          <button style="background:rgba(255,255,255,.05);color:#C9C9D6;border:1px solid rgba(255,255,255,.1);padding:10px 16px;border-radius:11px;font-family:'Manrope';font-weight:700;font-size:14px;cursor:pointer">Enregistrer</button>
+        </sc-if>
+        <div style="position:relative">
+          <button onClick="{{ toggleNotif }}" style="position:relative;width:40px;height:40px;border-radius:11px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#F3F3F6;cursor:pointer;display:flex;align-items:center;justify-content:center" style-hover="background:rgba(255,255,255,.08)">
+            {{ bellIcon }}
+            <sc-if value="{{ hasUnread }}" hint-placeholder-val="{{ true }}"><span style="position:absolute;top:8px;right:8px;width:8px;height:8px;border-radius:50%;background:#9D6BFF;border:2px solid #0A0A0F"></span></sc-if>
+          </button>
+          <sc-if value="{{ notifOpen }}" hint-placeholder-val="{{ false }}">
+            <div>
+              <div onClick="{{ toggleNotif }}" style="position:fixed;inset:0;z-index:40"></div>
+              <div style="position:absolute;right:0;top:50px;width:344px;background:#14141B;border:1px solid rgba(255,255,255,.1);border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.55);z-index:41;overflow:hidden;animation:fadeUp .2s ease both">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.07)"><span style="font-weight:700;font-size:14px">Notifications</span><button onClick="{{ markAllRead }}" style="background:none;border:none;color:#A78BFA;font-size:12px;font-weight:600;cursor:pointer;font-family:Manrope">Tout marquer lu</button></div>
+                <div style="max-height:360px;overflow:auto">
+                  <sc-for list="{{ notifs }}" as="n" hint-placeholder-count="4">
+                    <div style="{{ n.rowStyle }}">
+                      <span style="{{ n.iconWrap }}">{{ n.icon }}</span>
+                      <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;line-height:1.3">{{ n.title }}</div><div style="font-size:11.5px;color:#7E7E92;margin-top:2px">{{ n.time }}</div></div>
+                      <sc-if value="{{ n.unread }}" hint-placeholder-val="{{ false }}"><span style="width:7px;height:7px;border-radius:50%;background:#7C5CFF;flex:none;margin-top:6px"></span></sc-if>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+        <sc-if value="{{ showNewBtn }}" hint-placeholder-val="{{ true }}">
+          <button onClick="{{ goCreate }}" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#7C5CFF,#9D6BFF);color:#fff;border:none;padding:11px 18px;border-radius:11px;font-family:'Manrope';font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 8px 24px rgba(124,92,255,.35)" style-hover="filter:brightness(1.08);transform:translateY(-1px)">{{ plusIcon }} {{ primaryBtnLabel }}</button>
+        </sc-if>
+      </header>
+
+      <div style="flex:1;padding:30px 34px 60px" key="{{ view }}">
+
+        <!-- ===== DASHBOARD ===== -->
+        <sc-if value="{{ isDashboard }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .35s ease both">
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px">
+              <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+                <div style="border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px 18px 16px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01))">
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <span style="font-size:12.5px;color:#8A8A9C;font-weight:600">{{ s.label }}</span>
+                    <span style="display:flex;color:#7C5CFF">{{ s.icon }}</span>
+                  </div>
+                  <div style="font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:600;letter-spacing:-.02em;margin-top:10px">{{ s.value }}</div>
+                  <div style="font-size:12px;margin-top:4px;color:#34D399;font-weight:600">{{ s.delta }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+              <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin-right:6px">Bibliothèque</h2>
+              <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
+                <button onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }}</button>
+              </sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(184px,1fr));gap:20px">
+              <sc-for list="{{ videos }}" as="v" hint-placeholder-count="8">
+                <div onClick="{{ v.onEdit }}" style="cursor:pointer" style-hover="transform:translateY(-3px)">
+                  <div style="position:relative;aspect-ratio:9/16;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:{{ v.bg }}">
+                    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.55))"></div>
+                    <div style="position:absolute;top:11px;left:11px;display:flex;gap:6px">{{ v.platBadge }}</div>
+                    <div style="position:absolute;top:11px;right:11px;font-size:10px;font-weight:700;color:#fff;background:rgba(0,0,0,.4);backdrop-filter:blur(6px);padding:3px 8px;border-radius:20px">{{ v.duration }}</div>
+                    <div style="position:absolute;left:14px;right:14px;top:50%;transform:translateY(-50%);text-align:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;line-height:1.12;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.5);text-wrap:balance">{{ v.hook }}</div>
+                    <div style="position:absolute;left:12px;right:12px;bottom:12px;display:flex;flex-direction:column;gap:8px">
+                      <div style="display:inline-flex;align-self:center;gap:4px;background:rgba(0,0,0,.55);padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;color:#fff"><span style="color:#FFE45C">⚡</span>{{ v.captionWord }}</div>
+                      <div style="{{ v.statusStyle }}">{{ v.statusLabel }}</div>
+                    </div>
+                  </div>
+                  <div style="padding:10px 2px 0">
+                    <div style="font-size:13px;font-weight:600;color:#B9B9C8">{{ v.niche }}</div>
+                    <div style="margin-top:4px;font-size:12px;color:#7E7E92">{{ v.meta }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ===== CREATE ===== -->
+        <sc-if value="{{ isCreate }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .35s ease both;max-width:1040px;margin:0 auto">
+            <div style="display:flex;align-items:center;gap:0;margin-bottom:30px">
+              <sc-for list="{{ steps }}" as="st" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:12px;flex:1">
+                  <div style="{{ st.dotStyle }}">{{ st.num }}</div>
+                  <div style="flex:1"><div style="font-size:11px;color:#7E7E92;font-weight:600">ÉTAPE {{ st.num }}</div><div style="{{ st.labelStyle }}">{{ st.label }}</div></div>
+                  <sc-if value="{{ st.showLine }}" hint-placeholder-val="{{ true }}"><div style="{{ st.lineStyle }}"></div></sc-if>
+                </div>
+              </sc-for>
+            </div>
+
+            <sc-if value="{{ isStep0 }}" hint-placeholder-val="{{ true }}">
+              <div style="animation:fadeUp .3s ease both">
+                <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 4px">Choisis ta niche</h2>
+                <p style="color:#8A8A9C;margin:0 0 22px;font-size:14px">L'IA générera des scripts adaptés à cette thématique, tous les jours.</p>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+                  <sc-for list="{{ niches }}" as="n" hint-placeholder-count="6">
+                    <button onClick="{{ n.onClick }}" style="{{ n.cardStyle }}" style-hover="border-color:rgba(255,255,255,.22);transform:translateY(-2px)">
+                      <div style="width:46px;height:46px;border-radius:13px;background:{{ n.bg }};display:flex;align-items:center;justify-content:center;color:#fff">{{ n.icon }}</div>
+                      <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin-top:14px">{{ n.name }}</div>
+                      <div style="font-size:12.5px;color:#8A8A9C;margin-top:3px;line-height:1.35">{{ n.desc }}</div>
+                      <sc-if value="{{ n.selected }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:14px;right:14px;display:flex;color:#7C5CFF">{{ checkIcon }}</span></sc-if>
+                    </button>
+                  </sc-for>
+                </div>
+                <div style="display:flex;align-items:center;gap:14px;margin:30px 0 18px"><span style="height:1px;flex:1;background:rgba(255,255,255,.08)"></span><span style="font-size:12px;color:#7E7E92;font-weight:600;letter-spacing:.04em">OU DÉCRIS TON IDÉE</span><span style="height:1px;flex:1;background:rgba(255,255,255,.08)"></span></div>
+
+                <div style="display:grid;grid-template-columns:1fr 300px;gap:18px;align-items:start">
+                  <div>
+                    <label style="display:block;font-size:13px;font-weight:700;margin-bottom:8px">Ton idée de vidéo <span style="color:#7E7E92;font-weight:500">· optionnel</span></label>
+                    <textarea onInput="{{ onIdea }}" value="{{ videoIdea }}" placeholder="Ex : 3 erreurs que font les débutants en muscu, ton direct et cash, avec des exemples concrets…" style="width:100%;min-height:120px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px 16px;color:#F3F3F6;font-size:14px;line-height:1.55;resize:vertical" style-focus="border-color:#7C5CFF;outline:none"></textarea>
+                    <div style="font-size:12px;color:#7E7E92;margin-top:8px;line-height:1.5">💡 Plus tu es précis (angle, ton, exemples, public visé), plus le script collera à ta vision. Cadence combine ton idée avec la niche choisie.</div>
+                  </div>
+                  <div>
+                    <label style="display:block;font-size:13px;font-weight:700;margin-bottom:8px">Références <span style="color:#7E7E92;font-weight:500">· optionnel</span></label>
+                    <label onDrop="{{ onDrop }}" onDragOver="{{ onDragOver }}" onDragLeave="{{ onDragLeave }}" style="{{ dropStyle }}">
+                      <input type="file" accept="image/*,video/*" multiple onChange="{{ onFiles }}" style="display:none">
+                      <span style="color:#7C5CFF;display:flex">{{ uploadIcon }}</span>
+                      <span style="font-size:13px;font-weight:700;color:#C9C9D6">Glisse des images ou vidéos</span>
+                      <span style="font-size:11.5px;color:#7E7E92">ou clique pour parcourir · JPG, PNG, MP4</span>
+                    </label>
+                    <sc-if value="{{ hasRefs }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:14px">
+                        <sc-for list="{{ refCards }}" as="r" hint-placeholder-count="0">
+                          <div style="{{ r.thumbStyle }}">
+                            <sc-if value="{{ r.isVid }}" hint-placeholder-val="{{ false }}">
+                              <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:#A78BFA;background:#1A1A24;padding:4px"><span style="display:flex">{{ filmIcon2 }}</span><span style="font-size:8px;color:#8A8A9C;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ r.name }}</span></div>
+                            </sc-if>
+                            <button onClick="{{ r.onRemove }}" style="position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;border:none;background:rgba(0,0,0,.65);color:#fff;font-size:13px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2">×</button>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </sc-if>
+                  </div>
+                </div>
+
+                <div style="display:flex;justify-content:flex-end;margin-top:26px"><button onClick="{{ next }}" style="{{ continueStyle }}" style-hover="filter:brightness(1.08)">Continuer →</button></div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ false }}">
+              <div style="animation:fadeUp .3s ease both">
+                <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 4px">Réglages de l'automatisation</h2>
+                <p style="color:#8A8A9C;margin:0 0 22px;font-size:14px">Définis le rythme et le style. Modifiable à tout moment.</p>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+                  <div style="border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px;background:rgba(255,255,255,.02)">
+                    <div style="font-size:13px;font-weight:700;margin-bottom:6px">Vidéos par jour</div>
+                    <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:14px"><span style="font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:600;color:#A78BFA">{{ perDay }}</span><span style="color:#8A8A9C;font-size:13px">vidéo(s) / jour</span></div>
+                    <input type="range" min="1" max="10" value="{{ perDay }}" onInput="{{ onPerDay }}" style="width:100%;accent-color:#7C5CFF">
+                  </div>
+                  <div style="border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px;background:rgba(255,255,255,.02)">
+                    <div style="font-size:13px;font-weight:700;margin-bottom:12px">Horaires de publication</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ times }}" as="t" hint-placeholder-count="4"><button onClick="{{ t.onClick }}" style="{{ t.style }}">{{ t.label }}</button></sc-for></div>
+                  </div>
+                  <div style="border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px;background:rgba(255,255,255,.02)">
+                    <div style="font-size:13px;font-weight:700;margin-bottom:12px">Style visuel</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ styles }}" as="v" hint-placeholder-count="5"><button onClick="{{ v.onClick }}" style="{{ v.style }}">{{ v.label }}</button></sc-for></div>
+                    <div style="font-size:13px;font-weight:700;margin:18px 0 12px">Voix off</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ voices }}" as="vo" hint-placeholder-count="4"><button onClick="{{ vo.onClick }}" style="{{ vo.style }}">{{ vo.label }}</button></sc-for></div>
+                  </div>
+                  <div style="border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px;background:rgba(255,255,255,.02);display:flex;flex-direction:column;gap:16px">
+                    <div>
+                      <div style="font-size:13px;font-weight:700;margin-bottom:12px">Langue</div>
+                      <div style="display:flex;flex-wrap:wrap;gap:8px"><sc-for list="{{ langs }}" as="l" hint-placeholder-count="3"><button onClick="{{ l.onClick }}" style="{{ l.style }}">{{ l.label }}</button></sc-for></div>
+                    </div>
+                    <label style="display:flex;align-items:center;gap:12px;cursor:pointer;margin-top:auto" onClick="{{ toggleValidate }}">
+                      <span style="{{ validateTrack }}"><span style="{{ validateKnob }}"></span></span>
+                      <span><span style="display:block;font-size:13px;font-weight:700">Valider avant de publier</span><span style="display:block;font-size:12px;color:#8A8A9C">Chaque vidéo attend ton feu vert</span></span>
+                    </label>
+                  </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-top:26px">
+                  <button onClick="{{ prev }}" style="background:rgba(255,255,255,.05);color:#C9C9D6;border:1px solid rgba(255,255,255,.1);padding:12px 22px;border-radius:12px;font-family:'Manrope';font-weight:700;font-size:14px;cursor:pointer">← Retour</button>
+                  <button onClick="{{ next }}" style="background:linear-gradient(135deg,#7C5CFF,#9D6BFF);color:#fff;border:none;padding:12px 26px;border-radius:12px;font-family:'Manrope';font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 8px 24px rgba(124,92,255,.35)" style-hover="filter:brightness(1.08)">Générer la 1ʳᵉ vidéo →</button>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ false }}">
+              <div style="animation:fadeUp .3s ease both;display:grid;grid-template-columns:1fr 300px;gap:32px;align-items:start">
+                <div>
+                  <h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 4px">{{ pipeTitle }}</h2>
+                  <p style="color:#8A8A9C;margin:0 0 16px;font-size:14px">{{ pipeSubtitle }}</p>
+                  <sc-if value="{{ genFromIdea }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;gap:11px;align-items:flex-start;border:1px solid rgba(124,92,255,.3);background:rgba(124,92,255,.08);border-radius:12px;padding:12px 14px;margin-bottom:20px">
+                      <span style="display:flex;color:#A78BFA;flex:none;margin-top:1px">{{ sparkIcon }}</span>
+                      <div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:700;color:#A78BFA;margin-bottom:2px">Script basé sur ton idée</div><div style="font-size:12.5px;color:#B9B9C8;line-height:1.4">« {{ ideaText }} »</div></div>
+                    </div>
+                  </sc-if>
+                  <div style="display:flex;flex-direction:column;gap:14px">
+                    <sc-for list="{{ stages }}" as="p" hint-placeholder-count="5">
+                      <div style="{{ p.rowStyle }}">
+                        <div style="{{ p.iconWrap }}">{{ p.icon }}</div>
+                        <div style="flex:1;min-width:0">
+                          <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-weight:700;font-size:14px;color:{{ p.textColor }}">{{ p.name }}</span><span style="font-size:12px;color:#8A8A9C">{{ p.status }}</span></div>
+                          <div style="font-size:12px;color:#8A8A9C;margin-top:1px">{{ p.desc }}</div>
+                          <div style="height:5px;border-radius:10px;background:rgba(255,255,255,.08);margin-top:9px;overflow:hidden"><div style="height:100%;border-radius:10px;background:linear-gradient(90deg,#7C5CFF,#9D6BFF);width:{{ p.pct }}%;transition:width .18s linear"></div></div>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <sc-if value="{{ pipeDone }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top:26px;border:1px solid rgba(52,211,153,.3);background:rgba(52,211,153,.08);border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:14px;animation:fadeUp .4s ease both">
+                      <span style="width:36px;height:36px;border-radius:10px;background:#34D399;color:#04160E;display:flex;align-items:center;justify-content:center;flex:none">{{ checkIcon }}</span>
+                      <div style="flex:1"><div style="font-weight:700;font-size:14px">Vidéo prête — export MP4 · 1080×1920</div><div style="font-size:12.5px;color:#8A8A9C">Ouvre l'éditeur pour peaufiner, ou ajoute-la directement à la file.</div></div>
+                    </div>
+                    <div style="display:flex;gap:12px;margin-top:18px;flex-wrap:wrap">
+                      <button onClick="{{ addToQueue }}" style="background:linear-gradient(135deg,#7C5CFF,#9D6BFF);color:#fff;border:none;padding:12px 22px;border-radius:12px;font-weight:700;font-size:14px;font-family:'Manrope';cursor:pointer;box-shadow:0 8px 24px rgba(124,92,255,.35)" style-hover="filter:brightness(1.08)">Ajouter à la file →</button>
+                      <button onClick="{{ editGenerated }}" style="background:rgba(255,255,255,.05);color:#C9C9D6;border:1px solid rgba(255,255,255,.1);padding:12px 22px;border-radius:12px;font-weight:700;font-size:14px;font-family:'Manrope';cursor:pointer">Ouvrir l'éditeur</button>
+                      <button onClick="{{ regenerate }}" style="background:rgba(255,255,255,.05);color:#C9C9D6;border:1px solid rgba(255,255,255,.1);padding:12px 22px;border-radius:12px;font-weight:700;font-size:14px;font-family:'Manrope';cursor:pointer">↻ Régénérer</button>
+                    </div>
+                  </sc-if>
+                </div>
+                <div style="position:sticky;top:96px">
+                  <div style="position:relative;aspect-ratio:9/16;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:{{ preview.bg }};box-shadow:0 30px 70px rgba(0,0,0,.5)">
+                    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.6));opacity:{{ preview.dim }};transition:opacity .4s"></div>
+                    <div style="position:absolute;top:14px;left:14px;right:14px;display:flex;justify-content:space-between;align-items:center;opacity:{{ preview.chrome }};transition:opacity .4s"><span style="font-size:10px;font-weight:700;color:#fff;background:rgba(0,0,0,.45);padding:3px 9px;border-radius:20px">{{ preview.tag }}</span><span style="font-size:10px;font-weight:700;color:#fff;background:rgba(0,0,0,.45);padding:3px 9px;border-radius:20px">9:16</span></div>
+                    <div style="position:absolute;left:16px;right:16px;top:48%;text-align:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;line-height:1.1;color:#fff;text-shadow:0 3px 18px rgba(0,0,0,.55);opacity:{{ preview.hook }};transform:translateY(-50%) scale({{ preview.hookScale }});transition:opacity .45s,transform .45s;text-wrap:balance">{{ preview.hookText }}</div>
+                    <div style="position:absolute;left:0;right:0;bottom:78px;display:flex;justify-content:center;gap:3px;height:26px;align-items:flex-end;opacity:{{ preview.wave }};transition:opacity .4s">{{ preview.waveBars }}</div>
+                    <div style="position:absolute;left:16px;right:16px;bottom:40px;text-align:center;opacity:{{ preview.subs }};transition:opacity .4s"><span style="background:#7C5CFF;color:#fff;font-weight:800;font-size:13px;padding:4px 10px;border-radius:6px;box-decoration-break:clone;-webkit-box-decoration-break:clone;line-height:1.5">{{ preview.subLine }}</span></div>
+                    <div style="position:absolute;bottom:14px;left:14px;display:flex;align-items:center;gap:6px;opacity:{{ preview.music }};transition:opacity .4s"><span style="display:flex;color:#fff">{{ musicIcon }}</span><span style="font-size:11px;color:#fff;font-weight:600">{{ preview.track }}</span></div>
+                    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:{{ preview.play }};transition:opacity .4s;pointer-events:none"><span style="width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.9);color:#0A0A0F;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(0,0,0,.4)">{{ playIcon }}</span></div>
+                  </div>
+                  <div style="text-align:center;margin-top:12px;font-size:12px;color:#7E7E92">Aperçu en temps réel</div>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <!-- ===== EDITOR ===== -->
+        <sc-if value="{{ isEditor }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .35s ease both;display:grid;grid-template-columns:320px 1fr;gap:26px;align-items:start">
+            <!-- canvas -->
+            <div style="position:sticky;top:96px">
+              <div style="position:relative;aspect-ratio:{{ ed.aspectCss }};border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:#0A0A0F;box-shadow:0 26px 60px rgba(0,0,0,.5);transition:aspect-ratio .3s">
+                <div key="{{ ed.sceneKey }}" style="position:absolute;inset:0;background:{{ ed.bg }};animation:{{ ed.transAnim }}">
+                  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(0,0,0,.58))"></div>
+                  <div style="position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:center">
+                    <span style="font-size:10px;font-weight:700;color:#fff;background:rgba(124,92,255,.7);padding:3px 9px;border-radius:20px">◆ {{ ed.sceneLabel }}</span>
+                    {{ ed.platBadge }}
+                  </div>
+                  <sc-if value="{{ ed.showHook }}" hint-placeholder-val="{{ true }}">
+                    <div style="position:absolute;left:16px;right:16px;top:44%;transform:translateY(-50%);text-align:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;line-height:1.12;color:#fff;text-shadow:0 3px 16px rgba(0,0,0,.55);text-wrap:balance">{{ ed.hook }}</div>
+                  </sc-if>
+                  <div style="position:absolute;left:16px;right:16px;bottom:{{ ed.capBottom }};top:{{ ed.capTop }};display:flex;align-items:center;justify-content:center;text-align:center"><span style="{{ ed.subStyle }}">{{ ed.subFull }}</span></div>
+                </div>
+                <sc-if value="{{ ed.showLogo }}" hint-placeholder-val="{{ true }}">
+                  <div style="position:absolute;top:52px;right:14px;font-family:'Manrope';font-weight:700;font-size:11px;color:#fff;opacity:.75;letter-spacing:.02em">⚡ Cadence</div>
+                </sc-if>
+                <div style="position:absolute;bottom:14px;left:14px;display:flex;align-items:center;gap:6px"><span style="display:flex;color:#fff">{{ musicIcon }}</span><span style="font-size:11px;color:#fff;font-weight:600">{{ ed.track }}</span></div>
+                <button onClick="{{ toggleMute }}" style="position:absolute;bottom:12px;right:12px;width:30px;height:30px;border-radius:9px;border:none;background:rgba(0,0,0,.45);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center">{{ ed.muteIcon }}</button>
+              </div>
+              <!-- scrubber -->
+              <div style="display:flex;align-items:center;gap:10px;margin-top:14px">
+                <button onClick="{{ togglePlay }}" style="width:40px;height:40px;border-radius:50%;background:#7C5CFF;color:#fff;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;box-shadow:0 6px 18px rgba(124,92,255,.4)" style-hover="filter:brightness(1.08)">{{ playPauseIcon }}</button>
+                <div onClick="{{ seekBar }}" style="flex:1;height:14px;display:flex;align-items:center;cursor:pointer">
+                  <div style="flex:1;height:6px;border-radius:10px;background:rgba(255,255,255,.12);position:relative"><div style="position:absolute;left:0;top:0;bottom:0;width:{{ progressPct }};border-radius:10px;background:linear-gradient(90deg,#7C5CFF,#9D6BFF)"></div><div style="position:absolute;left:{{ progressPct }};top:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.4)"></div></div>
+                </div>
+                <span style="font-size:12px;color:#8A8A9C;font-variant-numeric:tabular-nums;flex:none">{{ timeLabel }} / {{ durLabel }}</span>
+              </div>
+              <div style="display:flex;justify-content:center;gap:8px;margin-top:14px">
+                <button style="flex:1;background:rgba(255,255,255,.05);color:#C9C9D6;border:1px solid rgba(255,255,255,.1);padding:10px;border-radius:11px;font-family:Manrope;font-weight:700;font-size:13px;cursor:pointer" style-hover="background:rgba(255,255,255,.08)">Aperçu plein écran</button>
+                <button style="flex:1;display:inline-flex;align-items:center;justify-content:center;gap:7px;background:linear-gradient(135deg,#7C5CFF,#9D6BFF);color:#fff;border:none;padding:10px;border-radius:11px;font-family:Manrope;font-weight:700;font-size:13px;cursor:pointer;box-shadow:0 8px 20px rgba(124,92,255,.35)" style-hover="filter:brightness(1.08)">Exporter MP4</button>
+              </div>
+            </div>
+
+            <!-- editing panels -->
+            <div>
+              <div style="display:flex;gap:2px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:20px;overflow-x:auto">
+                <sc-for list="{{ edTabs }}" as="t" hint-placeholder-count="6">
+                  <button onClick="{{ t.onClick }}" style="{{ t.style }}"><span style="display:flex">{{ t.icon }}</span>{{ t.label }}</button>
+                </sc-for>
+              </div>
+
+              <sc-if value="{{ edIsScript }}" hint-placeholder-val="{{ true }}">
+                <div style="animation:fadeUp .25s ease both">
+                  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
+                    <sc-for list="{{ scriptStats }}" as="st" hint-placeholder-count="3">
+                      <div style="border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 14px;background:rgba(255,255,255,.02)"><div style="font-size:11.5px;color:#8A8A9C;font-weight:600">{{ st.label }}</div><div style="font-family:'Manrope';font-size:19px;font-weight:600;margin-top:3px">{{ st.value }}</div></div>
+                    </sc-for>
+                  </div>
+                  <div style="border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px 16px;background:rgba(255,255,255,.02);margin-bottom:16px">
+                    <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:8px"><span style="font-weight:700">Force du hook</span><span style="font-weight:700;color:{{ hookColor }}">{{ hookLabel }}</span></div>
+                    <div style="height:7px;border-radius:8px;background:rgba(255,255,255,.06);overflow:hidden"><div style="height:100%;border-radius:8px;background:{{ hookColor }};width:{{ hookScorePct }};transition:width .3s"></div></div>
+                  </div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><label style="font-size:13px;font-weight:700">Script complet</label><span style="font-size:11.5px;color:#7C5CFF;background:rgba(124,92,255,.14);padding:3px 10px;border-radius:20px;font-weight:600">✨ Généré par IA</span></div>
+                  <textarea onInput="{{ onScript }}" value="{{ ed.script }}" style="width:100%;min-height:150px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:16px;color:#F3F3F6;font-size:14px;line-height:1.6;resize:vertical" style-focus="border-color:#7C5CFF;outline:none"></textarea>
+                  <div style="display:flex;gap:10px;margin-top:14px"><button style="display:inline-flex;align-items:center;gap:7px;background:rgba(124,92,255,.14);color:#A78BFA;border:1px solid rgba(124,92,255,.3);padding:10px 16px;border-radius:11px;font-family:'Manrope';font-weight:700;font-size:13px;cursor:pointer">{{ sparkIcon }} Régénérer</button><button style="background:rgba(255,255,255,.04);color:#C9C9D6;border:1px solid rgba(255,255,255,.1);padding:10px 16px;border-radius:11px;font-family:'Manrope';font-weight:700;font-size:13px;cursor:pointer">Raccourcir</button><button style="background:rgba(255,255,255,.04);color:#C9C9D6;border:1px solid rgba(255,255,255,.1);padding:10px 16px;border-radius:11px;font-family:'Manrope';font-weight:700;font-size:13px;cursor:pointer">Traduire</button></div>
+                  <div style="font-size:13px;font-weight:700;margin:22px 0 12px">Découpage en scènes</div>
+                  <div style="display:flex;flex-direction:column;gap:8px">
+                    <sc-for list="{{ sceneRows }}" as="sc" hint-placeholder-count="5">
+                      <div onClick="{{ sc.onClick }}" style="{{ sc.rowStyle }}">
+                        <span style="{{ sc.numStyle }}">{{ sc.num }}</span>
+                        <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;line-height:1.3">{{ sc.full }}</div><div style="font-size:11.5px;color:#8A8A9C;margin-top:2px">{{ sc.label }}</div></div>
+                        <span style="font-size:11.5px;color:#7E7E92;font-variant-numeric:tabular-nums;flex:none">{{ sc.range }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ edIsCaption }}" hint-placeholder-val="{{ false }}">
+                <div style="animation:fadeUp .25s ease both">
+                  <div style="font-size:13px;font-weight:700;margin-bottom:12px">Style des sous-titres</div>
+                  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
+                    <sc-for list="{{ capStyles }}" as="c" hint-placeholder-count="4">
+                      <button onClick="{{ c.onClick }}" style="{{ c.wrap }}"><span style="{{ c.chip }}">{{ c.preview }}</span><span style="font-size:12.5px;font-weight:600;color:#B9B9C8">{{ c.label }}</span></button>
+                    </sc-for>
+                  </div>
+                  <div style="font-size:13px;font-weight:700;margin:20px 0 10px">Police</div>
+                  <div style="display:flex;gap:8px"><sc-for list="{{ capFonts }}" as="f" hint-placeholder-count="3"><button onClick="{{ f.onClick }}" style="{{ f.style }}">{{ f.label }}</button></sc-for></div>
+                  <div style="font-size:13px;font-weight:700;margin:20px 0 10px">Taille · {{ capSize }}%</div>
+                  <input type="range" min="70" max="150" value="{{ capSize }}" onInput="{{ onCapSize }}" style="width:100%;accent-color:#7C5CFF">
+                  <div style="display:flex;gap:30px;margin-top:20px">
+                    <div><div style="font-size:13px;font-weight:700;margin-bottom:10px">Couleur du texte</div><div style="display:flex;gap:8px"><sc-for list="{{ capColors }}" as="c" hint-placeholder-count="5"><span onClick="{{ c.onClick }}" style="{{ c.style }}"></span></sc-for></div></div>
+                    <div><div style="font-size:13px;font-weight:700;margin-bottom:10px">Surbrillance</div><div style="display:flex;gap:8px"><sc-for list="{{ hiColors }}" as="c" hint-placeholder-count="4"><span onClick="{{ c.onClick }}" style="{{ c.style }}"></span></sc-for></div></div>
+                  </div>
+                  <div style="font-size:13px;font-weight:700;margin:22px 0 10px">Position</div>
+                  <div style="display:flex;gap:8px"><sc-for list="{{ capPos }}" as="p" hint-placeholder-count="3"><button onClick="{{ p.onClick }}" style="{{ p.style }}">{{ p.label }}</button></sc-for></div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ edIsVoice }}" hint-placeholder-val="{{ false }}">
+                <div style="animation:fadeUp .25s ease both">
+                  <div style="font-size:13px;font-weight:700;margin-bottom:12px">Voix off</div>
+                  <div style="display:flex;flex-direction:column;gap:10px">
+                    <sc-for list="{{ voiceRows }}" as="v" hint-placeholder-count="4">
+                      <div style="{{ v.row }}">
+                        <button onClick="{{ v.onClick }}" style="width:36px;height:36px;border-radius:10px;background:{{ v.color }};display:flex;align-items:center;justify-content:center;color:#fff;flex:none;border:none;cursor:pointer">{{ micIcon }}</button>
+                        <div onClick="{{ v.onClick }}" style="flex:1;text-align:left;cursor:pointer"><div style="font-size:13.5px;font-weight:700">{{ v.name }}</div><div style="font-size:11.5px;color:#8A8A9C">{{ v.desc }}</div></div>
+                        <button style="width:30px;height:30px;border-radius:9px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:#A78BFA;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none" title="Écouter un extrait">{{ v.playIcon }}</button>
+                        {{ v.check }}
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="margin-top:20px"><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:10px"><span>Vitesse</span><span style="color:#8A8A9C">{{ edSpeed }}%</span></div><input type="range" min="80" max="120" value="{{ edSpeed }}" onInput="{{ onEdSpeed }}" style="width:100%;accent-color:#7C5CFF"></div>
+                  <div style="margin-top:16px"><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:10px"><span>Tonalité</span><span style="color:#8A8A9C">{{ edPitch }}%</span></div><input type="range" min="0" max="100" value="{{ edPitch }}" onInput="{{ onEdPitch }}" style="width:100%;accent-color:#7C5CFF"></div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ edIsMusic }}" hint-placeholder-val="{{ false }}">
+                <div style="animation:fadeUp .25s ease both">
+                  <div style="font-size:13px;font-weight:700;margin-bottom:12px">Musique de fond</div>
+                  <div style="display:flex;flex-direction:column;gap:10px">
+                    <sc-for list="{{ tracks }}" as="m" hint-placeholder-count="4">
+                      <div style="{{ m.row }}">
+                        <button onClick="{{ m.onClick }}" style="width:36px;height:36px;border-radius:10px;background:rgba(124,92,255,.16);color:#A78BFA;display:flex;align-items:center;justify-content:center;flex:none;border:none;cursor:pointer">{{ musicIcon }}</button>
+                        <div onClick="{{ m.onClick }}" style="flex:1;min-width:0;cursor:pointer"><div style="font-size:13.5px;font-weight:700">{{ m.name }}</div><div style="font-size:11.5px;color:#8A8A9C">{{ m.genre }} · {{ m.bpm }}</div></div>
+                        <span style="flex:none">{{ m.wave }}</span>
+                        {{ m.check }}
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="margin-top:20px"><div style="font-size:13px;font-weight:700;margin-bottom:10px">Volume musique</div><input type="range" min="0" max="100" value="35" style="width:100%;accent-color:#7C5CFF"></div>
+                  <div style="display:flex;gap:24px;margin-top:18px">
+                    <label style="display:flex;align-items:center;gap:10px;cursor:pointer" onClick="{{ toggleFadeIn }}"><span style="{{ fadeInTk.track }}"><span style="{{ fadeInTk.knob }}"></span></span><span style="font-size:13px;font-weight:600">Fondu d'entrée</span></label>
+                    <label style="display:flex;align-items:center;gap:10px;cursor:pointer" onClick="{{ toggleFadeOut }}"><span style="{{ fadeOutTk.track }}"><span style="{{ fadeOutTk.knob }}"></span></span><span style="font-size:13px;font-weight:600">Fondu de sortie</span></label>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ edIsVisual }}" hint-placeholder-val="{{ false }}">
+                <div style="animation:fadeUp .25s ease both">
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><div style="font-size:13px;font-weight:700">Séquences visuelles</div><span style="font-size:11.5px;color:#8A8A9C">Clique une scène pour l'aperçu</span></div>
+                  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px">
+                    <sc-for list="{{ clips }}" as="c" hint-placeholder-count="5">
+                      <div onClick="{{ c.onClick }}" style="{{ c.cardStyle }}" style-hover="transform:scale(1.03)">
+                        <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(0,0,0,.4))"></div>
+                        <span style="{{ c.srcStyle }}">{{ c.src }}</span>
+                        <span style="position:absolute;bottom:5px;left:6px;font-size:9px;font-weight:700;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6)">{{ c.label }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <button style="width:100%;margin-top:14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;background:rgba(124,92,255,.14);color:#A78BFA;border:1px dashed rgba(124,92,255,.4);padding:12px;border-radius:12px;font-family:'Manrope';font-weight:700;font-size:13px;cursor:pointer">{{ sparkIcon }} Générer de nouveaux visuels IA</button>
+                  <div style="display:flex;gap:10px;margin-top:10px"><button style="flex:1;background:rgba(255,255,255,.04);color:#C9C9D6;border:1px solid rgba(255,255,255,.1);padding:11px;border-radius:11px;font-family:Manrope;font-weight:700;font-size:13px;cursor:pointer">Importer un média</button><button style="flex:1;background:rgba(255,255,255,.04);color:#C9C9D6;border:1px solid rgba(255,255,255,.1);padding:11px;border-radius:11px;font-family:Manrope;font-weight:700;font-size:13px;cursor:pointer">Banque d'images</button></div>
+
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin:24px 0 6px"><div style="font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px">{{ scissorsIcon }} Découpe des scènes</div><button onClick="{{ resetTrim }}" style="background:none;border:none;color:#7E7E92;font-family:Manrope;font-weight:700;font-size:12px;cursor:pointer" style-hover="color:#A78BFA">Réinitialiser</button></div>
+                  <p style="font-size:12px;color:#8A8A9C;margin:0 0 12px">Glisse les poignées entre les scènes pour ajuster leur durée, ou utilise − / +.</p>
+                  <div style="display:flex;gap:4px;align-items:stretch;padding:4px 0">
+                    <sc-for list="{{ trimSegs }}" as="t" hint-placeholder-count="5">
+                      <div onClick="{{ t.onSelect }}" style="{{ t.segStyle }}" title="{{ t.label }}">
+                        <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(0,0,0,.35));border-radius:7px"></div>
+                        <span style="position:relative;font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.7);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 4px">{{ t.label }}</span>
+                        <span style="position:relative;font-size:11px;font-weight:800;color:#fff;font-variant-numeric:tabular-nums;text-shadow:0 1px 3px rgba(0,0,0,.7)">{{ t.durLabel }}</span>
+                        <span style="position:absolute;bottom:4px;display:flex;gap:6px;z-index:2">
+                          <button onClick="{{ t.onMinus }}" style="width:18px;height:18px;border-radius:5px;border:none;background:rgba(0,0,0,.5);color:#fff;font-weight:800;font-size:12px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center">−</button>
+                          <button onClick="{{ t.onPlus }}" style="width:18px;height:18px;border-radius:5px;border:none;background:rgba(0,0,0,.5);color:#fff;font-weight:800;font-size:12px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>
+                        </span>
+                        <sc-if value="{{ t.notLast }}" hint-placeholder-val="{{ true }}">
+                          <div style="position:absolute;top:0;bottom:0;right:-6px;width:14px;cursor:col-resize;z-index:3;display:flex;align-items:center;justify-content:center" onPointerDown="{{ t.onDown }}"><span style="width:4px;height:26px;border-radius:3px;background:#fff;box-shadow:0 0 6px rgba(0,0,0,.5)"></span></div>
+                        </sc-if>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="display:flex;justify-content:flex-end;font-size:11.5px;color:#7E7E92;margin-top:6px;font-variant-numeric:tabular-nums">Durée totale · {{ trimTotal }}</div>
+
+                  <div style="font-size:13px;font-weight:700;margin:24px 0 4px">Transitions entre scènes</div>
+                  <p style="font-size:12px;color:#8A8A9C;margin:0 0 12px">Choisis l'effet à l'entrée de chaque scène. L'aperçu se rejoue à la sélection.</p>
+                  <div style="display:flex;flex-direction:column;gap:10px">
+                    <sc-for list="{{ transRows }}" as="tr" hint-placeholder-count="4">
+                      <div style="display:flex;align-items:center;gap:12px;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:10px 12px;background:rgba(255,255,255,.02)">
+                        <div style="width:120px;flex:none;font-size:12px;font-weight:600;color:#B9B9C8;display:flex;align-items:center;gap:5px;min-width:0"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ tr.fromLabel }}</span><span style="color:#5A5A6C;flex:none">→</span><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ tr.toLabel }}</span></div>
+                        <div style="flex:1;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
+                          <sc-for list="{{ tr.opts }}" as="o" hint-placeholder-count="4"><button onClick="{{ o.onClick }}" style="{{ o.style }}">{{ o.label }}</button></sc-for>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ edIsFormat }}" hint-placeholder-val="{{ false }}">
+                <div style="animation:fadeUp .25s ease both">
+                  <div style="font-size:13px;font-weight:700;margin-bottom:12px">Format d'export</div>
+                  <div style="display:flex;gap:12px">
+                    <sc-for list="{{ aspects }}" as="a" hint-placeholder-count="3">
+                      <button onClick="{{ a.onClick }}" style="{{ a.style }}"><div style="{{ a.boxStyle }}"></div><div style="font-size:13.5px;font-weight:700">{{ a.ratio }} · {{ a.label }}</div><div style="font-size:11.5px;color:#8A8A9C;margin-top:2px">{{ a.desc }}</div></button>
+                    </sc-for>
+                  </div>
+                  <div style="font-size:13px;font-weight:700;margin:22px 0 12px">Marque</div>
+                  <div style="display:flex;flex-direction:column;gap:12px">
+                    <label style="display:flex;align-items:center;gap:14px;cursor:pointer;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px;background:rgba(255,255,255,.02)" onClick="{{ toggleLogo }}"><span style="{{ logoTk.track }}"><span style="{{ logoTk.knob }}"></span></span><div style="flex:1"><div style="font-size:13.5px;font-weight:700">Filigrane / logo</div><div style="font-size:12px;color:#8A8A9C">Affiche « ⚡ Cadence » en haut à droite</div></div></label>
+                    <label style="display:flex;align-items:center;gap:14px;cursor:pointer;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px;background:rgba(255,255,255,.02)" onClick="{{ toggleIntro }}"><span style="{{ introTk.track }}"><span style="{{ introTk.knob }}"></span></span><div style="flex:1"><div style="font-size:13.5px;font-weight:700">Intro animée (0,5s)</div><div style="font-size:12px;color:#8A8A9C">Logo animé au démarrage</div></div></label>
+                    <label style="display:flex;align-items:center;gap:14px;cursor:pointer;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px;background:rgba(255,255,255,.02)" onClick="{{ toggleOutro }}"><span style="{{ outroTk.track }}"><span style="{{ outroTk.knob }}"></span></span><div style="flex:1"><div style="font-size:13.5px;font-weight:700">Call-to-action final</div><div style="font-size:12px;color:#8A8A9C">« Abonne-toi » sur la dernière scène</div></div></label>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- timeline -->
+              <div style="margin-top:26px;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;background:rgba(255,255,255,.02)">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px"><span style="font-size:12px;color:#8A8A9C;font-weight:700;letter-spacing:.03em">TIMELINE</span><span style="font-size:11.5px;color:#7E7E92;font-variant-numeric:tabular-nums">{{ timeLabel }} / {{ durLabel }}</span></div>
+                <div style="position:relative;padding-left:78px">
+                  <div style="position:relative;height:16px;margin-bottom:4px">
+                    <sc-for list="{{ ruler }}" as="r" hint-placeholder-count="5"><span style="position:absolute;left:{{ r.left }};font-size:10px;color:#5A5A6C;transform:translateX(-2px)">{{ r.label }}</span></sc-for>
+                  </div>
+                  <div style="position:absolute;top:16px;bottom:0;left:{{ playheadLeft }};margin-left:78px;width:2px;background:#9D6BFF;box-shadow:0 0 8px #9D6BFF;z-index:2;pointer-events:none"><span style="position:absolute;top:-5px;left:-4px;width:10px;height:10px;border-radius:50%;background:#9D6BFF"></span></div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:8px;margin-top:2px">
+                  <sc-for list="{{ timeline }}" as="tr" hint-placeholder-count="4">
+                    <div style="display:flex;align-items:center;gap:10px">
+                      <span style="width:68px;font-size:11px;color:#8A8A9C;font-weight:600;flex:none;display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:3px;background:{{ tr.color }}"></span>{{ tr.label }}</span>
+                      <div style="flex:1;display:flex;gap:4px">{{ tr.blocks }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ===== CALENDAR ===== -->
+        <sc-if value="{{ isCalendar }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .35s ease both">
+            <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+              <button onClick="{{ calPrev }}" style="width:36px;height:36px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#F3F3F6;cursor:pointer" style-hover="background:rgba(255,255,255,.08)">‹</button>
+              <h2 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:600;min-width:190px">{{ calTitle }}</h2>
+              <button onClick="{{ calNext }}" style="width:36px;height:36px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#F3F3F6;cursor:pointer" style-hover="background:rgba(255,255,255,.08)">›</button>
+              <div style="flex:1"></div>
+              <div style="display:flex;gap:16px;font-size:12px;color:#8A8A9C">
+                <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:9px;height:9px;border-radius:3px;background:#7C5CFF"></span>Programmé</span>
+                <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:9px;height:9px;border-radius:3px;background:#34D399"></span>Publié</span>
+                <span style="display:inline-flex;align-items:center;gap:6px"><span style="width:9px;height:9px;border-radius:3px;background:#FFB74C"></span>À valider</span>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:8px">
+              <sc-for list="{{ weekdays }}" as="w" hint-placeholder-count="7"><div style="text-align:center;font-size:11.5px;font-weight:700;color:#7E7E92;letter-spacing:.04em">{{ w }}</div></sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px">
+              <sc-for list="{{ calCells }}" as="c" hint-placeholder-count="35">
+                <div style="{{ c.style }}">
+                  <div style="{{ c.numStyle }}">{{ c.day }}</div>
+                  <div style="display:flex;flex-direction:column;gap:3px;margin-top:4px">{{ c.chips }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ===== ANALYTICS ===== -->
+        <sc-if value="{{ isAnalytics }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .35s ease both">
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px">
+              <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+                <div style="border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01))">
+                  <div style="font-size:12.5px;color:#8A8A9C;font-weight:600">{{ k.label }}</div>
+                  <div style="font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:600;letter-spacing:-.02em;margin-top:8px">{{ k.value }}</div>
+                  <div style="display:flex;align-items:center;gap:6px;margin-top:6px"><span style="font-size:12px;font-weight:700;color:{{ k.deltaColor }}">{{ k.delta }}</span><span style="font-size:11px;color:#7E7E92">vs période préc.</span></div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:18px;margin-bottom:18px">
+              <div style="border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:22px;background:rgba(255,255,255,.02)">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px"><h3 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600">Vues · 14 derniers jours</h3><span style="font-size:12px;color:#34D399;font-weight:700">+18,3%</span></div>
+                <div style="display:flex;align-items:flex-end;gap:6px;height:180px">
+                  <sc-for list="{{ chartBars }}" as="b" hint-placeholder-count="14">
+                    <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end">
+                      <div style="width:100%;border-radius:6px 6px 3px 3px;background:linear-gradient(180deg,#9D6BFF,#7C5CFF);height:{{ b.h }}%;transform-origin:bottom;animation:growBar .6s ease both" title="{{ b.value }}"></div>
+                      <span style="font-size:9px;color:#5A5A6C">{{ b.label }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:22px;background:rgba(255,255,255,.02)">
+                <h3 style="margin:0 0 18px;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600">Répartition par réseau</h3>
+                <div style="display:flex;align-items:center;justify-content:center;margin-bottom:18px">{{ donut }}</div>
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <div style="display:flex;align-items:center;gap:10px"><span style="width:10px;height:10px;border-radius:3px;background:#FF0033"></span><span style="flex:1;font-size:13px;font-weight:600">YouTube Shorts</span><span style="font-size:13px;color:#8A8A9C">62%</span></div>
+                  <div style="display:flex;align-items:center;gap:10px"><span style="width:10px;height:10px;border-radius:3px;background:#7C5CFF"></span><span style="flex:1;font-size:13px;font-weight:600">TikTok</span><span style="font-size:13px;color:#8A8A9C">38%</span></div>
+                </div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:18px">
+              <div style="border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:22px;background:rgba(255,255,255,.02)">
+                <h3 style="margin:0 0 16px;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600">Top vidéos</h3>
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <sc-for list="{{ topVideos }}" as="t" hint-placeholder-count="4">
+                    <div style="display:flex;align-items:center;gap:12px">
+                      <span style="font-family:'Manrope';font-weight:700;font-size:15px;color:#7E7E92;width:18px">{{ t.rank }}</span>
+                      <div style="width:38px;height:56px;border-radius:8px;background:{{ t.bg }};flex:none;border:1px solid rgba(255,255,255,.1)"></div>
+                      <div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:600;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ t.hook }}</div><div style="font-size:11.5px;color:#8A8A9C;margin-top:2px">{{ t.niche }}</div></div>
+                      <div style="text-align:right"><div style="font-size:13px;font-weight:700">{{ t.views }}</div><div style="font-size:11px;color:#34D399">{{ t.rate }}</div></div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:22px;background:rgba(255,255,255,.02)">
+                <h3 style="margin:0 0 6px;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600">Meilleurs horaires</h3>
+                <p style="margin:0 0 16px;font-size:12px;color:#8A8A9C">Engagement moyen par créneau</p>
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <sc-for list="{{ bestTimes }}" as="h" hint-placeholder-count="4">
+                    <div style="display:flex;align-items:center;gap:12px"><span style="width:52px;font-size:12.5px;font-weight:600;color:#B9B9C8">{{ h.time }}</span><div style="flex:1;height:8px;border-radius:8px;background:rgba(255,255,255,.06);overflow:hidden"><div style="height:100%;border-radius:8px;background:linear-gradient(90deg,#7C5CFF,#9D6BFF);width:{{ h.pct }}%"></div></div><span style="font-size:12px;color:#8A8A9C;width:34px;text-align:right">{{ h.val }}</span></div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ===== BILLING ===== -->
+        <sc-if value="{{ isBilling }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .35s ease both;max-width:960px">
+            <!-- current plan + usage -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:26px">
+              <div style="border:1px solid rgba(124,92,255,.3);border-radius:18px;padding:22px;background:linear-gradient(135deg,rgba(124,92,255,.14),rgba(124,92,255,.06))">
+                <div style="font-size:12px;color:#A78BFA;font-weight:700;letter-spacing:.04em">PLAN ACTUEL</div>
+                <div style="display:flex;align-items:baseline;gap:8px;margin-top:8px"><span style="font-family:'Manrope';font-size:26px;font-weight:600">Creator</span><span style="color:#8A8A9C;font-size:13px">· 19€/mois</span></div>
+                <div style="font-size:12.5px;color:#8A8A9C;margin-top:6px">Renouvellement le 1ᵉʳ août 2026</div>
+                <button style="margin-top:16px;background:rgba(255,255,255,.08);color:#F3F3F6;border:1px solid rgba(255,255,255,.15);padding:10px 18px;border-radius:11px;font-family:'Manrope';font-weight:700;font-size:13px;cursor:pointer">Gérer l'abonnement</button>
+              </div>
+              <div style="border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:22px;background:rgba(255,255,255,.02)">
+                <div style="font-size:13px;font-weight:700;margin-bottom:16px">Consommation ce mois</div>
+                <sc-for list="{{ usage }}" as="u" hint-placeholder-count="2">
+                  <div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:6px"><span style="color:#B9B9C8;font-weight:600">{{ u.label }}</span><span style="color:#8A8A9C">{{ u.val }}</span></div><div style="height:7px;border-radius:8px;background:rgba(255,255,255,.06);overflow:hidden"><div style="height:100%;border-radius:8px;background:{{ u.color }};width:{{ u.pct }}%"></div></div></div>
+                </sc-for>
+              </div>
+            </div>
+
+            <h3 style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;margin:0 0 16px">Changer de plan</h3>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:30px">
+              <sc-for list="{{ plans }}" as="p" hint-placeholder-count="3">
+                <div style="{{ p.card }}">
+                  <sc-if value="{{ p.popular }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#7C5CFF,#9D6BFF);color:#fff;font-size:10.5px;font-weight:700;padding:3px 12px;border-radius:20px">POPULAIRE</span></sc-if>
+                  <div style="font-family:'Manrope';font-size:17px;font-weight:600">{{ p.name }}</div>
+                  <div style="display:flex;align-items:baseline;gap:4px;margin:10px 0 16px"><span style="font-family:'Manrope';font-size:32px;font-weight:600">{{ p.price }}</span><span style="color:#8A8A9C;font-size:13px">{{ p.period }}</span></div>
+                  <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:18px">
+                    <sc-for list="{{ p.feats }}" as="f" hint-placeholder-count="3"><div style="display:flex;align-items:center;gap:9px;font-size:13px;color:#B9B9C8"><span style="display:flex;color:#34D399;flex:none">{{ smallCheck }}</span>{{ f }}</div></sc-for>
+                  </div>
+                  <button style="{{ p.btn }}">{{ p.cta }}</button>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+              <div style="border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:22px;background:rgba(255,255,255,.02)">
+                <div style="font-size:13px;font-weight:700;margin-bottom:14px">Moyen de paiement</div>
+                <div style="display:flex;align-items:center;gap:14px;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px">
+                  <div style="width:46px;height:30px;border-radius:6px;background:linear-gradient(135deg,#1a1a2e,#16213e);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:11px;font-style:italic;flex:none">VISA</div>
+                  <div style="flex:1"><div style="font-size:13.5px;font-weight:600">•••• •••• •••• 4242</div><div style="font-size:11.5px;color:#8A8A9C">Expire 08/27</div></div>
+                  <button style="background:none;border:none;color:#A78BFA;font-family:'Manrope';font-weight:700;font-size:13px;cursor:pointer">Modifier</button>
+                </div>
+              </div>
+              <div style="border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:22px;background:rgba(255,255,255,.02)">
+                <div style="font-size:13px;font-weight:700;margin-bottom:14px">Factures</div>
+                <div style="display:flex;flex-direction:column;gap:2px">
+                  <sc-for list="{{ invoices }}" as="i" hint-placeholder-count="3">
+                    <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="flex:1;font-size:13px;color:#B9B9C8">{{ i.date }}</span><span style="font-size:13px;font-weight:600">{{ i.amount }}</span><span style="font-size:11px;font-weight:700;color:#34D399;background:rgba(52,211,153,.14);padding:2px 9px;border-radius:20px">{{ i.status }}</span><button style="background:none;border:none;color:#7E7E92;cursor:pointer;display:flex" style-hover="color:#A78BFA">{{ dlIcon }}</button></div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ===== QUEUE ===== -->
+        <sc-if value="{{ isQueue }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .35s ease both;max-width:920px">
+            <div style="display:flex;align-items:center;gap:16px;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px 20px;background:rgba(255,255,255,.02);margin-bottom:24px">
+              <div style="flex:1"><div style="font-weight:700;font-size:14px">Mode « valider avant de publier »</div><div style="font-size:12.5px;color:#8A8A9C">{{ validateHint }}</div></div>
+              <label style="cursor:pointer" onClick="{{ toggleValidate }}"><span style="{{ validateTrack }}"><span style="{{ validateKnob }}"></span></span></label>
+            </div>
+            <sc-for list="{{ queue }}" as="q" hint-placeholder-count="5">
+              <div style="display:flex;align-items:center;gap:16px;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px 14px;margin-bottom:12px;background:rgba(255,255,255,.02)">
+                <div style="width:54px;height:96px;border-radius:9px;overflow:hidden;flex:none;position:relative;background:{{ q.bg }};border:1px solid rgba(255,255,255,.1)"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Manrope';font-weight:700;font-size:8px;line-height:1.1;padding:5px;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.6)">{{ q.hook }}</div></div>
+                <div style="flex:1;min-width:0"><div style="font-weight:700;font-size:14px;line-height:1.2">{{ q.hook }}</div><div style="display:flex;align-items:center;gap:10px;margin-top:6px;font-size:12.5px;color:#8A8A9C"><span>{{ q.niche }}</span><span style="color:#3A3A48">•</span>{{ q.platBadge }}<span style="color:#3A3A48">•</span><span style="display:inline-flex;align-items:center;gap:4px">{{ clockIcon }} {{ q.when }}</span></div></div>
+                <div style="{{ q.statusStyle }}">{{ q.statusLabel }}</div>
+                <sc-if value="{{ q.needsApproval }}" hint-placeholder-val="{{ false }}"><button onClick="{{ q.onApprove }}" style="background:#34D399;color:#04160E;border:none;padding:9px 16px;border-radius:10px;font-weight:700;font-size:13px;font-family:'Manrope';cursor:pointer" style-hover="filter:brightness(1.06)">Valider</button></sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <!-- ===== HISTORY ===== -->
+        <sc-if value="{{ isHistory }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .35s ease both;max-width:960px">
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:26px">
+              <sc-for list="{{ histStats }}" as="s" hint-placeholder-count="4">
+                <div style="border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px 18px;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01))">
+                  <div style="font-size:12.5px;color:#8A8A9C;font-weight:600">{{ s.label }}</div>
+                  <div style="font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:600;letter-spacing:-.02em;margin-top:8px">{{ s.value }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <sc-for list="{{ historyRows }}" as="h" hint-placeholder-count="8">
+              <sc-if value="{{ h.showDate }}" hint-placeholder-val="{{ true }}">
+                <div style="font-size:12px;font-weight:700;color:#7E7E92;letter-spacing:.05em;text-transform:uppercase;margin:20px 0 10px">{{ h.dateLabel }}</div>
+              </sc-if>
+              <div style="display:flex;align-items:center;gap:16px;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px 16px;margin-bottom:10px;background:rgba(255,255,255,.02)" style-hover="border-color:rgba(255,255,255,.16)">
+                <div style="width:42px;height:74px;border-radius:8px;overflow:hidden;flex:none;position:relative;background:{{ h.bg }};border:1px solid rgba(255,255,255,.1)"><div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;font-family:'Manrope';font-weight:700;font-size:7px;line-height:1.1;padding:4px;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.6)">{{ h.hook }}</div></div>
+                <div style="flex:1;min-width:0">
+                  <div style="font-weight:700;font-size:14px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ h.hook }}</div>
+                  <div style="display:flex;align-items:center;gap:10px;margin-top:6px;font-size:12.5px;color:#8A8A9C"><span>{{ h.niche }}</span><span style="color:#3A3A48">•</span>{{ h.platBadge }}<span style="color:#3A3A48">•</span><span style="display:inline-flex;align-items:center;gap:4px">{{ clockIcon }} {{ h.time }}</span></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:16px;font-size:13px;color:#B9B9C8;flex:none">
+                  <span style="display:inline-flex;align-items:center;gap:5px;min-width:58px">{{ eyeIcon }} {{ h.views }}</span>
+                  <span style="display:inline-flex;align-items:center;gap:5px;min-width:52px">{{ heartIcon }} {{ h.likes }}</span>
+                </div>
+                <div style="{{ h.statusStyle }}">{{ h.statusLabel }}</div>
+                <sc-if value="{{ h.ok }}" hint-placeholder-val="{{ true }}">
+                  <button style="width:34px;height:34px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#8A8A9C;cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none" style-hover="color:#F3F3F6;background:rgba(255,255,255,.08)" title="Voir la publication">{{ extIcon }}</button>
+                </sc-if>
+                <sc-if value="{{ h.failed }}" hint-placeholder-val="{{ false }}">
+                  <button style="display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,183,76,.3);background:rgba(255,183,76,.12);color:#FFB74C;cursor:pointer;padding:8px 13px;border-radius:10px;font-family:Manrope;font-weight:700;font-size:12.5px;flex:none" style-hover="filter:brightness(1.08)" title="Republier">{{ retryIcon }} Réessayer</button>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <!-- ===== TRENDS ===== -->
+        <sc-if value="{{ isTrends }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .35s ease both">
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:22px">
+              <sc-for list="{{ trendChips }}" as="c" hint-placeholder-count="6"><button onClick="{{ c.onClick }}" style="{{ c.style }}">{{ c.label }}</button></sc-for>
+              <div style="flex:1"></div>
+              <button style="display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.05);color:#C9C9D6;border:1px solid rgba(255,255,255,.1);padding:8px 14px;border-radius:11px;font-family:Manrope;font-weight:700;font-size:13px;cursor:pointer" style-hover="background:rgba(255,255,255,.08)">{{ refreshIcon }} Actualiser</button>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start">
+              <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
+                <sc-for list="{{ trends }}" as="t" hint-placeholder-count="6">
+                  <div style="border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.02)">
+                    <div style="height:88px;background:{{ t.bg }};position:relative;display:flex;align-items:flex-end;padding:12px">
+                      <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.35))"></div>
+                      <span style="position:relative;font-size:11px;font-weight:800;color:#0A0A0F;background:#FFE45C;padding:3px 9px;border-radius:20px">🔥 {{ t.badge }}</span>
+                      <span style="position:absolute;top:12px;right:12px;display:flex;gap:5px">{{ t.platBadge }}</span>
+                    </div>
+                    <div style="padding:16px">
+                      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><span style="font-size:11.5px;color:#8A8A9C;font-weight:600">{{ t.nicheName }}</span><span style="{{ t.scoreStyle }}">{{ t.score }}</span></div>
+                      <div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;line-height:1.2">{{ t.topic }}</div>
+                      <div style="font-size:13px;color:#B9B9C8;margin-top:8px;font-style:italic;line-height:1.4">{{ t.hook }}</div>
+                      <div style="font-size:12px;color:#7E7E92;margin-top:10px">Format suggéré · {{ t.format }}</div>
+                      <button onClick="{{ t.onGenerate }}" style="width:100%;margin-top:14px;display:inline-flex;align-items:center;justify-content:center;gap:7px;background:linear-gradient(135deg,#7C5CFF,#9D6BFF);color:#fff;border:none;padding:10px;border-radius:11px;font-family:Manrope;font-weight:700;font-size:13.5px;cursor:pointer" style-hover="filter:brightness(1.08)">✨ Générer cette vidéo</button>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:16px;position:sticky;top:96px">
+                <div style="border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px;background:rgba(255,255,255,.02)">
+                  <div style="font-size:13px;font-weight:700;margin-bottom:14px">🎵 Sons en tendance</div>
+                  <div style="display:flex;flex-direction:column;gap:12px">
+                    <sc-for list="{{ trendSounds }}" as="m" hint-placeholder-count="4">
+                      <div style="display:flex;align-items:center;gap:11px"><span style="width:30px;height:30px;border-radius:8px;background:rgba(124,92,255,.16);color:#A78BFA;display:flex;align-items:center;justify-content:center;flex:none">{{ musicIcon }}</span><div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;line-height:1.1">{{ m.name }}</div><div style="font-size:11px;color:#7E7E92">{{ m.uses }}</div></div></div>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px;background:rgba(255,255,255,.02)">
+                  <div style="font-size:13px;font-weight:700;margin-bottom:14px"># Hashtags populaires</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:8px">
+                    <sc-for list="{{ trendTags }}" as="h" hint-placeholder-count="8"><span style="font-size:12.5px;font-weight:600;color:#A78BFA;background:rgba(124,92,255,.12);padding:5px 11px;border-radius:20px">{{ h }}</span></sc-for>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ===== SETTINGS ===== -->
+        <sc-if value="{{ isSettings }}" hint-placeholder-val="{{ false }}">
+          <div style="animation:fadeUp .35s ease both;display:grid;grid-template-columns:224px 1fr;gap:30px;align-items:start;max-width:1000px">
+            <div style="display:flex;flex-direction:column;gap:4px;position:sticky;top:96px">
+              <sc-for list="{{ setTabs }}" as="t" hint-placeholder-count="5"><button onClick="{{ t.onClick }}" style="{{ t.style }}"><span style="display:flex;flex:none">{{ t.icon }}</span>{{ t.label }}</button></sc-for>
+            </div>
+            <div>
+              <!-- COMPTE -->
+              <sc-if value="{{ setIsCompte }}" hint-placeholder-val="{{ true }}">
+                <div style="animation:fadeUp .25s ease both">
+                  <div style="display:flex;align-items:center;gap:18px;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px;background:rgba(255,255,255,.02);margin-bottom:18px">
+                    <div style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#9D6BFF,#7C5CFF);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:24px;flex:none">C</div>
+                    <div style="flex:1"><div style="font-family:'Manrope';font-size:18px;font-weight:600">Studio Créateur</div><div style="font-size:13px;color:#8A8A9C">creator@studio.co · Plan Creator</div></div>
+                    <button style="background:rgba(255,255,255,.06);color:#F3F3F6;border:1px solid rgba(255,255,255,.14);padding:9px 16px;border-radius:11px;font-family:Manrope;font-weight:700;font-size:13px;cursor:pointer">Changer la photo</button>
+                  </div>
+                  <div style="border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:22px;background:rgba(255,255,255,.02)">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                      <div><label style="display:block;font-size:12.5px;font-weight:600;color:#B9B9C8;margin-bottom:7px">Nom du studio</label><input value="Studio Créateur" style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:11px;padding:11px 14px;color:#F3F3F6;font-size:14px" style-focus="border-color:#7C5CFF;outline:none"></div>
+                      <div><label style="display:block;font-size:12.5px;font-weight:600;color:#B9B9C8;margin-bottom:7px">E-mail</label><input value="creator@studio.co" style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:11px;padding:11px 14px;color:#F3F3F6;font-size:14px" style-focus="border-color:#7C5CFF;outline:none"></div>
+                      <div><label style="display:block;font-size:12.5px;font-weight:600;color:#B9B9C8;margin-bottom:7px">Langue</label><input value="Français" style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:11px;padding:11px 14px;color:#F3F3F6;font-size:14px" style-focus="border-color:#7C5CFF;outline:none"></div>
+                      <div><label style="display:block;font-size:12.5px;font-weight:600;color:#B9B9C8;margin-bottom:7px">Fuseau horaire</label><input value="Europe/Paris (GMT+2)" style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:11px;padding:11px 14px;color:#F3F3F6;font-size:14px" style-focus="border-color:#7C5CFF;outline:none"></div>
+                    </div>
+                    <div style="display:flex;justify-content:flex-end;margin-top:18px"><button style="background:linear-gradient(135deg,#7C5CFF,#9D6BFF);color:#fff;border:none;padding:11px 22px;border-radius:11px;font-family:Manrope;font-weight:700;font-size:13.5px;cursor:pointer;box-shadow:0 8px 24px rgba(124,92,255,.35)" style-hover="filter:brightness(1.08)">Enregistrer</button></div>
+                  </div>
+                  <div style="border:1px solid rgba(255,92,92,.25);border-radius:16px;padding:18px 20px;background:rgba(255,92,92,.05);margin-top:18px;display:flex;align-items:center;gap:14px"><div style="flex:1"><div style="font-weight:700;font-size:13.5px;color:#FF9A9A">Supprimer le compte</div><div style="font-size:12.5px;color:#8A8A9C">Action irréversible — toutes tes vidéos et données seront effacées.</div></div><button style="background:rgba(255,92,92,.14);color:#FF9A9A;border:1px solid rgba(255,92,92,.3);padding:9px 16px;border-radius:11px;font-family:Manrope;font-weight:700;font-size:13px;cursor:pointer">Supprimer</button></div>
+                </div>
+              </sc-if>
+
+              <!-- NOTIFICATIONS -->
+              <sc-if value="{{ setIsNotif }}" hint-placeholder-val="{{ false }}">
+                <div style="animation:fadeUp .25s ease both;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.02);overflow:hidden">
+                  <div style="display:flex;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.07);font-size:12px;font-weight:700;color:#7E7E92;letter-spacing:.03em"><span style="flex:1">TYPE D'ÉVÉNEMENT</span><span style="width:64px;text-align:center">E-MAIL</span><span style="width:64px;text-align:center">PUSH</span></div>
+                  <sc-for list="{{ notifRows }}" as="n" hint-placeholder-count="5">
+                    <div style="display:flex;align-items:center;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.05)">
+                      <div style="flex:1"><div style="font-size:13.5px;font-weight:600">{{ n.label }}</div><div style="font-size:12px;color:#8A8A9C;margin-top:2px">{{ n.desc }}</div></div>
+                      <div style="width:64px;display:flex;justify-content:center"><label onClick="{{ n.onEmail }}" style="cursor:pointer"><span style="{{ n.eTrack }}"><span style="{{ n.eKnob }}"></span></span></label></div>
+                      <div style="width:64px;display:flex;justify-content:center"><label onClick="{{ n.onPush }}" style="cursor:pointer"><span style="{{ n.pTrack }}"><span style="{{ n.pKnob }}"></span></span></label></div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <!-- ÉQUIPE & RÔLES -->
+              <sc-if value="{{ setIsTeam }}" hint-placeholder-val="{{ false }}">
+                <div style="animation:fadeUp .25s ease both">
+                  <div style="display:flex;gap:10px;margin-bottom:18px">
+                    <input value="collaborateur@email.com" style="flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:11px;padding:11px 14px;color:#F3F3F6;font-size:14px" style-focus="border-color:#7C5CFF;outline:none">
+                    <button style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#7C5CFF,#9D6BFF);color:#fff;border:none;padding:11px 20px;border-radius:11px;font-family:Manrope;font-weight:700;font-size:13.5px;cursor:pointer;white-space:nowrap;box-shadow:0 8px 24px rgba(124,92,255,.35)" style-hover="filter:brightness(1.08)">{{ usersIcon }} Inviter</button>
+                  </div>
+                  <div style="border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.02);overflow:hidden;margin-bottom:18px">
+                    <sc-for list="{{ members }}" as="m" hint-placeholder-count="3">
+                      <div style="display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.05)">
+                        <div style="width:40px;height:40px;border-radius:50%;background:{{ m.color }};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;flex:none">{{ m.initial }}</div>
+                        <div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700">{{ m.name }}</div><div style="font-size:12px;color:#8A8A9C">{{ m.email }}</div></div>
+                        <sc-if value="{{ m.fixed }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:700;color:#A78BFA;background:rgba(124,92,255,.16);padding:6px 14px;border-radius:9px">{{ m.fixedLabel }}</span></sc-if>
+                        <div style="display:flex;gap:6px"><sc-for list="{{ m.roles }}" as="r" hint-placeholder-count="0"><button onClick="{{ r.onClick }}" style="{{ r.style }}">{{ r.label }}</button></sc-for></div>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <sc-for list="{{ pendingInvites }}" as="p" hint-placeholder-count="1">
+                    <div style="display:flex;align-items:center;gap:14px;border:1px dashed rgba(255,255,255,.14);border-radius:14px;padding:14px 18px;margin-bottom:18px">
+                      <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;color:#7E7E92;flex:none">{{ clockIcon }}</div>
+                      <div style="flex:1"><div style="font-size:13.5px;font-weight:600">{{ p.email }}</div><div style="font-size:12px;color:#FFB74C">Invitation en attente · {{ p.role }}</div></div>
+                      <button style="background:none;border:none;color:#7E7E92;font-family:Manrope;font-weight:700;font-size:12.5px;cursor:pointer" style-hover="color:#FF9A9A">Annuler</button>
+                    </div>
+                  </sc-for>
+                  <div style="border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:18px;background:rgba(255,255,255,.02)">
+                    <div style="font-size:12px;font-weight:700;color:#7E7E92;letter-spacing:.03em;margin-bottom:12px">RÔLES</div>
+                    <div style="display:flex;flex-direction:column;gap:10px">
+                      <sc-for list="{{ roleLegend }}" as="r" hint-placeholder-count="3"><div style="display:flex;gap:10px;font-size:13px"><span style="font-weight:700;color:#A78BFA;width:70px;flex:none">{{ r.r }}</span><span style="color:#B9B9C8">{{ r.d }}</span></div></sc-for>
+                    </div>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- COMPTES & ESPACES -->
+              <sc-if value="{{ setIsAccounts }}" hint-placeholder-val="{{ false }}">
+                <div style="animation:fadeUp .25s ease both">
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px"><h3 style="margin:0;font-family:'Manrope';font-size:16px;font-weight:600">Espaces de travail</h3><button style="background:rgba(124,92,255,.14);color:#A78BFA;border:1px solid rgba(124,92,255,.3);padding:8px 15px;border-radius:10px;font-family:Manrope;font-weight:700;font-size:12.5px;cursor:pointer">+ Nouvel espace</button></div>
+                  <p style="font-size:12.5px;color:#8A8A9C;margin:0 0 16px">Gère plusieurs marques depuis un seul compte. Chacune a son planning, ses réseaux et son abonnement.</p>
+                  <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:28px">
+                    <sc-for list="{{ workspaces }}" as="w" hint-placeholder-count="3">
+                      <div style="{{ w.rowStyle }}">
+                        <div style="width:42px;height:42px;border-radius:12px;background:{{ w.color }};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:17px;flex:none">{{ w.initial }}</div>
+                        <div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700">{{ w.name }}</div><div style="font-size:12px;color:#8A8A9C">{{ w.handle }} · Plan {{ w.plan }}</div></div>
+                        <button onClick="{{ w.onSwitch }}" style="{{ w.btnStyle }}">{{ w.btnLabel }}</button>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <h3 style="margin:0 0 14px;font-family:'Manrope';font-size:16px;font-weight:600">Réseaux connectés</h3>
+                  <div style="display:flex;flex-direction:column;gap:12px">
+                    <sc-for list="{{ networks }}" as="n" hint-placeholder-count="4">
+                      <div style="display:flex;align-items:center;gap:14px;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px;background:rgba(255,255,255,.02)">
+                        <span style="width:42px;height:42px;border-radius:11px;background:{{ n.bg }};display:flex;align-items:center;justify-content:center;color:#fff;flex:none">{{ n.icon }}</span>
+                        <div style="flex:1;min-width:0"><div style="font-size:14px;font-weight:700;display:flex;align-items:center;gap:8px">{{ n.name }}<span style="width:7px;height:7px;border-radius:50%;background:{{ n.dot }}"></span></div><div style="font-size:12px;color:#8A8A9C">{{ n.handle }}</div></div>
+                        <button style="{{ n.btnStyle }}">{{ n.btnLabel }}</button>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- PARRAINAGE -->
+              <sc-if value="{{ setIsReferral }}" hint-placeholder-val="{{ false }}">
+                <div style="animation:fadeUp .25s ease both">
+                  <div style="border:1px solid rgba(124,92,255,.3);border-radius:18px;padding:26px;background:linear-gradient(135deg,rgba(124,92,255,.16),rgba(124,92,255,.08));margin-bottom:20px">
+                    <div style="width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:#fff;margin-bottom:14px">{{ giftBig }}</div>
+                    <h2 style="font-family:'Manrope';font-size:20px;font-weight:600;margin:0 0 6px">Offre 1 mois, gagne 1 mois</h2>
+                    <p style="font-size:13.5px;color:#C9C9D6;margin:0 0 18px;line-height:1.5">Pour chaque ami qui s'abonne, vous recevez tous les deux 1 mois Creator offert. À 10 filleuls, 3 mois Studio en bonus.</p>
+                    <div style="display:flex;gap:10px">
+                      <div style="flex:1;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.14);border-radius:11px;padding:12px 16px;font-size:14px;font-weight:600;font-family:ui-monospace,Menlo,monospace;color:#F3F3F6;display:flex;align-items:center">cadence.video/r/CREATOR42</div>
+                      <button onClick="{{ copyRef }}" style="display:inline-flex;align-items:center;gap:8px;background:#fff;color:#14141B;border:none;padding:12px 20px;border-radius:11px;font-family:Manrope;font-weight:700;font-size:13.5px;cursor:pointer;white-space:nowrap" style-hover="filter:brightness(.95)">{{ copyIcon }} {{ copyLabel }}</button>
+                    </div>
+                  </div>
+                  <div style="border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px;background:rgba(255,255,255,.02);margin-bottom:18px">
+                    <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:10px"><span style="font-weight:700">Progression vers 3 mois Studio</span><span style="color:#8A8A9C">{{ refProgress }} / {{ refGoal }} filleuls</span></div>
+                    <div style="height:10px;border-radius:10px;background:rgba(255,255,255,.06);overflow:hidden"><div style="height:100%;border-radius:10px;background:linear-gradient(90deg,#7C5CFF,#9D6BFF);width:{{ refPct }}"></div></div>
+                  </div>
+                  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+                    <sc-for list="{{ refStats }}" as="r" hint-placeholder-count="3"><div style="border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:18px;background:rgba(255,255,255,.02);text-align:center"><div style="font-family:'Manrope';font-size:26px;font-weight:600;color:#A78BFA">{{ r.value }}</div><div style="font-size:12.5px;color:#8A8A9C;margin-top:4px">{{ r.label }}</div></div></sc-for>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+      </div>
+    </main>
+  </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:&quot;100%&quot;,&quot;height&quot;:900},&quot;brandName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Cadence&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Marque&quot;},&quot;validate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Comportement&quot;}}">
+class Component extends DCLogic {
+  state = {
+    appStage: 'auth', authStep: 0, authTab: 'signup', connected: { yt: false, tt: false }, connecting: null,
+    view: 'dashboard', step: 0,
+    niche: 'motivation', perDay: 3,
+    times: { '08:00': true, '12:00': false, '18:30': true, '21:00': false },
+    style: 'cine', voice: 'lea', lang: 'fr', validate: true, filter: 'all',
+    pipe: { running: false, idx: 0, pcts: [0,0,0,0,0], done: false },
+    extraVideos: [], approved: {},
+    editingVideo: null, editorTab: 'script', editorScript: '', capStyle: 'karaoke', capPos: 'bas', edVoice: 'lea', edTrack: 'uplift',
+    videoIdea: '', refs: [], dragOver: false,
+    sceneDurs: [3, 5, 6, 5, 4],
+    sceneTrans: ['cut', 'fade', 'slide', 'zoom', 'fade'],
+    edPlaying: false, edTime: 0, edMuted: false, edAspect: '9:16', edLogo: true, edFont: 'grotesk', edCapSize: 100, edCapColor: '#7C5CFF', edHighlight: '#FFE45C', edFadeIn: true, edFadeOut: true, edIntro: false, edOutro: true, edSpeed: 100, edPitch: 50,
+    cal: { y: 2026, m: 6 },
+    settingsTab: 'compte', notifOpen: false, notifRead: false,
+    notifPrefs: { published: { e: true, p: true }, review: { e: true, p: true }, failed: { e: true, p: false }, weekly: { e: true, p: false }, product: { e: false, p: false } },
+    teamRoles: { anna: 'admin', marc: 'editor' }, workspace: 'studio', trendNiche: 'all', refCopied: false,
+  };
+
+  svg(paths, sz, sw) {
+    const kids = (Array.isArray(paths) ? paths : [paths]).map((d, i) =>
+      typeof d === 'string' ? React.createElement('path', { key: i, d }) : React.createElement(d.t, { key: i, ...d.a }));
+    return React.createElement('svg', { width: sz || 18, height: sz || 18, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: sw || 1.8, strokeLinecap: 'round', strokeLinejoin: 'round' }, kids);
+  }
+  ic = {
+    home: 'M3 10.5 12 3l9 7.5M5 9.5V21h14V9.5', spark: 'M12 3v4M12 17v4M3 12h4M17 12h4M6.3 6.3l2.4 2.4M15.3 15.3l2.4 2.4M17.7 6.3l-2.4 2.4M8.7 15.3l-2.4 2.4',
+    cal: [{t:'rect',a:{x:3,y:4.5,width:18,height:16.5,rx:2.5}},'M3 9h18M8 2.5v4M16 2.5v4'], chart: 'M4 20V10M10 20V4M16 20v-7M22 20H2',
+    gear: [{t:'circle',a:{cx:12,cy:12,r:3.2}},'M4 12a8 8 0 0 1 .3-2.2l-2-1.5 2-3.5 2.3 1a8 8 0 0 1 1.9-1.1L9 2h4l.5 2.4a8 8 0 0 1 1.9 1.1l2.3-1 2 3.5-2 1.5A8 8 0 0 1 20 12a8 8 0 0 1-.3 2.2l2 1.5-2 3.5-2.3-1a8 8 0 0 1-1.9 1.1L13 22H9l-.5-2.4a8 8 0 0 1-1.9-1.1l-2.3 1-2-3.5 2-1.5A8 8 0 0 1 4 12z'],
+    card: [{t:'rect',a:{x:3,y:5,width:18,height:14,rx:2.5}},'M3 10h18'], plus: 'M12 5v14M5 12h14', check: 'M20 6 9 17l-5-5',
+    uploadc: 'M12 15V4m0 0 4 4m-4-4-4 4M4 15v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3',
+    play: {t:'path',a:{d:'M8 5v14l11-7z',fill:'currentColor',stroke:'none'}}, clock: [{t:'circle',a:{cx:12,cy:12,r:9}},'M12 7v5l3 2'],
+    pause: [{t:'rect',a:{x:6,y:5,width:4,height:14,rx:1,fill:'currentColor',stroke:'none'}},{t:'rect',a:{x:14,y:5,width:4,height:14,rx:1,fill:'currentColor',stroke:'none'}}], mute: ['M11 5 6 9H2v6h4l5 4z','M22 9l-6 6M16 9l6 6'], volume: ['M11 5 6 9H2v6h4l5 4z','M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13'], crop: ['M6 2v16a1 1 0 0 0 1 1h16','M2 6h16a1 1 0 0 1 1 1v16'], scissors: [{t:'circle',a:{cx:6,cy:6,r:2.5}},{t:'circle',a:{cx:6,cy:18,r:2.5}},'M8 8l12 8M8 16l12-8'], type: 'M4 7V5h16v2M9 5v14M9 19h6', stamp: ['M9 3h6v4a3 3 0 0 1-3 3 3 3 0 0 1-3-3z','M12 10v4M5 21h14v-2a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3z'], sparkles: 'M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5zM19 14l.7 2.1L22 17l-2.3.9L19 20l-.7-2.1L16 17l2.3-.9z',
+    music: [{t:'circle',a:{cx:6,cy:18,r:2.5}},{t:'circle',a:{cx:18,cy:16,r:2.5}},'M8.5 18V6l12-2v12'], mic: [{t:'rect',a:{x:9,y:2.5,width:6,height:11,rx:3}},'M6 11a6 6 0 0 0 12 0M12 17v4'],
+    img: [{t:'rect',a:{x:3,y:4,width:18,height:16,rx:2.5}},{t:'circle',a:{cx:8.5,cy:9.5,r:1.5}},'M21 16l-5-5L4 20'], film: [{t:'rect',a:{x:3,y:4,width:18,height:16,rx:2.5}},'M3 9h18M3 15h18M8 4v16M16 4v16'],
+    doc: [{t:'path',a:{d:'M6 3h8l4 4v14H6z'}},'M14 3v4h4M9 12h6M9 16h6'], download: 'M12 4v11m0 0 4-4m-4 4-4-4M5 20h14',
+    caption: [{t:'rect',a:{x:3,y:5,width:18,height:14,rx:2.5}},'M7 10h3M7 14h7M14 10h3'], trend: 'M3 17l6-6 4 4 8-8M15 7h6v6',
+    flame: 'M12 3c3 3 4 6 2 9 0-2-1-3-2-3 0 3-4 3-4 7a4 4 0 0 0 8 0c0-4-2-6-4-13z', dollar: 'M12 2v20M17 6.5C17 4.6 14.8 3.5 12 3.5S7 4.9 7 7s2.2 3 5 3.5 5 1.4 5 3.5-2.2 3.5-5 3.5S7 20 7 18',
+    dumbbell: 'M6.5 6.5l11 11M4 9l2-2M20 15l-2 2M7 4l3 3M17 20l-3-3M2 12l3 3M22 12l-3-3', brain: 'M9.5 4a3 3 0 0 0-3 3 3 3 0 0 0-1 5.8V15a3 3 0 0 0 5 2.2M14.5 4a3 3 0 0 1 3 3 3 3 0 0 1 1 5.8V15a3 3 0 0 1-5 2.2M12 4.5v14',
+    zap: {t:'path',a:{d:'M13 2 4 14h7l-1 8 9-12h-7z',fill:'currentColor',stroke:'none'}}, back: 'M15 5l-7 7 7 7', lock: [{t:'rect',a:{x:5,y:11,width:14,height:9,rx:2}},'M8 11V7a4 4 0 0 1 8 0v4'], logout: 'M16 17l5-5-5-5M21 12H9M12 3H5v18h7',
+    bell: 'M6 9a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6M10 20a2 2 0 0 0 4 0', users: [{t:'circle',a:{cx:9,cy:8,r:3.2}},'M3 20a6 6 0 0 1 12 0M16 5.6a3 3 0 0 1 0 5.8M21 20a5.5 5.5 0 0 0-4-5.3'], gift: [{t:'rect',a:{x:3,y:8,width:18,height:5,rx:1}},'M12 8v13M4 13v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M12 8S11 3 8 3a2.5 2.5 0 0 0 0 5M12 8s1-5 4-5a2.5 2.5 0 0 1 0 5'], link: 'M9 15l6-6M10.5 7l1-1a4 4 0 0 1 5.7 5.7l-1 1M13.5 17l-1 1a4 4 0 0 1-5.7-5.7l1-1', trash: 'M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13', copy: [{t:'rect',a:{x:9,y:9,width:11,height:11,rx:2}},'M5 15V5a2 2 0 0 1 2-2h10'], bulb: 'M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10c1 1 1.4 2 1.5 3h5c.1-1 .5-2 1.5-3a6 6 0 0 0-4-10z', refresh: 'M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4',
+    history: [{t:'path',a:{d:'M3 12a9 9 0 1 0 3-6.7L3 8'}},'M3 4v4h4M12 8v4l3 2'], external: [{t:'path',a:{d:'M14 4h6v6'}},'M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5'], eye: ['M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z',{t:'circle',a:{cx:12,cy:12,r:3}}], heart: 'M12 20s-7-4.5-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 5c-2.5 4.5-9.5 9-9.5 9z',
+  };
+  icon = (n, sz, sw) => this.svg(this.ic[n], sz, sw);
+  googleIcon() {
+    return React.createElement('svg', { width: 18, height: 18, viewBox: '0 0 48 48' },
+      React.createElement('path', { fill: '#FFC107', d: 'M43.6 20.5H42V20H24v8h11.3C33.7 32.9 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6.1 29.5 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.3-.4-3.5z' }),
+      React.createElement('path', { fill: '#FF3D00', d: 'M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6.1 29.5 4 24 4 16.3 4 9.7 8.3 6.3 14.7z' }),
+      React.createElement('path', { fill: '#4CAF50', d: 'M24 44c5.2 0 9.9-2 13.5-5.2l-6.2-5.3C29.2 35.1 26.7 36 24 36c-5.3 0-9.7-3.1-11.3-7.9l-6.5 5C9.6 39.6 16.2 44 24 44z' }),
+      React.createElement('path', { fill: '#1976D2', d: 'M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.2-4.2 5.5l6.2 5.3C39.9 41.2 44 37 44 24c0-1.3-.1-2.3-.4-3.5z' }));
+  }
+
+  NICHES = {
+    motivation: { name: 'Citations motivantes', desc: 'Punchlines qui claquent, ton inspirant.', icon: 'flame', bg: 'linear-gradient(135deg,#9D6BFF,#FF8A5C)', hook: 'Personne ne viendra te sauver.' },
+    facts: { name: 'Faits insolites', desc: 'Le saviez-vous ? qui rend accro.', icon: 'brain', bg: 'linear-gradient(135deg,#5CC8FF,#7C5CFF)', hook: 'Ton cerveau brûle 20% de tes calories.' },
+    finance: { name: 'Finance', desc: 'Argent, investissement, discipline.', icon: 'dollar', bg: 'linear-gradient(135deg,#34D399,#0EA5A5)', hook: 'Les riches ne budgètent pas. Ils font ça.' },
+    fitness: { name: 'Fitness', desc: 'Routines, discipline, transformation.', icon: 'dumbbell', bg: 'linear-gradient(135deg,#FFB74C,#FF6B4C)', hook: '5 minutes > 1 heure le dimanche.' },
+    growth: { name: 'Développement perso', desc: 'Habitudes, focus, mental.', icon: 'zap', bg: 'linear-gradient(135deg,#A78BFA,#7C5CFF)', hook: 'Arrête de scroller. Lis ça.' },
+    tips: { name: 'Astuces & vie pratique', desc: 'Hacks utiles du quotidien.', icon: 'spark', bg: 'linear-gradient(135deg,#F472B6,#A855F7)', hook: 'La règle des 2 minutes.' },
+  };
+  BASE_VIDEOS = [
+    { hook: 'Personne ne viendra te sauver.', niche: 'motivation', plat: 'yt', status: 'published', bg: 'linear-gradient(150deg,#9D6BFF,#7C2D6B)', views: '42,8K', likes: '3,1K', dur: '0:22', rate: '8,4%' },
+    { hook: 'Ton cerveau brûle 20% de tes calories.', niche: 'facts', plat: 'tt', status: 'published', bg: 'linear-gradient(150deg,#5CC8FF,#2D3E9E)', views: '128K', likes: '9,4K', dur: '0:31', rate: '11,2%' },
+    { hook: 'La règle des 2 minutes qui change tout.', niche: 'growth', plat: 'both', status: 'published', bg: 'linear-gradient(150deg,#A78BFA,#4C1D95)', views: '76,2K', likes: '5,8K', dur: '0:27', rate: '9,1%' },
+    { hook: 'Les riches ne budgètent pas. Ils font ça.', niche: 'finance', plat: 'both', status: 'scheduled', bg: 'linear-gradient(150deg,#34D399,#065F46)', when: 'Demain · 08:00', dur: '0:29' },
+    { hook: '5 minutes > 1 heure le dimanche.', niche: 'fitness', plat: 'yt', status: 'scheduled', bg: 'linear-gradient(150deg,#FFB74C,#7C2D12)', when: "Aujourd'hui · 18:30", dur: '0:19' },
+    { hook: '1€ par jour = 400 000€. Voici comment.', niche: 'finance', plat: 'tt', status: 'scheduled', bg: 'linear-gradient(150deg,#0EA5A5,#134E4A)', when: 'Demain · 12:00', dur: '0:34' },
+    { hook: 'Arrête de scroller. Lis ça.', niche: 'growth', plat: 'tt', status: 'draft', bg: 'linear-gradient(150deg,#F472B6,#831843)', dur: '0:24' },
+    { hook: 'Le café à jeun ? Grosse erreur.', niche: 'facts', plat: 'yt', status: 'draft', bg: 'linear-gradient(150deg,#5CE0C8,#134E4A)', dur: '0:26' },
+  ];
+  STAGES = [
+    { key: 'script', name: 'Script', desc: 'Hook fort dans les 2 premières secondes', icon: 'doc' },
+    { key: 'voice', name: 'Voix off', desc: 'Synthèse vocale naturelle (TTS)', icon: 'mic' },
+    { key: 'visuals', name: 'Visuels', desc: 'Clips & images IA générés', icon: 'img' },
+    { key: 'edit', name: 'Montage & sous-titres', desc: 'Format 9:16, sous-titres synchro, musique', icon: 'film' },
+    { key: 'export', name: 'Export MP4', desc: 'Rendu final 1080×1920', icon: 'download' },
+  ];
+  DEF_SCRIPT = "Personne ne viendra te sauver.\n\nÀ 6h du matin, pendant que le monde dort, c'est toi contre toi.\n\nChaque excuse que tu te donnes, quelqu'un d'autre l'ignore en ce moment même.\n\nAlors lève-toi. Commence. Aujourd'hui.";
+
+  componentWillUnmount() { clearInterval(this._t); clearInterval(this._pt); clearTimeout(this._rc); }
+
+  // Build a hook + scene script from the user's typed idea (falls back to the niche default).
+  hookFromIdea(idea) {
+    let h = (idea || '').trim().replace(/\s+/g, ' ');
+    if (!h) return '';
+    h = h.charAt(0).toUpperCase() + h.slice(1);
+    if (h.length > 62) { h = h.slice(0, 60); const sp = h.lastIndexOf(' '); if (sp > 32) h = h.slice(0, sp); h += '…'; }
+    else if (!/[.!?…»]$/.test(h)) h += '.';
+    return h;
+  }
+  genContent() {
+    const n = this.NICHES[this.state.niche];
+    const idea = (this.state.videoIdea || '').trim();
+    if (!idea) {
+      const fulls = ['', "6h du matin. C'est toi contre toi.", "Chaque excuse, un autre l'ignore.", 'La discipline bat la motivation.', "Alors lève-toi. Commence."];
+      fulls[0] = n.hook;
+      return { fromIdea: false, hook: n.hook, sceneFulls: fulls, scriptText: this.DEF_SCRIPT };
+    }
+    const hook = this.hookFromIdea(idea);
+    const listicle = /\b(\d+)\b/.test(idea);
+    const sceneFulls = [
+      hook,
+      listicle ? 'Reste jusqu\u2019au bout, le point n\u00b02 change tout.' : 'La plupart des gens s\u2019y prennent mal.',
+      'Voici ce que presque personne ne t\u2019explique.',
+      'Applique \u00e7a et tu vois la diff\u00e9rence en une semaine.',
+      'Abonne-toi pour ne rien rater.',
+    ];
+    const scriptText = `${hook}\n\n${idea}\n\n${sceneFulls[2]}\n${sceneFulls[3]}\n\n${sceneFulls[4]}`;
+    return { fromIdea: true, hook, sceneFulls, scriptText };
+  }
+
+  // handlers
+  setSignup = () => this.setState({ authTab: 'signup' });
+  setLogin = () => this.setState({ authTab: 'login' });
+  authNext = () => this.setState(s => ({ authStep: Math.min(2, s.authStep + 1) }));
+  connect = (net) => () => {
+    this.setState({ connecting: net });
+    setTimeout(() => this.setState(s => ({ connecting: null, connected: { ...s.connected, [net]: true } })), 1100);
+  };
+  enterApp = () => this.setState({ appStage: 'app' });
+  logout = () => this.setState({ appStage: 'auth', authStep: 0 });
+
+  setView = (v) => () => this.setState({ view: v });
+  goCreate = () => this.setState({ view: 'create', step: 0, pipe: { running: false, idx: 0, pcts: [0,0,0,0,0], done: false } });
+  next = () => { const ns = this.state.step + 1; this.setState({ step: ns }); if (ns === 2) setTimeout(() => this.startPipe(), 250); };
+  prev = () => this.setState({ step: Math.max(0, this.state.step - 1) });
+  selectNiche = (k) => () => this.setState({ niche: k });
+  onIdea = (e) => this.setState({ videoIdea: e.target.value });
+  addFiles = (fileList) => {
+    const files = Array.from(fileList || []).slice(0, 10);
+    files.forEach(f => {
+      const isImg = (f.type || '').startsWith('image'), isVid = (f.type || '').startsWith('video');
+      if (!isImg && !isVid) return;
+      if (isImg) { const rd = new FileReader(); rd.onload = () => this.setState(s => ({ refs: [...s.refs, { name: f.name, type: 'image', url: rd.result }] })); rd.readAsDataURL(f); }
+      else { const url = URL.createObjectURL(f); this.setState(s => ({ refs: [...s.refs, { name: f.name, type: 'video', url }] })); }
+    });
+  };
+  onFiles = (e) => { this.addFiles(e.target.files); e.target.value = ''; };
+  onDrop = (e) => { e.preventDefault(); this.setState({ dragOver: false }); this.addFiles(e.dataTransfer.files); };
+  onDragOver = (e) => { e.preventDefault(); if (!this.state.dragOver) this.setState({ dragOver: true }); };
+  onDragLeave = (e) => { e.preventDefault(); this.setState({ dragOver: false }); };
+  removeRef = (idx) => (e) => { if (e) { e.preventDefault(); e.stopPropagation(); } this.setState(s => ({ refs: s.refs.filter((_, i) => i !== idx) })); };
+  setFilter = (f) => () => this.setState({ filter: f });
+  onPerDay = (e) => this.setState({ perDay: +e.target.value });
+  toggleTime = (k) => () => this.setState(s => ({ times: { ...s.times, [k]: !s.times[k] } }));
+  setStyle = (k) => () => this.setState({ style: k });
+  setVoice = (k) => () => this.setState({ voice: k });
+  setLang = (k) => () => this.setState({ lang: k });
+  toggleValidate = () => this.setState(s => ({ validate: !s.validate }));
+  regenerate = () => { this.setState({ pipe: { running: false, idx: 0, pcts: [0,0,0,0,0], done: false } }); setTimeout(() => this.startPipe(), 150); };
+  startPipe() {
+    clearInterval(this._t);
+    this.setState({ pipe: { running: true, idx: 0, pcts: [0,0,0,0,0], done: false } });
+    this._t = setInterval(() => {
+      this.setState(s => {
+        const p = { ...s.pipe, pcts: [...s.pipe.pcts] };
+        if (p.done) { clearInterval(this._t); return { pipe: p }; }
+        const i = p.idx;
+        p.pcts[i] = Math.min(100, p.pcts[i] + (7 + Math.random() * 15));
+        if (p.pcts[i] >= 100) { p.pcts[i] = 100; if (i < 4) p.idx = i + 1; else { p.done = true; p.running = false; clearInterval(this._t); } }
+        return { pipe: p };
+      });
+    }, 190);
+  }
+  addToQueue = () => {
+    const n = this.NICHES[this.state.niche];
+    const c = this.genContent();
+    const v = { hook: c.hook, niche: n.name, plat: 'both', status: this.state.validate ? 'review' : 'scheduled', bg: n.bg, when: this.state.validate ? 'En attente de validation' : "Aujourd'hui · 21:00", dur: '0:23', script: c.scriptText, sceneFulls: c.sceneFulls };
+    this.setState(s => ({ extraVideos: [v, ...s.extraVideos], view: 'queue', step: 0, pipe: { running: false, idx: 0, pcts: [0,0,0,0,0], done: false } }));
+  };
+  approve = (idx) => () => this.setState(s => ({ approved: { ...s.approved, [idx]: true } }));
+
+  openEditor = (v) => () => this.setState({ view: 'editor', editingVideo: v, editorTab: 'script', editorScript: v.script || this.DEF_SCRIPT });
+  editGenerated = () => { const n = this.NICHES[this.state.niche]; const c = this.genContent(); this.setState({ view: 'editor', editingVideo: { hook: c.hook, niche: n.name, bg: n.bg, plat: 'both', sceneFulls: c.sceneFulls }, editorTab: 'script', editorScript: c.scriptText }); };
+  backFromEditor = () => this.setState({ view: 'dashboard' });
+  setEdTab = (t) => () => this.setState({ editorTab: t });
+  onScript = (e) => this.setState({ editorScript: e.target.value });
+  setCapStyle = (k) => () => this.setState({ capStyle: k });
+  setCapPos = (k) => () => this.setState({ capPos: k });
+  setEdVoice = (k) => () => this.setState({ edVoice: k });
+  setEdTrack = (k) => () => this.setState({ edTrack: k });
+  EDDUR = 23;
+  edDur() { return this.state.sceneDurs.reduce((a, b) => a + b, 0); }
+  trimScene = (idx, delta) => () => {
+    const durs = [...this.state.sceneDurs];
+    const partner = idx < durs.length - 1 ? idx + 1 : idx - 1;
+    let d = Math.max(-(durs[idx] - 1), Math.min(durs[partner] - 1, delta));
+    durs[idx] = +(durs[idx] + d).toFixed(1); durs[partner] = +(durs[partner] - d).toFixed(1);
+    this.setState({ sceneDurs: durs });
+  };
+  resetTrim = () => this.setState({ sceneDurs: [3, 5, 6, 5, 4] });
+  setTrans = (idx, type) => () => { const a = [...this.state.sceneTrans]; a[idx] = type; this.setState({ sceneTrans: a, edTime: 0.001 }); setTimeout(() => this.setState({ edTime: this.sumBefore(idx) + 0.05 }), 20); };
+  sumBefore = (idx) => this.state.sceneDurs.slice(0, idx).reduce((a, b) => a + b, 0);
+  trimDown = (idx) => (e) => {
+    e.preventDefault(); e.stopPropagation();
+    const track = e.currentTarget.parentElement.parentElement;
+    const perSec = track.getBoundingClientRect().width / this.edDur();
+    const startX = e.clientX;
+    const base = [...this.state.sceneDurs];
+    const move = (ev) => {
+      let dsec = (ev.clientX - startX) / perSec;
+      const a = base[idx], b = base[idx + 1];
+      dsec = Math.max(-(a - 1), Math.min(b - 1, dsec));
+      const nd = [...base]; nd[idx] = +(a + dsec).toFixed(1); nd[idx + 1] = +(b - dsec).toFixed(1);
+      this.setState({ sceneDurs: nd });
+    };
+    const up = () => { document.removeEventListener('pointermove', move); document.removeEventListener('pointerup', up); };
+    document.addEventListener('pointermove', move); document.addEventListener('pointerup', up);
+  };
+  togglePlay = () => {
+    if (this.state.edPlaying) { clearInterval(this._pt); this.setState({ edPlaying: false }); return; }
+    if (this.state.edTime >= this.edDur() - 0.05) this.setState({ edTime: 0 });
+    this.setState({ edPlaying: true });
+    this._pt = setInterval(() => {
+      this.setState(st => {
+        const nt = st.edTime + 0.1;
+        if (nt >= this.edDur()) { clearInterval(this._pt); return { edTime: this.edDur(), edPlaying: false }; }
+        return { edTime: nt };
+      });
+    }, 100);
+  };
+  seekBar = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    const pct = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+    this.setState({ edTime: pct * this.edDur() });
+  };
+  toggleMute = () => this.setState(s => ({ edMuted: !s.edMuted }));
+  setAspect = (k) => () => this.setState({ edAspect: k });
+  toggleLogo = () => this.setState(s => ({ edLogo: !s.edLogo }));
+  setEdFont = (k) => () => this.setState({ edFont: k });
+  onCapSize = (e) => this.setState({ edCapSize: +e.target.value });
+  setCapColor = (c) => () => this.setState({ edCapColor: c });
+  setHighlight = (c) => () => this.setState({ edHighlight: c });
+  toggleFadeIn = () => this.setState(s => ({ edFadeIn: !s.edFadeIn }));
+  toggleFadeOut = () => this.setState(s => ({ edFadeOut: !s.edFadeOut }));
+  toggleIntro = () => this.setState(s => ({ edIntro: !s.edIntro }));
+  toggleOutro = () => this.setState(s => ({ edOutro: !s.edOutro }));
+  onEdSpeed = (e) => this.setState({ edSpeed: +e.target.value });
+  onEdPitch = (e) => this.setState({ edPitch: +e.target.value });
+  fmtTime = (t) => { const s = Math.floor(t); return `0:${String(s).padStart(2, '0')}`; };
+  calPrev = () => this.setState(s => { let { y, m } = s.cal; m--; if (m < 0) { m = 11; y--; } return { cal: { y, m } }; });
+  calNext = () => this.setState(s => { let { y, m } = s.cal; m++; if (m > 11) { m = 0; y++; } return { cal: { y, m } }; });
+  setSettingsTab = (t) => () => this.setState({ settingsTab: t });
+  toggleNotif = () => this.setState(s => ({ notifOpen: !s.notifOpen }));
+  markAllRead = () => this.setState({ notifRead: true });
+  setNotifPref = (key, ch) => () => this.setState(s => ({ notifPrefs: { ...s.notifPrefs, [key]: { ...s.notifPrefs[key], [ch]: !s.notifPrefs[key][ch] } } }));
+  setMemberRole = (id, role) => () => this.setState(s => ({ teamRoles: { ...s.teamRoles, [id]: role } }));
+  switchWorkspace = (id) => () => this.setState({ workspace: id });
+  setTrendNiche = (k) => () => this.setState({ trendNiche: k });
+  generateFrom = (niche) => () => this.setState({ view: 'create', step: 0, niche, pipe: { running: false, idx: 0, pcts: [0,0,0,0,0], done: false } });
+  copyRef = () => { try { navigator.clipboard.writeText('cadence.video/r/CREATOR42'); } catch (e) {} this.setState({ refCopied: true }); clearTimeout(this._rc); this._rc = setTimeout(() => this.setState({ refCopied: false }), 1600); };
+
+  platBadge(plat) {
+    const yt = React.createElement('span', { style: { width: 22, height: 22, borderRadius: 6, background: '#FF0033', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' } }, this.svg({ t: 'path', a: { d: 'M9 8.5v7l6-3.5z', fill: '#fff', stroke: 'none' } }, 14));
+    const tt = React.createElement('span', { style: { width: 22, height: 22, borderRadius: 6, background: '#000', border: '1px solid rgba(255,255,255,.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' } }, this.svg('M15 4c.4 2 1.7 3.4 3.5 3.6v2.3c-1.3 0-2.5-.4-3.5-1v5.8a4.6 4.6 0 1 1-4.6-4.6c.3 0 .5 0 .8.1v2.4a2.2 2.2 0 1 0 1.5 2.1V4z', 13));
+    if (plat === 'yt') return yt;
+    if (plat === 'tt') return tt;
+    return React.createElement(React.Fragment, {}, yt, tt);
+  }
+  statusOf(st) {
+    const map = { published: { label: '● Publié', bg: 'rgba(52,211,153,.16)', fg: '#34D399' }, scheduled: { label: '● Programmé', bg: 'rgba(124,92,255,.18)', fg: '#A78BFA' }, draft: { label: '● Brouillon', bg: 'rgba(255,255,255,.09)', fg: '#B9B9C8' }, review: { label: '● À valider', bg: 'rgba(255,183,76,.16)', fg: '#FFB74C' } };
+    return map[st] || map.draft;
+  }
+  allVideos() { return [...this.state.extraVideos, ...this.BASE_VIDEOS]; }
+  nicheName(v) { return this.NICHES[v] ? this.NICHES[v].name : v; }
+  chip(on) { return `padding:9px 15px;border-radius:11px;cursor:pointer;font-family:'Manrope';font-weight:600;font-size:13px;border:1px solid ${on ? 'rgba(124,92,255,.5)' : 'rgba(255,255,255,.1)'};background:${on ? 'rgba(124,92,255,.16)' : 'transparent'};color:${on ? '#A78BFA' : '#B9B9C8'}`; }
+  waveBars() { return React.createElement(React.Fragment, {}, [0,1,2,3,4,5,6,7,8,9,10,11].map(i => React.createElement('span', { key: i, style: { width: 3, height: 22, borderRadius: 3, background: '#fff', transformOrigin: 'bottom', animation: `wave ${0.6 + (i % 4) * 0.15}s ease-in-out ${i * 0.05}s infinite` } }))); }
+  miniWave(active) { const hs = [7,12,9,15,11,17,10,14,8,13,9,16,11,7,12,10]; return React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 2, height: 18 } }, hs.map((h, i) => React.createElement('span', { key: i, style: { width: 2, height: h, borderRadius: 2, background: active ? '#A78BFA' : 'rgba(255,255,255,.25)' } }))); }
+
+  renderVals() {
+    const s = this.state, P = this.props || {};
+    const brandName = P.brandName || 'Cadence';
+    const common = {
+      brandName,
+      logoIcon: this.svg({ t: 'path', a: { d: 'M13 2 4 14h7l-1 8 9-12h-7z', fill: '#fff', stroke: 'none' } }, 18),
+      isAuth: s.appStage === 'auth', isApp: s.appStage === 'app',
+    };
+
+    // ---- AUTH ----
+    const conn = s.connected, anyConn = conn.yt || conn.tt;
+    const netBtn = (net, state) => {
+      if (state === 'connected') return `background:rgba(52,211,153,.14);color:#34D399;border:1px solid rgba(52,211,153,.3);padding:9px 15px;border-radius:10px;font-family:'Manrope';font-weight:700;font-size:12.5px;cursor:default;flex:none`;
+      if (state === 'connecting') return `background:rgba(255,255,255,.06);color:#8A8A9C;border:1px solid rgba(255,255,255,.12);padding:9px 15px;border-radius:10px;font-family:'Manrope';font-weight:700;font-size:12.5px;flex:none`;
+      return `background:#fff;color:#14141B;border:none;padding:9px 15px;border-radius:10px;font-family:'Manrope';font-weight:700;font-size:12.5px;cursor:pointer;flex:none`;
+    };
+    const ytState = conn.yt ? 'connected' : s.connecting === 'yt' ? 'connecting' : 'idle';
+    const ttState = conn.tt ? 'connected' : s.connecting === 'tt' ? 'connecting' : 'idle';
+    const cardStyle = (on) => `display:flex;align-items:center;gap:14px;border:1px solid ${on ? 'rgba(52,211,153,.3)' : 'rgba(255,255,255,.1)'};border-radius:14px;padding:14px;background:${on ? 'rgba(52,211,153,.06)' : 'rgba(255,255,255,.02)'}`;
+    const authVals = {
+      authDots: [0,1,2].map(i => ({ style: `width:${i === s.authStep ? '22px' : '7px'};height:7px;border-radius:20px;transition:.2s;background:${i <= s.authStep ? '#7C5CFF' : 'rgba(255,255,255,.15)'}` })),
+      isAuth0: s.authStep === 0, isAuth1: s.authStep === 1, isAuth2: s.authStep === 2,
+      tabSignup: `flex:1;padding:9px;border-radius:9px;border:none;cursor:pointer;font-family:'Manrope';font-weight:700;font-size:13px;background:${s.authTab === 'signup' ? '#fff' : 'transparent'};color:${s.authTab === 'signup' ? '#14141B' : '#8A8A9C'}`,
+      tabLogin: `flex:1;padding:9px;border-radius:9px;border:none;cursor:pointer;font-family:'Manrope';font-weight:700;font-size:13px;background:${s.authTab === 'login' ? '#fff' : 'transparent'};color:${s.authTab === 'login' ? '#14141B' : '#8A8A9C'}`,
+      authHeading: s.authTab === 'signup' ? 'Crée ton studio' : 'Bon retour',
+      authCta: s.authTab === 'signup' ? "S'inscrire par e-mail" : 'Se connecter',
+      setSignup: this.setSignup, setLogin: this.setLogin, authNext: this.authNext, enterApp: this.enterApp,
+      googleIcon: this.googleIcon(),
+      ytIcon: this.svg({ t: 'path', a: { d: 'M9 8.5v7l6-3.5z', fill: '#fff', stroke: 'none' } }, 18),
+      ttIcon: this.svg('M15 4c.4 2 1.7 3.4 3.5 3.6v2.3c-1.3 0-2.5-.4-3.5-1v5.8a4.6 4.6 0 1 1-4.6-4.6c.3 0 .5 0 .8.1v2.4a2.2 2.2 0 1 0 1.5 2.1V4z', 18),
+      lockIcon: this.icon('lock', 13), bigCheck: this.icon('check', 30, 2.6),
+      ytCardStyle: cardStyle(conn.yt), ttCardStyle: cardStyle(conn.tt),
+      ytStatus: conn.yt ? '@cadence.daily · connecté' : 'Publier des Shorts automatiquement',
+      ttStatus: conn.tt ? '@cadence.daily · connecté' : 'Publier des vidéos automatiquement',
+      ytBtn: netBtn('yt', ytState), ttBtn: netBtn('tt', ttState),
+      ytBtnLabel: ytState === 'connected' ? '✓ Connecté' : ytState === 'connecting' ? 'Connexion…' : 'Connecter',
+      ttBtnLabel: ttState === 'connected' ? '✓ Connecté' : ttState === 'connecting' ? 'Connexion…' : 'Connecter',
+      connectYt: this.connect('yt'), connectTt: this.connect('tt'),
+      auth1Cta: `width:100%;margin-top:20px;background:${anyConn ? 'linear-gradient(135deg,#7C5CFF,#9D6BFF)' : 'rgba(255,255,255,.08)'};color:${anyConn ? '#fff' : '#7E7E92'};border:none;padding:13px;border-radius:12px;font-family:'Manrope';font-weight:700;font-size:14.5px;cursor:pointer;box-shadow:${anyConn ? '0 8px 24px rgba(124,92,255,.35)' : 'none'}`,
+      auth1CtaLabel: anyConn ? 'Continuer →' : 'Connecte un réseau pour continuer',
+    };
+    if (common.isAuth) return { ...common, ...authVals };
+
+    // ---- APP ----
+    const view = s.view;
+    const scheduledCount = this.allVideos().filter(v => v.status === 'scheduled' || v.status === 'review').length;
+    const nav = [
+      { id: 'dashboard', label: 'Tableau de bord', icon: this.icon('home') },
+      { id: 'create', label: 'Créer', icon: this.icon('spark') },
+      { id: 'trends', label: 'Tendances IA', icon: this.icon('bulb') },
+      { id: 'calendar', label: 'Calendrier', icon: this.icon('cal') },
+      { id: 'queue', label: "File d'attente", icon: this.icon('clock'), badge: String(scheduledCount) },
+      { id: 'history', label: 'Historique', icon: this.icon('history') },
+      { id: 'analytics', label: 'Analytics', icon: this.icon('chart') },
+      { id: 'billing', label: 'Facturation', icon: this.icon('card') },
+      { id: 'settings', label: 'Réglages', icon: this.icon('gear') },
+    ].map(n => {
+      const active = view === n.id || (n.id === 'dashboard' && view === 'editor');
+      return { ...n, onClick: this.setView(n.id), style: `display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;border-radius:11px;border:none;cursor:pointer;font-family:'Manrope';font-weight:600;font-size:14px;text-align:left;transition:background .15s;background:${active ? 'rgba(124,92,255,.16)' : 'transparent'};color:${active ? '#F3F3F6' : '#8A8A9C'}` };
+    });
+    const titles = {
+      dashboard: ['Tableau de bord', "Vue d'ensemble de ton contenu automatisé"],
+      create: ['Créer une automatisation', 'Configure une machine à contenu quotidien'],
+      editor: ['Éditeur vidéo', 'Peaufine ta vidéo avant publication'],
+      calendar: ['Calendrier de publication', 'Planning de tes vidéos sur tous les réseaux'],
+      queue: ["File d'attente", 'Vidéos programmées et à valider'],
+      history: ['Historique de publication', 'Journal de tout ce que Cadence a publié pour toi'],
+      analytics: ['Analytics', 'Performances de tes publications'],
+      billing: ['Facturation', 'Abonnement, consommation et factures'],
+      trends: ['Tendances & idées IA', 'Sujets qui percent en ce moment dans ta niche'],
+      settings: ['Réglages', 'Compte, équipe, notifications et intégrations'],
+    };
+    const [pageTitle, pageSubtitle] = titles[view] || titles.dashboard;
+
+    // dashboard
+    const stats = [
+      { label: 'Vidéos générées', value: String(47 + s.extraVideos.length), delta: '+12 cette semaine', icon: this.icon('film', 16) },
+      { label: 'Programmées', value: String(this.allVideos().filter(v => v.status === 'scheduled').length), delta: 'Prochaine dans 3h', icon: this.icon('cal', 16) },
+      { label: 'Publiées ce mois', value: '31', delta: '+8 vs mois dernier', icon: this.icon('check', 16) },
+      { label: 'Vues totales', value: '1,24M', delta: '+18,3% ce mois', icon: this.icon('trend', 16) },
+    ];
+    const filterDefs = [['all', 'Toutes'], ['published', 'Publiées'], ['scheduled', 'Programmées'], ['draft', 'Brouillons']];
+    const filters = filterDefs.map(([id, label]) => ({ label, onClick: this.setFilter(id), style: `padding:7px 14px;border-radius:20px;border:1px solid ${s.filter === id ? 'rgba(124,92,255,.5)' : 'rgba(255,255,255,.1)'};background:${s.filter === id ? 'rgba(124,92,255,.16)' : 'transparent'};color:${s.filter === id ? '#A78BFA' : '#8A8A9C'};font-family:'Manrope';font-weight:600;font-size:13px;cursor:pointer` }));
+    const all = this.allVideos();
+    const filtered = s.filter === 'all' ? all : all.filter(v => v.status === s.filter);
+    const videos = filtered.map(v => {
+      const st = this.statusOf(v.status);
+      return { hook: v.hook, niche: this.nicheName(v.niche), bg: v.bg, duration: v.dur, platBadge: this.platBadge(v.plat), captionWord: v.status === 'published' ? 'VIRAL' : 'AUTO', statusLabel: st.label, statusStyle: `align-self:flex-start;font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;background:${st.bg};color:${st.fg};backdrop-filter:blur(6px)`, meta: v.status === 'published' ? `${v.views} vues · ${v.likes} likes` : (v.when || 'Non programmé'), onEdit: this.openEditor(v) };
+    });
+
+    // create stepper + pipeline
+    const stepDefs = ['Niche', 'Réglages', 'Génération', 'Résultat'];
+    const stepShown = Math.min(s.step, 3);
+    const steps = stepDefs.map((label, i) => {
+      const done = i < stepShown, active = i === stepShown;
+      return { num: String(i + 1), label, showLine: i < 3, dotStyle: `width:34px;height:34px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-family:'Manrope';font-weight:700;font-size:15px;flex:none;background:${done ? '#34D399' : active ? 'linear-gradient(135deg,#7C5CFF,#9D6BFF)' : 'rgba(255,255,255,.06)'};color:${done ? '#04160E' : active ? '#fff' : '#7E7E92'};border:1px solid ${active || done ? 'transparent' : 'rgba(255,255,255,.1)'}`, labelStyle: `font-size:14px;font-weight:700;color:${active || done ? '#F3F3F6' : '#7E7E92'}`, lineStyle: `flex:1;height:2px;border-radius:2px;background:${done ? '#34D399' : 'rgba(255,255,255,.1)'};margin:0 6px` };
+    });
+    const niches = Object.entries(this.NICHES).map(([k, n]) => ({ name: n.name, desc: n.desc, bg: n.bg, icon: this.icon(n.icon, 22), selected: s.niche === k, onClick: this.selectNiche(k), cardStyle: `position:relative;text-align:left;padding:20px;border-radius:16px;cursor:pointer;font-family:'Manrope';transition:transform .15s,border-color .15s;background:${s.niche === k ? 'rgba(124,92,255,.1)' : 'rgba(255,255,255,.02)'};border:1px solid ${s.niche === k ? 'rgba(124,92,255,.5)' : 'rgba(255,255,255,.09)'}` }));
+    const times = Object.keys(s.times).map(k => ({ label: k, onClick: this.toggleTime(k), style: this.chip(s.times[k]) }));
+    const styles = [['minimal', 'Minimal'], ['cine', 'Cinématique'], ['retro', 'Rétro'], ['bold', 'Bold Text'], ['neon', 'Néon']].map(([k, l]) => ({ label: l, onClick: this.setStyle(k), style: this.chip(s.style === k) }));
+    const voices = [['lea', 'Léa · FR'], ['hugo', 'Hugo · FR'], ['emma', 'Emma · EN'], ['noah', 'Noah · EN']].map(([k, l]) => ({ label: l, onClick: this.setVoice(k), style: this.chip(s.voice === k) }));
+    const langs = [['fr', 'Français'], ['en', 'English'], ['es', 'Español']].map(([k, l]) => ({ label: l, onClick: this.setLang(k), style: this.chip(s.lang === k) }));
+    const validateTrack = `position:relative;width:44px;height:25px;border-radius:20px;flex:none;transition:background .2s;display:inline-block;background:${s.validate ? '#7C5CFF' : 'rgba(255,255,255,.15)'}`;
+    const validateKnob = `position:absolute;top:3px;left:${s.validate ? '22px' : '3px'};width:19px;height:19px;border-radius:50%;background:#fff;transition:left .2s`;
+    const p = s.pipe;
+    const stages = this.STAGES.map((stg, i) => {
+      const active = p.idx === i && !p.done && p.running, done = p.pcts[i] >= 100;
+      return { name: stg.name, desc: stg.desc, pct: Math.round(p.pcts[i]), icon: done ? this.icon('check', 18) : this.icon(stg.icon, 18), textColor: done || active ? '#F3F3F6' : '#8A8A9C', status: done ? 'Terminé' : active ? 'En cours…' : 'En attente', iconWrap: `width:40px;height:40px;border-radius:11px;flex:none;display:flex;align-items:center;justify-content:center;transition:.2s;background:${done ? '#34D399' : active ? 'rgba(124,92,255,.2)' : 'rgba(255,255,255,.05)'};color:${done ? '#04160E' : active ? '#A78BFA' : '#7E7E92'};${active ? 'animation:pulseDot 1.4s ease-in-out infinite' : ''}`, rowStyle: `display:flex;gap:14px;align-items:flex-start;padding:14px;border-radius:14px;border:1px solid ${active ? 'rgba(124,92,255,.35)' : 'rgba(255,255,255,.07)'};background:${active ? 'rgba(124,92,255,.06)' : 'rgba(255,255,255,.015)'};transition:.2s` };
+    });
+    const nicheObj = this.NICHES[s.niche];
+    const gen = this.genContent();
+    const overall = Math.round(p.pcts.reduce((a, b) => a + b, 0) / 5);
+    const preview = { bg: nicheObj.bg, tag: nicheObj.name, hookText: gen.hook, track: 'Uplifting Beat · 128 BPM', dim: p.idx >= 2 || p.done ? 0.55 : 0.9, chrome: p.pcts[0] > 20 || p.idx >= 1 || p.done ? 1 : 0.15, hook: p.pcts[0] > 40 || p.idx >= 1 || p.done ? 1 : 0, hookScale: p.pcts[0] > 40 || p.idx >= 1 || p.done ? 1 : 0.9, wave: (p.idx === 1 && p.running) ? 1 : 0, subs: p.idx >= 3 || p.done ? 1 : 0, subLine: p.done ? 'sans effort.' : 'chaque jour…', music: p.idx >= 3 || p.done ? 1 : 0, play: p.done ? 1 : 0, waveBars: this.waveBars() };
+
+    // editor
+    const ev = s.editingVideo || { hook: nicheObj.hook, niche: nicheObj.name, bg: nicheObj.bg, plat: 'both' };
+    const DUR = this.edDur(), t = s.edTime, prog = t / DUR;
+    // scenes (timed) drive live playback of canvas + timeline; durations are trimmable
+    const SDEF = ['', "6h du matin. C'est toi contre toi.", "Chaque excuse, un autre l'ignore.", 'La discipline bat la motivation.', "Alors lève-toi. Commence."];
+    const sf = (i) => (ev.sceneFulls && ev.sceneFulls[i] != null) ? ev.sceneFulls[i] : (i === 0 ? ev.hook : SDEF[i]);
+    const SCENE_DEFS = [
+      { label: 'Hook', bg: 'linear-gradient(150deg,#9D6BFF,#7C2D6B)', full: sf(0), hi: 'sauver', src: 'IA' },
+      { label: 'Contexte', bg: 'linear-gradient(150deg,#7C2D6B,#3B1D4E)', full: sf(1), hi: 'toi contre toi', src: 'IA' },
+      { label: 'Tension', bg: 'linear-gradient(150deg,#4C1D95,#7C5CFF)', full: sf(2), hi: "l'ignore", src: 'Stock' },
+      { label: 'Preuve', bg: 'linear-gradient(150deg,#2D3E9E,#5CC8FF)', full: sf(3), hi: 'discipline', src: 'IA' },
+      { label: 'CTA', bg: 'linear-gradient(150deg,#0EA5A5,#34D399)', full: sf(4), hi: 'Commence', src: 'IA' },
+    ];
+    let _acc = 0;
+    const SCENES = SCENE_DEFS.map((d, i) => { const start = _acc; const dur = s.sceneDurs[i]; _acc += dur; return { ...d, start, end: _acc, dur }; });
+    let actIdx = SCENES.findIndex(sc => t >= sc.start && t < sc.end);
+    if (actIdx < 0) actIdx = t >= DUR ? SCENES.length - 1 : 0;
+    const act = SCENES[actIdx];
+    const cs = s.edCapSize / 100, col = s.edCapColor;
+    const capMap = {
+      karaoke: `background:${col};color:#fff;font-weight:800;font-size:${Math.round(13 * cs)}px;padding:4px 10px;border-radius:6px;line-height:1.5`,
+      bold: `color:#fff;font-weight:800;font-size:${Math.round(15 * cs)}px;text-shadow:0 2px 8px rgba(0,0,0,.8);-webkit-text-stroke:1px rgba(0,0,0,.5)`,
+      neon: `color:${col};font-weight:800;font-size:${Math.round(14 * cs)}px;text-shadow:0 0 10px ${col}`,
+      pill: `background:rgba(0,0,0,.7);color:#fff;font-weight:700;font-size:${Math.round(13 * cs)}px;padding:5px 12px;border-radius:20px`,
+    };
+    const capPreview = { karaoke: `background:#7C5CFF;color:#fff;font-weight:800;font-size:13px;padding:4px 10px;border-radius:6px`, bold: `color:#fff;font-weight:800;font-size:15px;text-shadow:0 2px 8px rgba(0,0,0,.8);-webkit-text-stroke:1px rgba(0,0,0,.5)`, neon: `color:#7DF9FF;font-weight:800;font-size:14px;text-shadow:0 0 10px #7DF9FF`, pill: `background:rgba(0,0,0,.7);color:#fff;font-weight:700;font-size:13px;padding:5px 12px;border-radius:20px` };
+    const edTabDefs = [['script', 'Script', 'doc'], ['caption', 'Sous-titres', 'caption'], ['voice', 'Voix', 'mic'], ['music', 'Musique', 'music'], ['visual', 'Visuels', 'img'], ['format', 'Format & marque', 'crop']];
+    const edTabs = edTabDefs.map(([k, l, ic]) => ({ label: l, icon: this.icon(ic, 15), onClick: this.setEdTab(k), style: `display:flex;align-items:center;gap:7px;padding:10px 13px;background:none;border:none;border-bottom:2px solid ${s.editorTab === k ? '#7C5CFF' : 'transparent'};color:${s.editorTab === k ? '#F3F3F6' : '#8A8A9C'};font-family:'Manrope';font-weight:700;font-size:13px;cursor:pointer;margin-bottom:-1px;white-space:nowrap` }));
+    const capStyles = [['karaoke', 'Karaoké'], ['bold', 'Bold + contour'], ['neon', 'Néon'], ['pill', 'Pilule']].map(([k, l]) => ({ label: l, preview: 'Aa', onClick: this.setCapStyle(k), wrap: `display:flex;flex-direction:column;align-items:center;gap:10px;padding:18px;border-radius:14px;cursor:pointer;background:#111118;border:1px solid ${s.capStyle === k ? 'rgba(124,92,255,.6)' : 'rgba(255,255,255,.09)'}`, chip: capPreview[k] }));
+    const capPos = [['haut', 'Haut'], ['centre', 'Centre'], ['bas', 'Bas']].map(([k, l]) => ({ label: l, onClick: this.setCapPos(k), style: this.chip(s.capPos === k) }));
+    const capFonts = [['grotesk', 'Manrope'], ['manrope', 'Manrope'], ['impact', 'Condensé']].map(([k, l]) => ({ label: l, onClick: this.setEdFont(k), style: this.chip(s.edFont === k) }));
+    const swatch = (val, cur, fn) => ({ onClick: fn(val), style: `width:30px;height:30px;border-radius:9px;cursor:pointer;background:${val};border:2px solid ${cur === val ? '#fff' : 'rgba(255,255,255,.15)'};box-shadow:${cur === val ? '0 0 0 2px #7C5CFF' : 'none'}` });
+    const capColors = ['#7C5CFF', '#FFFFFF', '#FFE45C', '#34D399', '#9D6BFF'].map(c => swatch(c, s.edCapColor, this.setCapColor));
+    const hiColors = ['#FFE45C', '#7DF9FF', '#9D6BFF', '#34D399'].map(c => swatch(c, s.edHighlight, this.setHighlight));
+    const chk = (on) => on ? React.createElement('span', { style: { display: 'flex', color: '#7C5CFF', flex: 'none' } }, this.icon('check', 18)) : React.createElement('span', { style: { width: 18 } });
+    const voiceRows = [['lea', 'Léa', 'Féminine · FR · douce', '#9D6BFF'], ['hugo', 'Hugo', 'Masculine · FR · grave', '#5CC8FF'], ['emma', 'Emma', 'Féminine · EN · claire', '#34D399'], ['noah', 'Noah', 'Masculine · EN · énergique', '#FFB74C']].map(([k, name, desc, color]) => ({ name, desc, color, onClick: this.setEdVoice(k), sel: s.edVoice === k, check: chk(s.edVoice === k), playIcon: this.icon('play', 13), row: `display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;cursor:pointer;background:rgba(255,255,255,.02);border:1px solid ${s.edVoice === k ? 'rgba(124,92,255,.5)' : 'rgba(255,255,255,.08)'}` }));
+    const tracks = [['uplift', 'Uplifting Beat', 'Énergique', '128 BPM'], ['lofi', 'Lo-Fi Chill', 'Calme', '85 BPM'], ['epic', 'Epic Cinematic', 'Intense', '110 BPM'], ['trap', 'Trap Motiv', 'Puissant', '140 BPM']].map(([k, name, genre, bpm]) => ({ name, genre, bpm, onClick: this.setEdTrack(k), sel: s.edTrack === k, check: chk(s.edTrack === k), wave: this.miniWave(s.edTrack === k), row: `display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;cursor:pointer;background:rgba(255,255,255,.02);border:1px solid ${s.edTrack === k ? 'rgba(124,92,255,.5)' : 'rgba(255,255,255,.08)'}` }));
+    const trackName = { uplift: 'Uplifting Beat', lofi: 'Lo-Fi Chill', epic: 'Epic Cinematic', trap: 'Trap Motiv' }[s.edTrack];
+    const fmt1 = (n) => `0:${String(Math.round(n)).padStart(2, '0')}`;
+    const trimSegs = SCENES.map((sc, i) => ({
+      bg: sc.bg, label: sc.label, durLabel: `${sc.dur.toFixed(1).replace(/\.0$/, '')}s`, active: i === actIdx, last: i === SCENES.length - 1, notLast: i < SCENES.length - 1,
+      onSelect: () => this.setState({ edTime: sc.start + 0.01 }),
+      onDown: this.trimDown(i), onMinus: this.trimScene(i, -0.5), onPlus: this.trimScene(i, 0.5),
+      segStyle: `position:relative;flex:${sc.dur};min-width:34px;height:56px;border-radius:9px;background:${sc.bg};cursor:pointer;border:2px solid ${i === actIdx ? '#fff' : 'rgba(255,255,255,.14)'};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px`,
+    }));
+    const trimTotal = fmt1(DUR);
+    const TRANS = [['cut', 'Coupe'], ['fade', 'Fondu'], ['slide', 'Glissé'], ['zoom', 'Zoom']];
+    const transAnimMap = { cut: 'none', fade: 'trFade .45s ease both', slide: 'trSlide .5s cubic-bezier(.4,0,.2,1) both', zoom: 'trZoom .5s ease both' };
+    const transRows = SCENES.slice(1).map((sc, k) => { const i = k + 1; return { fromLabel: SCENES[i - 1].label, toLabel: sc.label, opts: TRANS.map(([type, label]) => ({ label, onClick: this.setTrans(i, type), style: `padding:6px 11px;border-radius:9px;cursor:pointer;font-family:Manrope;font-weight:600;font-size:12px;border:1px solid ${s.sceneTrans[i] === type ? 'rgba(124,92,255,.55)' : 'rgba(255,255,255,.1)'};background:${s.sceneTrans[i] === type ? 'rgba(124,92,255,.18)' : 'transparent'};color:${s.sceneTrans[i] === type ? '#A78BFA' : '#8A8A9C'}` })) }; });
+    const curTrans = s.sceneTrans[actIdx] || 'cut';
+    const clips = SCENES.map((sc, i) => ({ bg: sc.bg, t: `0:${String(Math.round(sc.start)).padStart(2, '0')}`, label: sc.label, src: sc.src, active: i === actIdx, srcStyle: `position:absolute;top:5px;right:5px;font-size:8px;font-weight:700;color:#fff;background:${sc.src === 'IA' ? 'rgba(124,92,255,.85)' : 'rgba(0,0,0,.6)'};padding:2px 5px;border-radius:5px`, cardStyle: `aspect-ratio:9/16;border-radius:11px;background:${sc.bg};position:relative;overflow:hidden;cursor:pointer;border:2px solid ${i === actIdx ? '#7C5CFF' : 'rgba(255,255,255,.1)'}` }));
+    // script stats
+    const words = (s.editorScript || '').trim().split(/\s+/).filter(Boolean).length;
+    const estDur = Math.max(1, Math.round(words / 2.6));
+    const hookLen = ((s.editorScript || '').split('\n')[0] || '').length;
+    const hookScore = hookLen > 0 && hookLen <= 45 ? 92 : hookLen <= 70 ? 68 : 40;
+    const hookLabel = hookScore >= 85 ? 'Excellent' : hookScore >= 60 ? 'Correct' : 'À raccourcir';
+    const scriptStats = [{ label: 'Mots', value: String(words) }, { label: 'Durée estimée', value: `~0:${String(estDur).padStart(2, '0')}` }, { label: 'Scènes', value: String(SCENES.length) }];
+    const sceneRows = SCENES.map((sc, i) => ({ num: String(i + 1), label: sc.label, full: sc.full, range: `${fmt1(sc.start)} – ${fmt1(sc.end)}`, active: i === actIdx, onClick: () => this.setState({ edTime: sc.start + 0.01 }), rowStyle: `display:flex;gap:12px;align-items:center;padding:11px 13px;border-radius:11px;cursor:pointer;background:${i === actIdx ? 'rgba(124,92,255,.1)' : 'rgba(255,255,255,.02)'};border:1px solid ${i === actIdx ? 'rgba(124,92,255,.4)' : 'rgba(255,255,255,.07)'}`, numStyle: `width:26px;height:26px;border-radius:8px;flex:none;display:flex;align-items:center;justify-content:center;font-family:'Manrope';font-weight:700;font-size:12px;background:${i === actIdx ? '#7C5CFF' : 'rgba(255,255,255,.06)'};color:${i === actIdx ? '#fff' : '#8A8A9C'}` }));
+    // format tab
+    const aspects = [['9:16', 'Vertical', 'Shorts / TikTok / Reels'], ['1:1', 'Carré', 'Feed Instagram'], ['4:5', 'Portrait', 'Feed vertical']].map(([k, l, d]) => ({ label: l, desc: d, ratio: k, onClick: this.setAspect(k), style: `flex:1;padding:14px;border-radius:13px;cursor:pointer;text-align:left;background:${s.edAspect === k ? 'rgba(124,92,255,.1)' : 'rgba(255,255,255,.02)'};border:1px solid ${s.edAspect === k ? 'rgba(124,92,255,.5)' : 'rgba(255,255,255,.09)'}`, boxStyle: `width:28px;height:${k === '9:16' ? '40px' : k === '1:1' ? '28px' : '35px'};border-radius:5px;background:${s.edAspect === k ? '#7C5CFF' : 'rgba(255,255,255,.12)'};margin-bottom:10px` }));
+    const tk2 = (on) => ({ track: `position:relative;width:44px;height:25px;border-radius:20px;flex:none;transition:background .2s;display:inline-block;background:${on ? '#7C5CFF' : 'rgba(255,255,255,.15)'}`, knob: `position:absolute;top:3px;left:${on ? '22px' : '3px'};width:19px;height:19px;border-radius:50%;background:#fff;transition:left .2s` });
+    const logoTk = tk2(s.edLogo), fadeInTk = tk2(s.edFadeIn), fadeOutTk = tk2(s.edFadeOut), introTk = tk2(s.edIntro), outroTk = tk2(s.edOutro);
+    // timeline with playhead
+    const trackColors = { Visuel: '#7C5CFF', Voix: '#9D6BFF', 'Sous-titres': '#34D399', Musique: '#FFB74C' };
+    const tlDefs = [['Visuel', SCENES.map(sc => sc.dur)], ['Voix', SCENES.map(sc => sc.dur)], ['Sous-titres', SCENES.map(sc => sc.dur)], ['Musique', [DUR]]];
+    const timeline = tlDefs.map(([label, segs]) => ({
+      label, color: trackColors[label],
+      blocks: React.createElement(React.Fragment, {}, segs.map((w, i) => React.createElement('span', { key: i, style: { flex: w, height: 22, borderRadius: 5, background: trackColors[label], opacity: 0.4 + (i % 3) * 0.2 } }))),
+    }));
+    const ruler = [0, 5, 10, 15, 20].map(sec => ({ label: `0:${String(sec).padStart(2, '0')}`, left: (sec / DUR) * 100 + '%' }));
+    const ed = {
+      bg: act.bg, tag: ev.niche, hook: ev.hook, showHook: actIdx === 0, sceneLabel: act.label,
+      platBadge: this.platBadge(ev.plat || 'both'), script: s.editorScript,
+      subStyle: capMap[s.capStyle], subFull: act.full, capTop: s.capPos === 'haut' ? '18%' : s.capPos === 'centre' ? '50%' : 'auto', capBottom: s.capPos === 'bas' ? '52px' : 'auto',
+      track: trackName, muted: s.edMuted, muteIcon: this.icon(s.edMuted ? 'mute' : 'volume', 15), showLogo: s.edLogo,
+      aspect: s.edAspect, aspectCss: { '9:16': '9 / 16', '1:1': '1 / 1', '4:5': '4 / 5' }[s.edAspect], dim: 0.55,
+      transAnim: transAnimMap[curTrans], sceneKey: actIdx + '-' + curTrans,
+    };
+
+    // calendar
+    const monthNames = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+    const { y, m } = s.cal;
+    const first = new Date(y, m, 1);
+    const startDow = (first.getDay() + 6) % 7;
+    const dim = new Date(y, m + 1, 0).getDate();
+    const today = new Date(2026, 6, 10);
+    const events = (y === 2026 && m === 6) ? {
+      3: [{ c: '#34D399', h: 'Motivation' }], 5: [{ c: '#34D399', h: 'Finance' }], 8: [{ c: '#34D399', h: 'Fitness' }, { c: '#34D399', h: 'Faits' }],
+      10: [{ c: '#7C5CFF', h: 'Finance' }, { c: '#FFB74C', h: 'Motivation' }], 11: [{ c: '#7C5CFF', h: 'Fitness' }], 12: [{ c: '#7C5CFF', h: 'Dev perso' }],
+      14: [{ c: '#7C5CFF', h: 'Finance' }, { c: '#7C5CFF', h: 'Faits' }], 16: [{ c: '#7C5CFF', h: 'Motivation' }], 18: [{ c: '#7C5CFF', h: 'Fitness' }], 20: [{ c: '#7C5CFF', h: 'Finance' }],
+      22: [{ c: '#7C5CFF', h: 'Dev perso' }, { c: '#7C5CFF', h: 'Faits' }], 25: [{ c: '#7C5CFF', h: 'Motivation' }],
+    } : {};
+    const calCells = [];
+    for (let i = 0; i < startDow; i++) calCells.push({ day: '', empty: true, style: `min-height:96px;border-radius:12px;background:transparent`, numStyle: '', chips: null });
+    for (let d = 1; d <= dim; d++) {
+      const isToday = d === today.getDate() && m === today.getMonth() && y === today.getFullYear();
+      const evs = events[d] || [];
+      const shown = evs.slice(0, 2);
+      const chips = React.createElement(React.Fragment, {}, [
+        ...shown.map((e, i) => React.createElement('div', { key: i, style: { fontSize: 10, fontWeight: 700, color: '#fff', background: e.c, borderRadius: 5, padding: '2px 6px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' } }, e.h)),
+        evs.length > 2 ? React.createElement('div', { key: 'more', style: { fontSize: 10, color: '#8A8A9C', fontWeight: 600 } }, `+${evs.length - 2}`) : null,
+      ]);
+      calCells.push({ day: String(d), empty: false, style: `min-height:96px;border-radius:12px;padding:8px;background:${isToday ? 'rgba(124,92,255,.1)' : 'rgba(255,255,255,.02)'};border:1px solid ${isToday ? 'rgba(124,92,255,.5)' : 'rgba(255,255,255,.06)'}`, numStyle: `font-size:12.5px;font-weight:700;color:${isToday ? '#A78BFA' : '#B9B9C8'}`, chips });
+    }
+
+    // analytics
+    const kpis = [
+      { label: 'Vues (30j)', value: '1,24M', delta: '+18,3%', deltaColor: '#34D399' },
+      { label: 'Likes', value: '87,4K', delta: '+12,1%', deltaColor: '#34D399' },
+      { label: 'Abonnés gagnés', value: '+4 208', delta: '+9,7%', deltaColor: '#34D399' },
+      { label: "Taux d'engagement", value: '9,2%', delta: '-0,4%', deltaColor: '#FF7A7A' },
+    ];
+    const seriesVals = [32, 45, 38, 52, 48, 61, 55, 70, 64, 78, 72, 88, 82, 96];
+    const maxV = Math.max(...seriesVals);
+    const dayLabels = ['J-13', '', '', 'J-10', '', '', 'J-7', '', '', 'J-4', '', '', 'J-1', "Auj."];
+    const chartBars = seriesVals.map((v, i) => ({ h: Math.round((v / maxV) * 100), value: `${(v * 1.3).toFixed(0)}K vues`, label: dayLabels[i] || '' }));
+    const R = 42, C = 2 * Math.PI * R, ytFrac = 0.62;
+    const donut = React.createElement('svg', { width: 130, height: 130, viewBox: '0 0 110 110' }, [
+      React.createElement('circle', { key: 'bg', cx: 55, cy: 55, r: R, fill: 'none', stroke: '#7C5CFF', strokeWidth: 16 }),
+      React.createElement('circle', { key: 'fg', cx: 55, cy: 55, r: R, fill: 'none', stroke: '#FF0033', strokeWidth: 16, strokeDasharray: `${C * ytFrac} ${C}`, strokeLinecap: 'round', transform: 'rotate(-90 55 55)' }),
+      React.createElement('text', { key: 't', x: 55, y: 52, textAnchor: 'middle', fill: '#F3F3F6', fontSize: 18, fontWeight: 700, fontFamily: 'Manrope' }, '1,24M'),
+      React.createElement('text', { key: 's', x: 55, y: 68, textAnchor: 'middle', fill: '#8A8A9C', fontSize: 8 }, 'vues totales'),
+    ]);
+    const topVideos = all.filter(v => v.status === 'published').slice(0, 4).map((v, i) => ({ rank: String(i + 1), bg: v.bg, hook: v.hook, niche: this.nicheName(v.niche), views: v.views, rate: v.rate || '—' }));
+    const bestTimes = [['08:00', 92, 'A+'], ['12:00', 68, 'B'], ['18:30', 100, 'A+'], ['21:00', 84, 'A']].map(([time, pct, val]) => ({ time, pct: pct + '%', val }));
+
+    // billing
+    const usage = [
+      { label: 'Vidéos ce mois', val: '47 / 90', pct: '52%', color: 'linear-gradient(90deg,#7C5CFF,#9D6BFF)' },
+      { label: 'Stockage', val: '6,2 / 20 Go', pct: '31%', color: 'linear-gradient(90deg,#34D399,#0EA5A5)' },
+    ];
+    const planDefs = [
+      { id: 'starter', name: 'Starter', price: '0€', period: '/mois', feats: ['1 vidéo / jour', '1 réseau', 'Filigrane Cadence'], cur: false },
+      { id: 'creator', name: 'Creator', price: '19€', period: '/mois', feats: ['3 vidéos / jour', '2 réseaux', 'Sans filigrane', 'Voix premium'], cur: true, popular: true },
+      { id: 'studio', name: 'Studio', price: '49€', period: '/mois', feats: ['10 vidéos / jour', 'Réseaux illimités', 'Visuels IA HD', 'Analytics avancés'], cur: false },
+    ];
+    const plans = planDefs.map(pl => ({ name: pl.name, price: pl.price, period: pl.period, feats: pl.feats, popular: !!pl.popular, cta: pl.cur ? 'Plan actuel' : 'Choisir', card: `position:relative;border-radius:18px;padding:24px;background:${pl.cur ? 'linear-gradient(180deg,rgba(124,92,255,.12),rgba(255,255,255,.02))' : 'rgba(255,255,255,.02)'};border:1px solid ${pl.cur ? 'rgba(124,92,255,.5)' : 'rgba(255,255,255,.09)'}`, btn: pl.cur ? `width:100%;background:rgba(124,92,255,.16);color:#A78BFA;border:1px solid rgba(124,92,255,.4);padding:11px;border-radius:11px;font-family:'Manrope';font-weight:700;font-size:13.5px;cursor:default` : `width:100%;background:rgba(255,255,255,.06);color:#F3F3F6;border:1px solid rgba(255,255,255,.14);padding:11px;border-radius:11px;font-family:'Manrope';font-weight:700;font-size:13.5px;cursor:pointer` }));
+    const invoices = [{ date: '1 juil. 2026', amount: '19,00€', status: 'Payée' }, { date: '1 juin 2026', amount: '19,00€', status: 'Payée' }, { date: '1 mai 2026', amount: '19,00€', status: 'Payée' }];
+
+    // queue
+    const queue = all.filter(v => v.status === 'scheduled' || v.status === 'review').map((v, i) => {
+      const isReview = v.status === 'review' && !s.approved[i];
+      const st = this.statusOf(s.approved[i] ? 'scheduled' : v.status);
+      return { hook: v.hook, niche: this.nicheName(v.niche), bg: v.bg, platBadge: this.platBadge(v.plat), when: s.approved[i] ? "Aujourd'hui · 21:00" : (v.when || 'Bientôt'), statusLabel: st.label, statusStyle: `font-size:12px;font-weight:700;padding:5px 12px;border-radius:9px;flex:none;background:${st.bg};color:${st.fg}`, needsApproval: isReview, onApprove: this.approve(i) };
+    });
+
+    // ---- notifications ----
+    const notifDefs = [
+      { u: true, c: '#34D399', ic: 'check', title: 'Vidéo publiée sur YouTube Shorts', time: 'Il y a 2 h' },
+      { u: true, c: '#FFB74C', ic: 'clock', title: '1 vidéo attend ta validation', time: 'Il y a 5 h' },
+      { u: false, c: '#7C5CFF', ic: 'film', title: '3 vidéos générées cette nuit', time: 'Hier · 03:00' },
+      { u: false, c: '#5CC8FF', ic: 'chart', title: 'Ton rapport hebdomadaire est prêt', time: 'Lundi' },
+    ];
+    const notifs = notifDefs.map(n => ({ title: n.title, time: n.time, unread: n.u && !s.notifRead, icon: this.icon(n.ic, 15), iconWrap: `width:32px;height:32px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;background:${n.c}22;color:${n.c}`, rowStyle: `display:flex;gap:11px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05);background:${n.u && !s.notifRead ? 'rgba(124,92,255,.05)' : 'transparent'}` }));
+    const hasUnread = !s.notifRead && notifDefs.some(n => n.u);
+
+    // ---- settings sub-tabs ----
+    const setTabDefs = [['compte', 'Compte', 'gear'], ['notifications', 'Notifications', 'bell'], ['team', 'Équipe & rôles', 'users'], ['accounts', 'Comptes & espaces', 'link'], ['referral', 'Parrainage', 'gift']];
+    const setTabs = setTabDefs.map(([k, l, ic]) => ({ label: l, icon: this.icon(ic, 16), onClick: this.setSettingsTab(k), style: `display:flex;align-items:center;gap:11px;width:100%;padding:10px 13px;border-radius:11px;border:none;cursor:pointer;font-family:'Manrope';font-weight:600;font-size:13.5px;text-align:left;background:${s.settingsTab === k ? 'rgba(124,92,255,.16)' : 'transparent'};color:${s.settingsTab === k ? '#F3F3F6' : '#8A8A9C'}` }));
+    const tk = (on) => ({ track: `position:relative;width:40px;height:23px;border-radius:20px;flex:none;display:inline-block;transition:background .2s;background:${on ? '#7C5CFF' : 'rgba(255,255,255,.15)'}`, knob: `position:absolute;top:3px;left:${on ? '20px' : '3px'};width:17px;height:17px;border-radius:50%;background:#fff;transition:left .2s` });
+    const notifPrefDefs = [['published', 'Vidéo publiée', 'Quand une vidéo part en ligne'], ['review', 'Vidéo à valider', 'Quand une vidéo attend ton feu vert'], ['failed', 'Échec de génération', 'Si le pipeline rencontre une erreur'], ['weekly', 'Rapport hebdomadaire', 'Résumé des performances chaque lundi'], ['product', 'Nouveautés produit', 'Fonctionnalités et conseils Cadence']];
+    const notifRows = notifPrefDefs.map(([k, label, desc]) => { const pr = s.notifPrefs[k]; const e = tk(pr.e), pp = tk(pr.p); return { label, desc, eTrack: e.track, eKnob: e.knob, pTrack: pp.track, pKnob: pp.knob, onEmail: this.setNotifPref(k, 'e'), onPush: this.setNotifPref(k, 'p') }; });
+
+    // ---- team ----
+    const memberDefs = [
+      { id: 'you', name: 'Toi', email: 'creator@studio.co', color: 'linear-gradient(135deg,#9D6BFF,#7C5CFF)', fixed: 'Propriétaire' },
+      { id: 'anna', name: 'Anna Diallo', email: 'anna@studio.co', color: 'linear-gradient(135deg,#34D399,#0EA5A5)' },
+      { id: 'marc', name: 'Marc Petit', email: 'marc@studio.co', color: 'linear-gradient(135deg,#5CC8FF,#7C5CFF)' },
+    ];
+    const roleOpts = [['admin', 'Admin'], ['editor', 'Éditeur'], ['viewer', 'Lecteur']];
+    const members = memberDefs.map(mm => ({ name: mm.name, email: mm.email, color: mm.color, initial: mm.name[0], fixed: !!mm.fixed, fixedLabel: mm.fixed || '', roles: mm.fixed ? [] : roleOpts.map(([rk, rl]) => ({ label: rl, onClick: this.setMemberRole(mm.id, rk), style: `padding:6px 12px;border-radius:9px;cursor:pointer;font-family:'Manrope';font-weight:600;font-size:12px;border:1px solid ${s.teamRoles[mm.id] === rk ? 'rgba(124,92,255,.5)' : 'rgba(255,255,255,.1)'};background:${s.teamRoles[mm.id] === rk ? 'rgba(124,92,255,.16)' : 'transparent'};color:${s.teamRoles[mm.id] === rk ? '#A78BFA' : '#8A8A9C'}` })) }));
+    const pendingInvites = [{ email: 'jules@studio.co', role: 'Éditeur' }];
+    const roleLegend = [{ r: 'Admin', d: 'Gère tout : équipe, facturation, publications.' }, { r: 'Éditeur', d: 'Crée et édite les vidéos, sans accès facturation.' }, { r: 'Lecteur', d: 'Consulte le contenu et les stats uniquement.' }];
+
+    // ---- workspaces + networks ----
+    const wsDefs = [
+      { id: 'studio', name: 'Studio Créateur', handle: '@cadence.daily', plan: 'Creator', color: 'linear-gradient(135deg,#9D6BFF,#7C5CFF)' },
+      { id: 'brandb', name: 'Fit Avec Marc', handle: '@fit.marc', plan: 'Studio', color: 'linear-gradient(135deg,#FFB74C,#FF6B4C)' },
+      { id: 'brandc', name: 'Money Tips FR', handle: '@money.tips.fr', plan: 'Starter', color: 'linear-gradient(135deg,#34D399,#0EA5A5)' },
+    ];
+    const workspaces = wsDefs.map(w => ({ name: w.name, handle: w.handle, plan: w.plan, color: w.color, initial: w.name[0], active: s.workspace === w.id, onSwitch: this.switchWorkspace(w.id), rowStyle: `display:flex;align-items:center;gap:14px;border:1px solid ${s.workspace === w.id ? 'rgba(124,92,255,.5)' : 'rgba(255,255,255,.08)'};border-radius:14px;padding:14px;background:${s.workspace === w.id ? 'rgba(124,92,255,.08)' : 'rgba(255,255,255,.02)'}`, btnLabel: s.workspace === w.id ? '✓ Actif' : 'Basculer', btnStyle: s.workspace === w.id ? `background:rgba(52,211,153,.14);color:#34D399;border:1px solid rgba(52,211,153,.3);padding:8px 16px;border-radius:10px;font-family:Manrope;font-weight:700;font-size:12.5px;cursor:default;flex:none` : `background:rgba(255,255,255,.06);color:#F3F3F6;border:1px solid rgba(255,255,255,.14);padding:8px 16px;border-radius:10px;font-family:Manrope;font-weight:700;font-size:12.5px;cursor:pointer;flex:none` }));
+    const netDefs = [
+      { name: 'YouTube Shorts', handle: '@cadence.daily', bg: '#FF0033', icon: this.svg({ t: 'path', a: { d: 'M9 8.5v7l6-3.5z', fill: '#fff', stroke: 'none' } }, 18), connected: true },
+      { name: 'TikTok', handle: '@cadence.daily', bg: '#000', icon: this.svg('M15 4c.4 2 1.7 3.4 3.5 3.6v2.3c-1.3 0-2.5-.4-3.5-1v5.8a4.6 4.6 0 1 1-4.6-4.6c.3 0 .5 0 .8.1v2.4a2.2 2.2 0 1 0 1.5 2.1V4z', 16), connected: true },
+      { name: 'Instagram Reels', handle: 'Non connecté', bg: 'linear-gradient(135deg,#F472B6,#A855F7)', icon: this.icon('img', 16), connected: false },
+      { name: 'X (Twitter)', handle: 'Non connecté', bg: '#111', icon: this.icon('spark', 14), connected: false },
+    ];
+    const networks = netDefs.map(n => ({ name: n.name, handle: n.handle, bg: n.bg, icon: n.icon, connected: n.connected, btnLabel: n.connected ? 'Déconnecter' : 'Connecter', btnStyle: n.connected ? `background:rgba(255,255,255,.05);color:#8A8A9C;border:1px solid rgba(255,255,255,.1);padding:8px 15px;border-radius:10px;font-family:Manrope;font-weight:700;font-size:12.5px;cursor:pointer;flex:none` : `background:#fff;color:#14141B;border:none;padding:8px 15px;border-radius:10px;font-family:Manrope;font-weight:700;font-size:12.5px;cursor:pointer;flex:none`, dot: n.connected ? '#34D399' : '#5A5A6C' }));
+
+    // ---- referral ----
+    const refStats = [{ label: 'Amis invités', value: '8' }, { label: 'Inscrits', value: '5' }, { label: 'Mois offerts', value: '5' }];
+    const refProgress = 5, refGoal = 10, refPct = Math.round((5 / 10) * 100) + '%';
+
+    // ---- trends ----
+    const TRENDS = [
+      { niche: 'growth', badge: '+320%', topic: 'Routine 5-to-9 avant le 9-to-5', hook: '« Voilà ce que je fais avant 6h… »', format: 'Vlog rythmé + texte', score: 'Potentiel élevé', plat: 'both', bg: 'linear-gradient(135deg,#A78BFA,#7C5CFF)' },
+      { niche: 'finance', badge: '+240%', topic: "La psychologie de l'argent", hook: "« Les riches pensent l'inverse de toi. »", format: 'Talking head + b-roll', score: 'Potentiel élevé', plat: 'both', bg: 'linear-gradient(135deg,#34D399,#0EA5A5)' },
+      { niche: 'facts', badge: '+180%', topic: 'Ce que le manque de sommeil te fait', hook: '« Dormir 5h fait ça à ton cerveau. »', format: 'Faits + visuels IA', score: 'En hausse', plat: 'tt', bg: 'linear-gradient(135deg,#5CC8FF,#2D3E9E)' },
+      { niche: 'growth', badge: '+150%', topic: '3 habitudes des gens disciplinés', hook: '« La n°2 va te surprendre. »', format: 'Liste rythmée', score: 'En hausse', plat: 'yt', bg: 'linear-gradient(135deg,#F472B6,#A855F7)' },
+      { niche: 'finance', badge: '+130%', topic: "Erreurs d'épargne avant 25 ans", hook: "« J'ai perdu 3 ans à cause de ça. »", format: 'Storytime', score: 'En hausse', plat: 'both', bg: 'linear-gradient(135deg,#FFB74C,#FF6B4C)' },
+      { niche: 'motivation', badge: '+110%', topic: 'Stoïcisme pour la discipline', hook: '« Marc Aurèle avait tout compris. »', format: 'Citation + ambiance', score: 'Stable', plat: 'both', bg: 'linear-gradient(135deg,#9D6BFF,#7C2D6B)' },
+    ];
+    const scoreColor = { 'Potentiel élevé': '#34D399', 'En hausse': '#A78BFA', 'Stable': '#8A8A9C' };
+    const trendChips = [['all', 'Toutes'], ['motivation', 'Motivation'], ['finance', 'Finance'], ['facts', 'Faits'], ['growth', 'Dev perso'], ['fitness', 'Fitness']].map(([k, l]) => ({ label: l, onClick: this.setTrendNiche(k), style: `padding:7px 14px;border-radius:20px;border:1px solid ${s.trendNiche === k ? 'rgba(124,92,255,.5)' : 'rgba(255,255,255,.1)'};background:${s.trendNiche === k ? 'rgba(124,92,255,.16)' : 'transparent'};color:${s.trendNiche === k ? '#A78BFA' : '#8A8A9C'};font-family:Manrope;font-weight:600;font-size:13px;cursor:pointer` }));
+    const trends = TRENDS.filter(t => s.trendNiche === 'all' || t.niche === s.trendNiche).map(t => ({ topic: t.topic, hook: t.hook, format: t.format, badge: t.badge, score: t.score, bg: t.bg, nicheName: this.nicheName(t.niche), platBadge: this.platBadge(t.plat), scoreStyle: `font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;background:${scoreColor[t.score]}22;color:${scoreColor[t.score]}`, onGenerate: this.generateFrom(t.niche) }));
+    const trendSounds = [{ name: 'Aesthetic Lo-Fi', uses: '1,2M vidéos' }, { name: 'Epic Motivation', uses: '840K vidéos' }, { name: 'Phonk Drift', uses: '2,1M vidéos' }, { name: 'Calm Piano', uses: '560K vidéos' }].map((x, i) => ({ ...x, rank: String(i + 1) }));
+    const trendTags = ['#motivation', '#mindset', '#financeperso', '#saviezvous', '#discipline', '#morningroutine', '#investir', '#productivité'];
+
+    // ---- history ----
+    const HISTORY = [
+      { date: "Aujourd'hui", time: '08:00', hook: 'Personne ne viendra te sauver.', niche: 'motivation', plat: 'yt', bg: 'linear-gradient(150deg,#9D6BFF,#7C2D6B)', views: '2,1K', likes: '184', ok: true },
+      { date: "Aujourd'hui", time: '08:00', hook: 'Ton cerveau brûle 20% de tes calories.', niche: 'facts', plat: 'tt', bg: 'linear-gradient(150deg,#5CC8FF,#2D3E9E)', views: '5,4K', likes: '412', ok: true },
+      { date: 'Hier', time: '21:00', hook: 'La règle des 2 minutes qui change tout.', niche: 'growth', plat: 'both', bg: 'linear-gradient(150deg,#A78BFA,#4C1D95)', views: '18,9K', likes: '1,3K', ok: true },
+      { date: 'Hier', time: '18:30', hook: '5 minutes > 1 heure le dimanche.', niche: 'fitness', plat: 'yt', bg: 'linear-gradient(150deg,#FFB74C,#7C2D12)', views: '7,2K', likes: '520', ok: true },
+      { date: 'Hier', time: '12:00', hook: 'Le café à jeun ? Grosse erreur.', niche: 'facts', plat: 'tt', bg: 'linear-gradient(150deg,#5CE0C8,#134E4A)', views: '—', likes: '—', ok: false },
+      { date: '9 juil.', time: '21:00', hook: '1€ par jour = 400 000€. Voici comment.', niche: 'finance', plat: 'both', bg: 'linear-gradient(150deg,#0EA5A5,#134E4A)', views: '42,8K', likes: '3,1K', ok: true },
+      { date: '9 juil.', time: '08:00', hook: 'Arrête de scroller. Lis ça.', niche: 'growth', plat: 'tt', bg: 'linear-gradient(150deg,#F472B6,#831843)', views: '9,6K', likes: '740', ok: true },
+      { date: '8 juil.', time: '18:30', hook: 'Les riches ne budgétent pas. Ils font ça.', niche: 'finance', plat: 'both', bg: 'linear-gradient(150deg,#34D399,#065F46)', views: '31,2K', likes: '2,4K', ok: true },
+    ];
+    const histStats = [
+      { label: 'Publications totales', value: '312' },
+      { label: 'Taux de réussite', value: '98,4%' },
+      { label: 'Vues cumulées', value: '1,24M' },
+      { label: 'Ce mois-ci', value: '31' },
+    ];
+    let lastDate = null;
+    const historyRows = HISTORY.map((h, i) => {
+      const showDate = h.date !== lastDate; lastDate = h.date;
+      return {
+        showDate, dateLabel: h.date, hook: h.hook, bg: h.bg, niche: this.nicheName(h.niche), time: h.time,
+        platBadge: this.platBadge(h.plat), views: h.views, likes: h.likes, ok: h.ok, failed: !h.ok,
+        statusLabel: h.ok ? '● Publié' : '● Échec',
+        statusStyle: `font-size:11.5px;font-weight:700;padding:5px 11px;border-radius:9px;flex:none;background:${h.ok ? 'rgba(52,211,153,.16)' : 'rgba(255,92,92,.16)'};color:${h.ok ? '#34D399' : '#FF9A9A'}`,
+      };
+    });
+
+    return {
+      ...common,
+      nav, pageTitle, pageSubtitle, goCreate: this.goCreate, logout: this.logout,
+      historyRows, histStats, eyeIcon: this.icon('eye', 13), heartIcon: this.icon('heart', 13), extIcon: this.icon('external', 14), retryIcon: this.icon('refresh', 14),
+      notifs, hasUnread, notifOpen: s.notifOpen, toggleNotif: this.toggleNotif, markAllRead: this.markAllRead, bellIcon: this.icon('bell', 18),
+      setTabs, setIsCompte: s.settingsTab === 'compte', setIsNotif: s.settingsTab === 'notifications', setIsTeam: s.settingsTab === 'team', setIsAccounts: s.settingsTab === 'accounts', setIsReferral: s.settingsTab === 'referral',
+      notifRows, members, pendingInvites, roleLegend, workspaces, networks,
+      refStats, refPct, refProgress, refGoal, refCopied: s.refCopied, copyLabel: s.refCopied ? 'Copié !' : 'Copier', copyRef: this.copyRef, copyIcon: this.icon('copy', 15), giftBig: this.icon('gift', 30), usersIcon: this.icon('users', 16),
+      trendChips, trends, trendSounds, trendTags, refreshIcon: this.icon('refresh', 15), bulbBig: this.icon('bulb', 22),
+      logoutIcon: this.icon('logout', 16), plusIcon: this.icon('plus', 17, 2.2), checkIcon: this.icon('check', 18, 2.4),
+      musicIcon: this.icon('music', 15), playIcon: this.svg({ t: 'path', a: { d: 'M9 6v12l9-6z', fill: 'currentColor', stroke: 'none' } }, 22),
+      clockIcon: this.icon('clock', 13), micIcon: this.icon('mic', 16), backIcon: this.icon('back', 18, 2.2),
+      smallCheck: this.icon('check', 15, 2.4), dlIcon: this.icon('download', 16), gearBig: this.icon('gear', 30),
+      isDashboard: view === 'dashboard', isCreate: view === 'create', isEditor: view === 'editor', isCalendar: view === 'calendar',
+      isQueue: view === 'queue', isAnalytics: view === 'analytics', isBilling: view === 'billing', isSettings: view === 'settings', isTrends: view === 'trends',
+      isHistory: view === 'history',
+      showBack: view === 'editor', showEditorActions: view === 'editor', showNewBtn: view !== 'editor',
+      primaryBtnLabel: view === 'create' ? 'Nouvelle vidéo' : 'Nouvelle vidéo',
+      stats, filters, videos,
+      steps, isStep0: s.step === 0, isStep1: s.step === 1, isStep2: s.step >= 2,
+      niches, next: this.next, prev: this.prev,
+      filmIcon2: this.icon('film', 20),
+      videoIdea: s.videoIdea, onIdea: this.onIdea, onFiles: this.onFiles, onDrop: this.onDrop, onDragOver: this.onDragOver, onDragLeave: this.onDragLeave,
+      uploadIcon: this.icon('uploadc', 22), hasRefs: s.refs.length > 0, refCount: String(s.refs.length),
+      dropStyle: `display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:1.5px dashed ${s.dragOver ? '#7C5CFF' : 'rgba(255,255,255,.18)'};border-radius:16px;padding:26px;cursor:pointer;text-align:center;background:${s.dragOver ? 'rgba(124,92,255,.08)' : 'rgba(255,255,255,.02)'};transition:.15s`,
+      refCards: s.refs.map((r, i) => ({ isImg: r.type === 'image', isVid: r.type === 'video', name: r.name, onRemove: this.removeRef(i), thumbStyle: `position:relative;width:74px;height:74px;border-radius:12px;overflow:hidden;flex:none;border:1px solid rgba(255,255,255,.12);background:#14141B;background-image:url(${r.url});background-size:cover;background-position:center` })),
+      continueStyle: `background:linear-gradient(135deg,#7C5CFF,#9D6BFF);color:#fff;border:none;padding:12px 26px;border-radius:12px;font-family:'Manrope';font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 8px 24px rgba(124,92,255,.35)`,
+      perDay: s.perDay, onPerDay: this.onPerDay, times, styles, voices, langs, toggleValidate: this.toggleValidate, validateTrack, validateKnob,
+      stages, preview, genFromIdea: gen.fromIdea, ideaText: (s.videoIdea || '').trim(), pipeTitle: p.done ? 'Ta vidéo est prête 🎬' : 'Génération en cours…', pipeSubtitle: p.done ? 'Cadence répètera ce processus automatiquement selon ton planning.' : `Pipeline IA · ${overall}% — hook, voix, visuels, montage, export.`, pipeDone: p.done, addToQueue: this.addToQueue, regenerate: this.regenerate, editGenerated: this.editGenerated,
+      backFromEditor: this.backFromEditor, ed, edTabs, edIsScript: s.editorTab === 'script', edIsCaption: s.editorTab === 'caption', edIsVoice: s.editorTab === 'voice', edIsMusic: s.editorTab === 'music', edIsVisual: s.editorTab === 'visual', edIsFormat: s.editorTab === 'format', onScript: this.onScript, capStyles, capPos, capFonts, capColors, hiColors, voiceRows, tracks, clips, timeline, ruler,
+      trimSegs, trimTotal, resetTrim: this.resetTrim, scissorsIcon: this.icon('scissors', 16), transRows,
+      edPlaying: s.edPlaying, togglePlay: this.togglePlay, playPauseIcon: this.icon(s.edPlaying ? 'pause' : 'play', 18), seekBar: this.seekBar, toggleMute: this.toggleMute,
+      progressPct: prog * 100 + '%', playheadLeft: prog * 100 + '%', timeLabel: this.fmtTime(t), durLabel: this.fmtTime(DUR),
+      scriptStats, sceneRows, hookScore, hookScorePct: hookScore + '%', hookLabel, hookColor: hookScore >= 85 ? '#34D399' : hookScore >= 60 ? '#FFB74C' : '#FF7A7A',
+      aspects, logoTk, fadeInTk, fadeOutTk, introTk, outroTk, toggleLogo: this.toggleLogo, toggleFadeIn: this.toggleFadeIn, toggleFadeOut: this.toggleFadeOut, toggleIntro: this.toggleIntro, toggleOutro: this.toggleOutro,
+      onCapSize: this.onCapSize, capSize: s.edCapSize, onEdSpeed: this.onEdSpeed, edSpeed: s.edSpeed, onEdPitch: this.onEdPitch, edPitch: s.edPitch, sparkIcon: this.icon('sparkles', 16),
+      weekdays: ['LUN', 'MAR', 'MER', 'JEU', 'VEN', 'SAM', 'DIM'], calTitle: `${monthNames[m]} ${y}`, calCells, calPrev: this.calPrev, calNext: this.calNext,
+      kpis, chartBars, donut, topVideos, bestTimes,
+      usage, plans, invoices,
+      queue, validateHint: s.validate ? 'Activé — les vidéos attendent ta validation avant publication.' : 'Désactivé — publication 100% automatique selon le planning.',
+    };
+  }
+}
+</script>
+</body>
+</html>
